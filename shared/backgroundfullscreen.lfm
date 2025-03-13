@@ -1,0 +1,11 @@
+object frmBackgroundFullScreen: TfrmBackgroundFullScreen
+  Left = 2032
+  Height = 192
+  Top = 330
+  Width = 256
+  Caption = 'frmBackgroundFullScreen'
+  OnClick = FormClick
+  OnDblClick = FormClick
+  OnMouseDown = FormMouseDown
+  LCLVersion = '3.4.0.0'
+end
