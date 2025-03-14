@@ -8,14 +8,16 @@ unit SmartDialogs;
 interface
 
 uses
-  functions, SimpleDialog, LoaderDialog, simple_dialog, loader_dialog, 
-  BackgroundFullScreen, LazarusPackageIntf;
+  SimpleDialog, ConfirmationDialog, LoaderDialog, confirmation_dialog, 
+  loader_dialog, simple_dialog, BackgroundFullScreen, enums, functions, 
+  LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
   RegisterUnit('SimpleDialog', @SimpleDialog.Register);
+  RegisterUnit('ConfirmationDialog', @ConfirmationDialog.Register);
   RegisterUnit('LoaderDialog', @LoaderDialog.Register);
 end;
 

@@ -6,11 +6,9 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  BackgroundFullScreen, loader_dialog;
+  functions, loader_dialog;
 
 procedure ShowLoaderDialog();
-procedure ShowBackgroundFullScreen();
-procedure CloseBackgroundFullScreen();
 
 type
   TLoaderDialog = class(TComponent)
@@ -44,13 +42,11 @@ begin
     ShowLoaderDialog()
   else
     frLoaderDialog.Close();
-
-  //Invalidate;
 end;
 
 procedure ShowLoaderDialog;
 begin
-  ShowBackgroundFullScreen();
+  functions.ShowBackgroundFullScreen();
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Application);
@@ -58,25 +54,6 @@ begin
   frLoaderDialog.FormStyle := fsStayOnTop;
   frLoaderDialog.Show;
   frLoaderDialog.BringToFront;
-end;
-
-procedure ShowBackgroundFullScreen();
-begin
-  if not Assigned(frmBackgroundFullScreen) then
-    frmBackgroundFullScreen := TfrmBackgroundFullScreen.Create(Application);
-
-  frmBackgroundFullScreen.Show;
-  frmBackgroundFullScreen.BringToFront;
-end;
-
-procedure CloseBackgroundFullScreen();
-begin
-  if Assigned(BackgroundFullScreen.frmBackgroundFullScreen) then
-  begin
-    BackgroundFullScreen.frmBackgroundFullScreen.Close;
-    BackgroundFullScreen.frmBackgroundFullScreen.Free;
-    BackgroundFullScreen.frmBackgroundFullScreen := nil;
-  end;
 end;
 
 procedure Register;

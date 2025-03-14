@@ -23,8 +23,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure imgCloseClick(Sender: TObject);
-    procedure SetHeightLabel;
+    procedure imgCloseClick(Sender: TObject);    
   private
     procedure SetRoundedCorners(Radius: Integer);
   public
@@ -33,12 +32,12 @@ type
 
 var
   frSimpleDialog: TfrSimpleDialog;
-  typeOfMessage: TTypeOfMessage = TTypeOfMessage.tmInfo;
+  typeMessage: TTypeMessage = TTypeMessage.tmInfo;
 
 implementation
 
 uses
-  functions;
+  functions, enums;
 
 {$R *.lfm}
 
@@ -66,23 +65,23 @@ procedure TfrSimpleDialog.FormShow(Sender: TObject);
 begin
   inherited;
 
-  SetHeightLabel;
+  lblSubTitle.Height := functions.GetLabelHeight(lblSubTitle);
   frSimpleDialog.Height := 250;
   frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height - 30;
 
-  if typeOfMessage = TTypeOfMessage.tmInfo then
+  if typeMessage = TTypeMessage.tmInfo then
   begin
     simple_dialog.frSimpleDialog.lblTitle.Caption := 'Olá';
     ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
     frSimpleDialog.Color := $00FFF1E8;
   end
-  else if typeOfMessage = TTypeOfMessage.tmWarning then
+  else if typeMessage = TTypeMessage.tmWarning then
   begin
     simple_dialog.frSimpleDialog.lblTitle.Caption := 'Atenção';
     ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
     frSimpleDialog.Color := $00E8FFFA;
   end
-  else if typeOfMessage = TTypeOfMessage.tmError then
+  else if typeMessage = TTypeMessage.tmError then
   begin
     simple_dialog.frSimpleDialog.lblTitle.Caption := 'Erro';
     ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
@@ -103,23 +102,6 @@ var
 begin
   Rgn := CreateRoundRectRgn(0, 0, Width + 1, Height + 1, Radius, Radius);
   SetWindowRgn(Handle, Rgn, True);
-end;
-
-procedure TfrSimpleDialog.SetHeightLabel;
-var
-  TmpBitmap: TBitmap;
-  TextHeight, Lines: Integer;
-begin
-  TmpBitmap := TBitmap.Create;
-  try
-    TmpBitmap.Canvas.Font.Assign(lblSubTitle.Font);
-    TextHeight := TmpBitmap.Canvas.TextHeight('W');
-    Lines := (TmpBitmap.Canvas.TextWidth(lblSubTitle.Caption) div lblSubTitle.Width) + 1;
-
-    lblSubTitle.Height := Lines * TextHeight;
-  finally
-    TmpBitmap.Free;
-  end;
 end;
 
 end.

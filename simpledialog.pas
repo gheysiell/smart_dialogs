@@ -5,29 +5,30 @@ unit SimpleDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, functions;
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, functions,
+  enums;
 
 type
-  TTypeOfMessage = (tmInfo, tmWarning, tmError);
+  TTypeMessage = enums.TTypeMessage;
 
-procedure ShowAlertDialog(subTitle: String; typeOfMessage: TTypeOfMessage; AForm: TForm);
+procedure ShowAlertDialog(subTitle: String; typeMessage: TTypeMessage; form: TForm);
 
 type
   TSimpleDialog = class(TComponent)
   private
     FVisible: Boolean;
-    FTypeOfMessage: TTypeOfMessage;
+    FTypeMessage: TTypeMessage;
     FMessage: String;
     procedure SetVisible(AValue: Boolean);
-    procedure SetTypeOfMessage(AValue: TTypeOfMessage);
+    procedure SetTypeMessage(AValue: TTypeMessage);
     procedure SetMessage(AValue: String);
   protected
-    function GetParentForm: TForm;
+
   public
     constructor Create(AOwner: TComponent); override;
   published
     property Visible: Boolean read FVisible write SetVisible default False;
-    property TypeOfMessage: TTypeOfMessage read FTypeOfMessage write SetTypeOfMessage default TTypeOfMessage.tmInfo;
+    property TypeMessage: TTypeMessage read FTypeMessage write SetTypeMessage default TTypeMessage.tmInfo;
     property Message: String read FMessage write SetMessage;
   end;
 
@@ -42,8 +43,8 @@ constructor TSimpleDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FVisible := False;
-  TypeOfMessage := TTypeOfMessage.tmInfo;
   Message := 'Olá';
+  TypeMessage := TTypeMessage.tmInfo;
 end;
 
 procedure TSimpleDialog.SetVisible(AValue: Boolean);
@@ -52,18 +53,21 @@ var
 begin
   FVisible := AValue;
 
-  ParentForm := GetParentForm;
+  if (csDesigning in ComponentState) then
+    Exit;
+
+  ParentForm := functions.GetParentForm(Owner);
 
   if FVisible then
-    ShowAlertDialog(FMessage, FTypeOfMessage, ParentForm)
+    ShowAlertDialog(FMessage, FTypeMessage, ParentForm)
   else if Assigned(frSimpleDialog) then
     frSimpleDialog.Close();
 end;
 
-procedure TSimpleDialog.SetTypeOfMessage(AValue: TTypeOfMessage);
+procedure TSimpleDialog.SetTypeMessage(AValue: TTypeMessage);
 begin
-  if FTypeOfMessage = AValue then Exit;
-  FTypeOfMessage := AValue;
+  if FTypeMessage = AValue then Exit;
+  FTypeMessage := AValue;
 end;
 
 procedure TSimpleDialog.SetMessage(AValue: String);
@@ -72,25 +76,20 @@ begin
   FMessage := AValue;
 end;
 
-function TSimpleDialog.GetParentForm: TForm;
+procedure ShowAlertDialog(subTitle: string; typeMessage: TTypeMessage; form: TForm);
 begin
-  Result := TForm(Owner);
-end;
-
-procedure ShowAlertDialog(subTitle: string; typeOfMessage: TTypeOfMessage; AForm: TForm);
-begin
-  ShowBackgroundFullScreen();
+  functions.ShowBackgroundFullScreen();
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Application);
 
   frSimpleDialog.lblSubTitle.Caption := subTitle;
-  simple_dialog.typeOfMessage := typeOfMessage;
+  simple_dialog.typeMessage := typeMessage;
 
   simple_dialog.frSimpleDialog.ShowModal;
 
-  if Assigned(AForm) then
-    AForm.BringToFront;
+  if Assigned(form) then
+    form.BringToFront;
 end;
 
 procedure Register;
