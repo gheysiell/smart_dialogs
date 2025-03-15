@@ -5,7 +5,7 @@ unit BackgroundFullScreen;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, loader_dialog;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, LoaderDialogForm;
 
 type
 

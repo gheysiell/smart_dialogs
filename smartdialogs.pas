@@ -8,9 +8,9 @@ unit SmartDialogs;
 interface
 
 uses
-  SimpleDialog, ConfirmationDialog, LoaderDialog, confirmation_dialog, 
-  loader_dialog, simple_dialog, BackgroundFullScreen, enums, functions, 
-  LazarusPackageIntf;
+  SimpleDialog, ConfirmationDialog, LoaderDialog, enums, functions, 
+  ConfirmationDialogForm, LoaderDialogForm, SimpleDialogForm, 
+  BackgroundFullScreen, LazarusPackageIntf;
 
 implementation
 

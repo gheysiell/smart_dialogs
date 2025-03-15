@@ -1,4 +1,4 @@
-unit simple_dialog;
+unit SimpleDialogForm;
 
 {$mode ObjFPC}{$H+}
 
@@ -57,6 +57,7 @@ end;
 
 procedure TfrSimpleDialog.FormResize(Sender: TObject);
 begin
+  Image.Left := (pnlContainer.Width - Image.Width) div 2;
   lblTitle.Left := (ClientWidth - lblTitle.Width) div 2;
   lblSubTitle.Left := (ClientWidth - lblSubTitle.Width) div 2;
 end;
@@ -66,24 +67,24 @@ begin
   inherited;
 
   lblSubTitle.Height := functions.GetLabelHeight(lblSubTitle);
-  frSimpleDialog.Height := 250;
+  frSimpleDialog.Height := 255;
   frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height - 30;
 
   if typeMessage = TTypeMessage.tmInfo then
   begin
-    simple_dialog.frSimpleDialog.lblTitle.Caption := 'Olá';
+    frSimpleDialog.lblTitle.Caption := 'Olá';
     ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
     frSimpleDialog.Color := $00FFF1E8;
   end
   else if typeMessage = TTypeMessage.tmWarning then
   begin
-    simple_dialog.frSimpleDialog.lblTitle.Caption := 'Atenção';
+    frSimpleDialog.lblTitle.Caption := 'Atenção';
     ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
     frSimpleDialog.Color := $00E8FFFA;
   end
   else if typeMessage = TTypeMessage.tmError then
   begin
-    simple_dialog.frSimpleDialog.lblTitle.Caption := 'Erro';
+    frSimpleDialog.lblTitle.Caption := 'Erro';
     ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
     frSimpleDialog.Color := $00E8ECFF;
   end;

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  functions, loader_dialog;
+  LoaderDialogForm;
 
 procedure ShowLoaderDialog();
 
@@ -26,6 +26,9 @@ type
 procedure Register;
 
 implementation
+
+uses
+  functions;
 
 constructor TLoaderDialog.Create(AOwner: TComponent);
 begin

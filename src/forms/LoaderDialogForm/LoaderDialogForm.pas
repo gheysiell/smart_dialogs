@@ -1,4 +1,4 @@
-unit loader_dialog;
+unit LoaderDialogForm;
 
 {$mode ObjFPC}{$H+}
 
