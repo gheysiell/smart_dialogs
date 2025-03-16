@@ -9,7 +9,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\shared;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen"/>
-        <OtherUnitFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\shared;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen"/>
+        <OtherUnitFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\shared;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen;src\shared\MyThread"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -28,14 +28,6 @@
         <Filename Value="loaderdialog.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="LoaderDialog"/>
-      </Item>
-      <Item>
-        <Filename Value="src\shared\enums.pas"/>
-        <UnitName Value="enums"/>
-      </Item>
-      <Item>
-        <Filename Value="src\shared\functions.pas"/>
-        <UnitName Value="functions"/>
       </Item>
       <Item>
         <Filename Value="src\forms\ConfirmationDialogForm\ConfirmationDialogForm.lfm"/>
@@ -68,6 +60,18 @@
       <Item>
         <Filename Value="src\shared\BackgroundFullScreen\BackgroundFullScreen.pas"/>
         <UnitName Value="BackgroundFullScreen"/>
+      </Item>
+      <Item>
+        <Filename Value="src\shared\MyThread\MyThread.pas"/>
+        <UnitName Value="MyThread"/>
+      </Item>
+      <Item>
+        <Filename Value="src\shared\Enums.pas"/>
+        <UnitName Value="enums"/>
+      </Item>
+      <Item>
+        <Filename Value="src\shared\Functions.pas"/>
+        <UnitName Value="functions"/>
       </Item>
     </Files>
     <RequiredPkgs>
