@@ -1,7 +1,7 @@
 object frSimpleDialog: TfrSimpleDialog
-  Left = 380
+  Left = 423
   Height = 250
-  Top = 137
+  Top = 255
   Width = 440
   BorderStyle = bsNone
   Caption = 'frSimpleDialog'
@@ -98,7 +98,7 @@ object frSimpleDialog: TfrSimpleDialog
     end
     object Image: TImage
       AnchorSideTop.Control = pnlContainer
-      Left = 144
+      Left = 146
       Height = 128
       Top = 5
       Width = 128

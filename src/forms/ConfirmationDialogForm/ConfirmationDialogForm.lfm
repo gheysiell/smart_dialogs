@@ -1,7 +1,7 @@
 object frConfirmationDialog: TfrConfirmationDialog
-  Left = 330
+  Left = 808
   Height = 310
-  Top = 257
+  Top = 123
   Width = 490
   BorderStyle = bsNone
   Caption = 'frConfirmationDialog'
@@ -13,7 +13,7 @@ object frConfirmationDialog: TfrConfirmationDialog
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   OnShow = FormShow
-  Position = poScreenCenter
+  Position = poMainFormCenter
   LCLVersion = '3.8.0.0'
   object pnlContainer: TPanel
     Left = 8
@@ -298,7 +298,6 @@ object frConfirmationDialog: TfrConfirmationDialog
       ClientWidth = 170
       ParentBackground = False
       TabOrder = 0
-      OnClick = pnlWrapperCancelClick
       object shpCancel: TShape
         Cursor = crHandPoint
         Left = 0

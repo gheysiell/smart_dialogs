@@ -43,16 +43,16 @@ uses
 
 { TfrSimpleDialog }
 
-procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  Self.Close;
-end;
-
 procedure TfrSimpleDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   functions.closeBackgroundFullScreen();
+end;
+
+procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  Self.Close;
 end;
 
 procedure TfrSimpleDialog.FormResize(Sender: TObject);

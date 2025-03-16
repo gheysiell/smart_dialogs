@@ -36,7 +36,6 @@ type
     procedure lblConfirmClick(Sender: TObject);
     procedure lblConfirmMouseEnter(Sender: TObject);
     procedure lblConfirmMouseLeave(Sender: TObject);
-    procedure pnlWrapperCancelClick(Sender: TObject);
     procedure shpCancelChangeBounds(Sender: TObject);
     procedure shpCancelMouseEnter(Sender: TObject);
     procedure shpCancelMouseLeave(Sender: TObject);
@@ -156,14 +155,16 @@ begin
   shpConfirmMouseLeave(Sender);
 end;
 
-procedure TfrConfirmationDialog.pnlWrapperCancelClick(Sender: TObject);
-begin
-
-end;
-
 procedure TfrConfirmationDialog.shpCancelChangeBounds(Sender: TObject);
 begin
   CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;
+  imgCloseClick(Sender);
+end;
+
+
+procedure TfrConfirmationDialog.shpConfirmChangeBounds(Sender: TObject);
+begin
+  CanceledOrConfirmed := TCanceledOrConfirmed.Confirmed;
   imgCloseClick(Sender);
 end;
 
@@ -182,12 +183,6 @@ procedure TfrConfirmationDialog.shpCancelMouseUp(Sender: TObject;
 begin
   if Button = mbLeft then
     imgCloseClick(Sender);
-end;
-
-procedure TfrConfirmationDialog.shpConfirmChangeBounds(Sender: TObject);
-begin
-  CanceledOrConfirmed := TCanceledOrConfirmed.Confirmed;
-  imgCloseClick(Sender);
 end;
 
 procedure TfrConfirmationDialog.SetRoundedCorners(Radius: Integer);

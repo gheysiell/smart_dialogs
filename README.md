@@ -7,7 +7,7 @@ with UI components.
 
 ## Project statatistics
 
-- **Lines of code**: 2,259
+- **Lines of code**: 2,282
 - **Files**: 11
 - **Folders**: 14
 - **Screens**: 3
@@ -38,7 +38,6 @@ begin
 end;
 
 procedure TForm1.SampleSlowProcess;
-begin
-  // Simulate a slow process with a 4-second delay
+begin  
   Sleep(4000);
 end;
