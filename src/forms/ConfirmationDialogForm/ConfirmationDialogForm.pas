@@ -1,4 +1,4 @@
-unit confirmation_dialog;
+unit ConfirmationDialogForm;
 
 {$mode ObjFPC}{$H+}
 
@@ -85,6 +85,7 @@ end;
 
 procedure TfrConfirmationDialog.FormResize(Sender: TObject);
 begin
+  Image.Left := (pnlContainer.Width - Image.Width) div 2;
   lblTitle.Left := (ClientWidth - lblTitle.Width) div 2;
   lblSubTitle.Left := (ClientWidth - lblSubTitle.Width) div 2;
 end;
@@ -99,19 +100,19 @@ begin
 
   if typeMessage = TTypeMessage.tmInfo then
   begin
-    confirmation_dialog.frConfirmationDialog.lblTitle.Caption := 'Olá';
+    frConfirmationDialog.lblTitle.Caption := 'Olá';
     ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
     frConfirmationDialog.Color := $00FFF1E8;
   end
   else if typeMessage = TTypeMessage.tmWarning then
   begin
-    confirmation_dialog.frConfirmationDialog.lblTitle.Caption := 'Atenção';
+    frConfirmationDialog.lblTitle.Caption := 'Atenção';
     ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
     frConfirmationDialog.Color := $00E8FFFA;
   end
   else if typeMessage = TTypeMessage.tmError then
   begin
-    confirmation_dialog.frConfirmationDialog.lblTitle.Caption := 'Erro';
+    frConfirmationDialog.lblTitle.Caption := 'Erro';
     ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
     frConfirmationDialog.Color := $00E8ECFF;
   end;

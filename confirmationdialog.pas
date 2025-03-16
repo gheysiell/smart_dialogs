@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, functions,
-  confirmation_dialog, enums;
+  ConfirmationDialogForm, enums;
 
 type
   TTypeMessage = enums.TTypeMessage;
@@ -46,7 +46,7 @@ constructor TConfirmationDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FVisible := False;
-  FMessage := 'Tem certeza ?';
+  FMessage := 'Tem certeza que deseja realizar essa operação ?';
   TypeMessage := TTypeMessage.tmWarning;
 end;
 
@@ -87,16 +87,16 @@ begin
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Application);
 
-  confirmation_dialog.frConfirmationDialog.lblTitle.Caption := title;
-  confirmation_dialog.frConfirmationDialog.lblSubTitle.Caption := subTitle;
-  confirmation_dialog.typeMessage := typeMessage;
+  frConfirmationDialog.lblTitle.Caption := title;
+  frConfirmationDialog.lblSubTitle.Caption := subTitle;
+  ConfirmationDialogForm.typeMessage := typeMessage;
 
-  confirmation_dialog.frConfirmationDialog.ShowModal;
+  frConfirmationDialog.ShowModal;
 
   if Assigned(form) then
     form.BringToFront;
 
-  ResultConfirmation := Ternary(confirmation_dialog.CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
+  ResultConfirmation := Ternary(CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
 
   if Assigned(FOnConfirmation) then
   begin

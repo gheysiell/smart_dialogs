@@ -37,7 +37,7 @@ procedure Register;
 implementation
 
 uses
-  simple_dialog;
+  SimpleDialogForm;
 
 constructor TSimpleDialog.Create(AOwner: TComponent);
 begin
@@ -84,9 +84,9 @@ begin
     frSimpleDialog := TfrSimpleDialog.Create(Application);
 
   frSimpleDialog.lblSubTitle.Caption := subTitle;
-  simple_dialog.typeMessage := typeMessage;
+  SimpleDialogForm.typeMessage := typeMessage;
 
-  simple_dialog.frSimpleDialog.ShowModal;
+  frSimpleDialog.ShowModal;
 
   if Assigned(form) then
     form.BringToFront;

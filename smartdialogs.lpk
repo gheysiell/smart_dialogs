@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="shared;simple_dialog;loader_dialog;confirmation_dialog;src\features\confirmation_dialog;src\features\loader_dialog;src\features\simple_dialog;src\shared"/>
-        <OtherUnitFiles Value="shared;simple_dialog;loader_dialog;confirmation_dialog;src\shared;src\features\confirmation_dialog;src\features\loader_dialog;src\features\simple_dialog"/>
+        <IncludeFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\shared;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen"/>
+        <OtherUnitFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\shared;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen;src\shared\MyThread"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -30,43 +30,47 @@
         <UnitName Value="LoaderDialog"/>
       </Item>
       <Item>
-        <Filename Value="src\features\confirmation_dialog\confirmation_dialog.lfm"/>
+        <Filename Value="src\forms\ConfirmationDialogForm\ConfirmationDialogForm.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\features\confirmation_dialog\confirmation_dialog.pas"/>
-        <UnitName Value="confirmation_dialog"/>
+        <Filename Value="src\forms\ConfirmationDialogForm\ConfirmationDialogForm.pas"/>
+        <UnitName Value="ConfirmationDialogForm"/>
       </Item>
       <Item>
-        <Filename Value="src\features\loader_dialog\loader_dialog.lfm"/>
+        <Filename Value="src\forms\LoaderDialogForm\LoaderDialogForm.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\features\loader_dialog\loader_dialog.pas"/>
-        <UnitName Value="loader_dialog"/>
+        <Filename Value="src\forms\LoaderDialogForm\LoaderDialogForm.pas"/>
+        <UnitName Value="LoaderDialogForm"/>
       </Item>
       <Item>
-        <Filename Value="src\features\simple_dialog\simple_dialog.lfm"/>
+        <Filename Value="src\forms\SimpleDialogForm\SimpleDialogForm.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\features\simple_dialog\simple_dialog.pas"/>
-        <UnitName Value="simple_dialog"/>
+        <Filename Value="src\forms\SimpleDialogForm\SimpleDialogForm.pas"/>
+        <UnitName Value="SimpleDialogForm"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\backgroundfullscreen.lfm"/>
+        <Filename Value="src\shared\BackgroundFullScreen\BackgroundFullScreen.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\backgroundfullscreen.pas"/>
+        <Filename Value="src\shared\BackgroundFullScreen\BackgroundFullScreen.pas"/>
         <UnitName Value="BackgroundFullScreen"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\enums.pas"/>
+        <Filename Value="src\shared\MyThread\MyThread.pas"/>
+        <UnitName Value="MyThread"/>
+      </Item>
+      <Item>
+        <Filename Value="src\shared\Enums.pas"/>
         <UnitName Value="enums"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\functions.pas"/>
+        <Filename Value="src\shared\Functions.pas"/>
         <UnitName Value="functions"/>
       </Item>
     </Files>
