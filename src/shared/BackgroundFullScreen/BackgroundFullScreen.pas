@@ -5,7 +5,8 @@ unit BackgroundFullScreen;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, LoaderDialogForm;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, LoaderDialogForm,
+  Windows, ShellApi;
 
 type
 
@@ -15,6 +16,7 @@ type
     procedure FormClick(Sender: TObject);
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    function GetTaskBarHeight: Integer;
   private
 
   public
@@ -42,6 +44,8 @@ begin
 end;
 
 constructor TfrmBackgroundFullScreen.Create(AOwner: TComponent);
+var
+  TaskbarHeight: Integer;
 begin
   inherited Create(AOwner);
   BorderStyle := bsNone;
@@ -49,7 +53,32 @@ begin
   Color := clBlack;
   AlphaBlend := True;
   AlphaBlendValue := 128;
-  SetBounds(0, 0, Screen.Width, Screen.Height);
+
+  TaskbarHeight := GetTaskBarHeight;
+
+  SetBounds(0, 0, Screen.Width, Screen.Height - TaskbarHeight);
+end;
+
+function TfrmBackgroundFullScreen.GetTaskBarHeight: Integer;
+var
+  hTaskbar: HWND;
+  Rect: TRect;
+begin
+  hTaskbar := FindWindow('Shell_TrayWnd', nil);
+
+  if hTaskbar = 0 then
+  begin
+    RaiseLastOSError;
+    Exit;
+  end;
+
+  if not GetWindowRect(hTaskbar, Rect) then
+  begin
+    RaiseLastOSError;
+    Exit;
+  end;
+
+  Result := Rect.Bottom - Rect.Top;
 end;
 
 end.
