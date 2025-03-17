@@ -13,7 +13,7 @@ object frConfirmationDialog: TfrConfirmationDialog
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   OnShow = FormShow
-  Position = poMainFormCenter
+  Position = poWorkAreaCenter
   LCLVersion = '3.8.0.0'
   object pnlContainer: TPanel
     Left = 8

@@ -1,7 +1,7 @@
 object frLoaderDialog: TfrLoaderDialog
-  Left = 2005
+  Left = 391
   Height = 155
-  Top = 228
+  Top = 116
   Width = 180
   BorderStyle = bsNone
   Caption = 'frLoaderDialog'
@@ -10,7 +10,7 @@ object frLoaderDialog: TfrLoaderDialog
   FormStyle = fsMDIChild
   OnClose = FormClose
   OnShow = FormShow
-  Position = poMainFormCenter
+  Position = poWorkAreaCenter
   LCLVersion = '3.8.0.0'
   object BCFluentProgressRing1: TBCFluentProgressRing
     Left = 41
