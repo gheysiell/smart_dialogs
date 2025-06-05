@@ -1,4 +1,4 @@
-unit functions;
+unit SDfunctions;
 
 {$mode ObjFPC}{$H+}
 
@@ -6,32 +6,32 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  BackgroundFullScreen;
+  SDBackgroundFullScreen;
 
-procedure ShowBackgroundFullScreen();
-procedure CloseBackgroundFullScreen();
+procedure ShowSDBackgroundFullScreen();
+procedure CloseSDBackgroundFullScreen();
 function Ternary(ACondition: Boolean; ATrueValue, AFalseValue: Variant): Variant;
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
 
 implementation
 
-procedure ShowBackgroundFullScreen();
+procedure ShowSDBackgroundFullScreen();
 begin
-  if not Assigned(frmBackgroundFullScreen) then
-    frmBackgroundFullScreen := TfrmBackgroundFullScreen.Create(Application);
+  if not Assigned(frmSDBackgroundFullScreen) then
+    frmSDBackgroundFullScreen := TfrmSDBackgroundFullScreen.Create(Application);
 
-  frmBackgroundFullScreen.Show;
-  frmBackgroundFullScreen.BringToFront;
+  frmSDBackgroundFullScreen.Show;
+  frmSDBackgroundFullScreen.BringToFront;
 end;
 
-procedure CloseBackgroundFullScreen();
+procedure CloseSDBackgroundFullScreen();
 begin
-  if Assigned(BackgroundFullScreen.frmBackgroundFullScreen) then
+  if Assigned(SDBackgroundFullScreen.frmSDBackgroundFullScreen) then
   begin
-    BackgroundFullScreen.frmBackgroundFullScreen.Close;
-    BackgroundFullScreen.frmBackgroundFullScreen.Free;
-    BackgroundFullScreen.frmBackgroundFullScreen := nil;
+    SDBackgroundFullScreen.frmSDBackgroundFullScreen.Close;
+    SDBackgroundFullScreen.frmSDBackgroundFullScreen.Free;
+    SDBackgroundFullScreen.frmSDBackgroundFullScreen := nil;
   end;
 end;
 

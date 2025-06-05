@@ -1,4 +1,4 @@
-unit enums;
+unit SDenums;
 
 {$mode ObjFPC}{$H+}
 

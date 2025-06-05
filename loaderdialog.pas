@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  LoaderDialogForm, MyThread;
+  SDLoaderDialogForm, SDMyThread;
 
 type
   TSlowProcess = procedure of object;
@@ -33,7 +33,7 @@ procedure Register;
 implementation
 
 uses
-  functions;
+  SDfunctions;
 
 constructor TLoaderDialog.Create(AOwner: TComponent);
 begin
@@ -54,7 +54,7 @@ end;
 
 procedure TLoaderDialog.ShowLoaderDialog;
 begin
-  functions.ShowBackgroundFullScreen();
+  SDfunctions.ShowSDBackgroundFullScreen();
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Application);
@@ -64,7 +64,7 @@ begin
   frLoaderDialog.BringToFront;
 
   if Assigned(FSlowProcess) then
-    TMyThread.Create(FSlowProcess, @CloseLoader);
+    TSDMyThread.Create(FSlowProcess, @CloseLoader);
 end;
 
 procedure TLoaderDialog.CloseLoader;

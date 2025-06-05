@@ -1,4 +1,4 @@
-unit ConfirmationDialogForm;
+unit SDConfirmationDialogForm;
 
 {$mode ObjFPC}{$H+}
 
@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  Windows, enums;
+  Windows, SDenums;
 
 type
 
@@ -61,7 +61,7 @@ var
 implementation
 
 uses
-  functions;
+  SDfunctions;
 
 {$R *.lfm}
 
@@ -70,7 +70,7 @@ uses
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  functions.closeBackgroundFullScreen();
+  SDfunctions.closeSDBackgroundFullScreen();
 end;
 
 procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;
@@ -93,7 +93,7 @@ procedure TfrConfirmationDialog.FormShow(Sender: TObject);
 begin
   inherited;
 
-  lblSubTitle.Height := functions.GetLabelHeight(lblSubTitle);
+  lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
   frConfirmationDialog.Height := 305;
   frConfirmationDialog.Height := frConfirmationDialog.Height + lblSubTitle.Height;
 

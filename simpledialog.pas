@@ -5,11 +5,11 @@ unit SimpleDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, functions,
-  enums;
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
+  SDenums;
 
 type
-  TTypeMessage = enums.TTypeMessage;
+  TTypeMessage = SDenums.TTypeMessage;
 
 procedure ShowAlertDialog(subTitle: String; typeMessage: TTypeMessage; form: TForm);
 
@@ -37,7 +37,7 @@ procedure Register;
 implementation
 
 uses
-  SimpleDialogForm;
+  SDSimpleDialogForm;
 
 constructor TSimpleDialog.Create(AOwner: TComponent);
 begin
@@ -56,7 +56,7 @@ begin
   if (csDesigning in ComponentState) then
     Exit;
 
-  ParentForm := functions.GetParentForm(Owner);
+  ParentForm := SDfunctions.GetParentForm(Owner);
 
   if FVisible then
     ShowAlertDialog(FMessage, FTypeMessage, ParentForm)
@@ -78,13 +78,13 @@ end;
 
 procedure ShowAlertDialog(subTitle: string; typeMessage: TTypeMessage; form: TForm);
 begin
-  functions.ShowBackgroundFullScreen();
+  SDfunctions.ShowSDBackgroundFullScreen();
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Application);
 
   frSimpleDialog.lblSubTitle.Caption := subTitle;
-  SimpleDialogForm.typeMessage := typeMessage;
+  SDSimpleDialogForm.typeMessage := typeMessage;
 
   frSimpleDialog.ShowModal;
 

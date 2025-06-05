@@ -1,9 +1,9 @@
-object frmBackgroundFullScreen: TfrmBackgroundFullScreen
+object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
   Left = 2032
   Height = 192
   Top = 330
   Width = 256
-  Caption = 'frmBackgroundFullScreen'
+  Caption = 'frmSDBackgroundFullScreen'
   OnClick = FormClick
   OnDblClick = FormClick
   OnMouseDown = FormMouseDown

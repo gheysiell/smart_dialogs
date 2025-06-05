@@ -1,4 +1,4 @@
-unit LoaderDialogForm;
+unit SDLoaderDialogForm;
 
 {$mode ObjFPC}{$H+}
 
@@ -29,7 +29,7 @@ var
 implementation
 
 uses
-  functions;
+  SDfunctions;
 
 {$R *.lfm}
 
@@ -41,7 +41,7 @@ end;
 procedure TfrLoaderDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  functions.closeBackgroundFullScreen();
+  SDfunctions.closeSDBackgroundFullScreen();
 end;
 
 procedure TfrLoaderDialog.SetRoundedCorners(Radius: Integer);

@@ -1,4 +1,4 @@
-unit SimpleDialogForm;
+unit SDSimpleDialogForm;
 
 {$mode ObjFPC}{$H+}
 
@@ -37,7 +37,7 @@ var
 implementation
 
 uses
-  functions, enums;
+  SDfunctions, SDenums;
 
 {$R *.lfm}
 
@@ -46,7 +46,7 @@ uses
 procedure TfrSimpleDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  functions.closeBackgroundFullScreen();
+  SDfunctions.closeSDBackgroundFullScreen();
 end;
 
 procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
@@ -66,7 +66,7 @@ procedure TfrSimpleDialog.FormShow(Sender: TObject);
 begin
   inherited;
 
-  lblSubTitle.Height := functions.GetLabelHeight(lblSubTitle);
+  lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
   frSimpleDialog.Height := 255;
   frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height - 30;
 

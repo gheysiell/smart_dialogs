@@ -1,4 +1,4 @@
-unit MyThread;
+unit SDMyThread;
 
 {$mode objfpc}{$H+}
 
@@ -11,7 +11,7 @@ type
   TSlowProcess = procedure of object;
   TThreadFinished = procedure of object;
 
-  TMyThread = class(TThread)
+  TSDMyThread = class(TThread)
   private
     FSlowProcess: TSlowProcess;
     FOnFinished: TThreadFinished;
@@ -24,7 +24,7 @@ type
 
 implementation
 
-constructor TMyThread.Create(ASlowProcess: TSlowProcess; AOnFinished: TThreadFinished);
+constructor TSDMyThread.Create(ASlowProcess: TSlowProcess; AOnFinished: TThreadFinished);
 begin
   inherited Create(True);
   FSlowProcess := ASlowProcess;
@@ -33,7 +33,7 @@ begin
   Start;
 end;
 
-procedure TMyThread.Execute;
+procedure TSDMyThread.Execute;
 begin
   if Assigned(FSlowProcess) then
     FSlowProcess();
@@ -41,7 +41,7 @@ begin
   Synchronize(@DoOnFinished);
 end;
 
-procedure TMyThread.DoOnFinished;
+procedure TSDMyThread.DoOnFinished;
 begin
   if Assigned(FOnFinished) then
     FOnFinished();

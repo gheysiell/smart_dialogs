@@ -5,11 +5,11 @@ unit ConfirmationDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, functions,
-  ConfirmationDialogForm, enums;
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
+  SDConfirmationDialogForm, SDfunctions, SDenums;
 
 type
-  TTypeMessage = enums.TTypeMessage;
+  TTypeMessage = SDenums.TTypeMessage;
 
 type
   TOnConfirmation = procedure() of Object;
@@ -59,7 +59,7 @@ begin
   if (csDesigning in ComponentState) then
     Exit;
 
-  ParentForm := functions.GetParentForm(Owner);
+  ParentForm := SDfunctions.GetParentForm(Owner);
 
   if FVisible then
     ShowConfirmationDialog('Atenção', FMessage, FTypeMessage, ParentForm)
@@ -82,14 +82,14 @@ function TConfirmationDialog.ShowConfirmationDialog(title: string; subTitle: str
 var
   ResultConfirmation: Boolean;
 begin
-  functions.ShowBackgroundFullScreen();
+  SDfunctions.ShowSDBackgroundFullScreen();
 
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Application);
 
   frConfirmationDialog.lblTitle.Caption := title;
   frConfirmationDialog.lblSubTitle.Caption := subTitle;
-  ConfirmationDialogForm.typeMessage := typeMessage;
+  SDConfirmationDialogForm.typeMessage := typeMessage;
 
   frConfirmationDialog.ShowModal;
 

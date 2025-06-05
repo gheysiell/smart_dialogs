@@ -1,18 +1,18 @@
-unit BackgroundFullScreen;
+unit SDBackgroundFullScreen;
 
 {$mode ObjFPC}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, LoaderDialogForm,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, SDLoaderDialogForm,
   Windows, ShellApi;
 
 type
 
-  { TfrmBackgroundFullScreen }
+  { TfrmSDBackgroundFullScreen }
 
-  TfrmBackgroundFullScreen = class(TForm)
+  TfrmSDBackgroundFullScreen = class(TForm)
     procedure FormClick(Sender: TObject);
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -24,26 +24,26 @@ type
   end;
 
 var
-  frmBackgroundFullScreen: TfrmBackgroundFullScreen;
+  frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen;
 
 implementation
 
 {$R *.lfm}
 
-procedure TfrmBackgroundFullScreen.FormClick(Sender: TObject);
+procedure TfrmSDBackgroundFullScreen.FormClick(Sender: TObject);
 begin
   if Assigned(frLoaderDialog) then
     frLoaderDialog.BringToFront;
 end;
 
-procedure TfrmBackgroundFullScreen.FormMouseDown(Sender: TObject;
+procedure TfrmSDBackgroundFullScreen.FormMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbLeft then
     FormClick(Sender);
 end;
 
-constructor TfrmBackgroundFullScreen.Create(AOwner: TComponent);
+constructor TfrmSDBackgroundFullScreen.Create(AOwner: TComponent);
 var
   TaskbarHeight: Integer;
 begin
@@ -59,7 +59,7 @@ begin
   SetBounds(0, 0, Screen.Width, Screen.Height - TaskbarHeight);
 end;
 
-function TfrmBackgroundFullScreen.GetTaskBarHeight: Integer;
+function TfrmSDBackgroundFullScreen.GetTaskBarHeight: Integer;
 var
   hTaskbar: HWND;
   Rect: TRect;

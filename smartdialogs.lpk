@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\shared;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen"/>
-        <OtherUnitFiles Value="shared;SimpleDialog;LoaderDialog;ConfirmationDialogForm;src\shared;src\forms\ConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\forms\LoaderDialogForm;src\forms\SimpleDialogForm;src\shared\BackgroundFullScreen;src\shared\MyThread"/>
+        <IncludeFiles Value="shared;SimpleDialog;LoaderDialog;SDConfirmationDialogForm;src\forms\SDConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\shared;src\forms\SDLoaderDialogForm;src\forms\SDSimpleDialogForm;src\shared\SDBackgroundFullScreen"/>
+        <OtherUnitFiles Value="shared;SimpleDialog;LoaderDialog;SDConfirmationDialogForm;src\shared;src\forms\SDConfirmationDialogForm;src\forms\LoaderDialog;src\forms\SimpleDialog;src\forms\SDLoaderDialogForm;src\forms\SDSimpleDialogForm;src\shared\SDBackgroundFullScreen;src\shared\SDMyThread"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -30,48 +30,48 @@
         <UnitName Value="LoaderDialog"/>
       </Item>
       <Item>
-        <Filename Value="src\forms\ConfirmationDialogForm\ConfirmationDialogForm.lfm"/>
+        <Filename Value="src\forms\SDConfirmationDialogForm\SDConfirmationDialogForm.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\forms\ConfirmationDialogForm\ConfirmationDialogForm.pas"/>
-        <UnitName Value="ConfirmationDialogForm"/>
+        <Filename Value="src\forms\SDConfirmationDialogForm\SDConfirmationDialogForm.pas"/>
+        <UnitName Value="SDConfirmationDialogForm"/>
       </Item>
       <Item>
-        <Filename Value="src\forms\LoaderDialogForm\LoaderDialogForm.lfm"/>
+        <Filename Value="src\forms\SDLoaderDialogForm\SDLoaderDialogForm.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\forms\LoaderDialogForm\LoaderDialogForm.pas"/>
-        <UnitName Value="LoaderDialogForm"/>
+        <Filename Value="src\forms\SDLoaderDialogForm\SDLoaderDialogForm.pas"/>
+        <UnitName Value="SDLoaderDialogForm"/>
       </Item>
       <Item>
-        <Filename Value="src\forms\SimpleDialogForm\SimpleDialogForm.lfm"/>
+        <Filename Value="src\forms\SDSimpleDialogForm\SDSimpleDialogForm.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\forms\SimpleDialogForm\SimpleDialogForm.pas"/>
-        <UnitName Value="SimpleDialogForm"/>
+        <Filename Value="src\forms\SDSimpleDialogForm\SDSimpleDialogForm.pas"/>
+        <UnitName Value="SDSimpleDialogForm"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\BackgroundFullScreen\BackgroundFullScreen.lfm"/>
+        <Filename Value="src\shared\SDBackgroundFullScreen\SDBackgroundFullScreen.lfm"/>
         <Type Value="LFM"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\BackgroundFullScreen\BackgroundFullScreen.pas"/>
-        <UnitName Value="BackgroundFullScreen"/>
+        <Filename Value="src\shared\SDBackgroundFullScreen\SDBackgroundFullScreen.pas"/>
+        <UnitName Value="SDBackgroundFullScreen"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\MyThread\MyThread.pas"/>
-        <UnitName Value="MyThread"/>
+        <Filename Value="src\shared\SDMyThread\SDMyThread.pas"/>
+        <UnitName Value="SDMyThread"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\Enums.pas"/>
-        <UnitName Value="enums"/>
+        <Filename Value="src\shared\SDEnums.pas"/>
+        <UnitName Value="SDenums"/>
       </Item>
       <Item>
-        <Filename Value="src\shared\Functions.pas"/>
-        <UnitName Value="functions"/>
+        <Filename Value="src\shared\SDFunctions.pas"/>
+        <UnitName Value="SDfunctions"/>
       </Item>
     </Files>
     <RequiredPkgs>
