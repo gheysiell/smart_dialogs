@@ -36,6 +36,8 @@ type
     procedure lblConfirmClick(Sender: TObject);
     procedure lblConfirmMouseEnter(Sender: TObject);
     procedure lblConfirmMouseLeave(Sender: TObject);
+    procedure pnlWrapperCancelClick(Sender: TObject);
+    procedure pnlWrapperConfirmClick(Sender: TObject);
     procedure shpCancelChangeBounds(Sender: TObject);
     procedure shpCancelMouseEnter(Sender: TObject);
     procedure shpCancelMouseLeave(Sender: TObject);
@@ -120,14 +122,55 @@ begin
   SetRoundedCorners(50);
 end;
 
+procedure TfrConfirmationDialog.shpCancelChangeBounds(Sender: TObject);
+begin
+  CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;
+  Self.Close;
+end;
+
+procedure TfrConfirmationDialog.shpConfirmChangeBounds(Sender: TObject);
+begin
+  CanceledOrConfirmed := TCanceledOrConfirmed.Confirmed;
+  Self.Close;
+end;
+
 procedure TfrConfirmationDialog.imgCloseClick(Sender: TObject);
 begin
-  Self.Close;
+  shpCancelChangeBounds(Sender);
 end;
 
 procedure TfrConfirmationDialog.lblCancelClick(Sender: TObject);
 begin
-  imgCloseClick(Sender);
+  shpCancelChangeBounds(Sender);
+end;
+
+procedure TfrConfirmationDialog.pnlWrapperCancelClick(Sender: TObject);
+begin
+  shpCancelChangeBounds(Sender);
+end;
+
+procedure TfrConfirmationDialog.shpCancelMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if Button = mbLeft then
+    shpCancelChangeBounds(Sender);
+end;
+
+procedure TfrConfirmationDialog.pnlWrapperConfirmClick(Sender: TObject);
+begin
+  shpConfirmChangeBounds(Sender);
+end;
+
+procedure TfrConfirmationDialog.lblConfirmClick(Sender: TObject);
+begin
+  shpConfirmChangeBounds(Sender);
+end;
+
+procedure TfrConfirmationDialog.shpConfirmMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if Button = mbLeft then
+    shpConfirmChangeBounds(Sender);
 end;
 
 procedure TfrConfirmationDialog.lblCancelMouseEnter(Sender: TObject);
@@ -140,11 +183,6 @@ begin
   shpCancelMouseLeave(Sender);
 end;
 
-procedure TfrConfirmationDialog.lblConfirmClick(Sender: TObject);
-begin
-  shpConfirmChangeBounds(Sender);
-end;
-
 procedure TfrConfirmationDialog.lblConfirmMouseEnter(Sender: TObject);
 begin
   shpConfirmMouseEnter(Sender);
@@ -155,19 +193,6 @@ begin
   shpConfirmMouseLeave(Sender);
 end;
 
-procedure TfrConfirmationDialog.shpCancelChangeBounds(Sender: TObject);
-begin
-  CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;
-  imgCloseClick(Sender);
-end;
-
-
-procedure TfrConfirmationDialog.shpConfirmChangeBounds(Sender: TObject);
-begin
-  CanceledOrConfirmed := TCanceledOrConfirmed.Confirmed;
-  imgCloseClick(Sender);
-end;
-
 procedure TfrConfirmationDialog.shpCancelMouseEnter(Sender: TObject);
 begin
   shpCancel.Brush.Color := $00A0A0A0;
@@ -176,13 +201,6 @@ end;
 procedure TfrConfirmationDialog.shpCancelMouseLeave(Sender: TObject);
 begin
   shpCancel.Brush.Color := $00C8C8C8;
-end;
-
-procedure TfrConfirmationDialog.shpCancelMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  if Button = mbLeft then
-    imgCloseClick(Sender);
 end;
 
 procedure TfrConfirmationDialog.SetRoundedCorners(Radius: Integer);
@@ -201,13 +219,6 @@ end;
 procedure TfrConfirmationDialog.shpConfirmMouseLeave(Sender: TObject);
 begin
   shpConfirm.Brush.Color := $00EDAF5C;
-end;
-
-procedure TfrConfirmationDialog.shpConfirmMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  if Button = mbLeft then
-    shpConfirmChangeBounds(Sender);
 end;
 
 end.

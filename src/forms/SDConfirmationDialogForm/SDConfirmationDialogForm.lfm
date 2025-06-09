@@ -9,12 +9,11 @@ object frConfirmationDialog: TfrConfirmationDialog
   ClientWidth = 490
   Color = 15269882
   FormStyle = fsMDIForm
+  Position = poWorkAreaCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   OnShow = FormShow
-  Position = poWorkAreaCenter
-  LCLVersion = '3.8.0.0'
   object pnlContainer: TPanel
     Left = 8
     Height = 294
@@ -38,7 +37,6 @@ object frConfirmationDialog: TfrConfirmationDialog
       Width = 24
       Anchors = [akTop, akRight]
       Center = True
-      OnClick = imgCloseClick
       Picture.Data = {
         1754506F727461626C654E6574776F726B477261706869632E01000089504E47
         0D0A1A0A0000000D49484452000000180000001808040000004A7EF573000000
@@ -52,6 +50,7 @@ object frConfirmationDialog: TfrConfirmationDialog
         7107317EBE7E13069E1C1065F69D8E85872DE45FA815B03C3DB9439B16390000
         000049454E44AE426082
       }
+      OnClick = imgCloseClick
     end
     object lblTitle: TLabel
       AnchorSideLeft.Control = pnlContainer
@@ -298,6 +297,7 @@ object frConfirmationDialog: TfrConfirmationDialog
       ClientWidth = 170
       ParentBackground = False
       TabOrder = 0
+      OnClick = pnlWrapperCancelClick
       object shpCancel: TShape
         Cursor = crHandPoint
         Left = 0
@@ -308,11 +308,11 @@ object frConfirmationDialog: TfrConfirmationDialog
         Brush.Color = 13158600
         Pen.Color = clMaroon
         Pen.Style = psClear
+        Shape = stRoundRect
         OnChangeBounds = shpCancelChangeBounds
         OnMouseEnter = shpCancelMouseEnter
         OnMouseLeave = shpCancelMouseLeave
         OnMouseUp = shpCancelMouseUp
-        Shape = stRoundRect
       end
       object lblCancel: TLabel
         Cursor = crHandPoint
@@ -350,6 +350,7 @@ object frConfirmationDialog: TfrConfirmationDialog
       ClientWidth = 170
       ParentBackground = False
       TabOrder = 1
+      OnClick = pnlWrapperConfirmClick
       object shpConfirm: TShape
         Cursor = crHandPoint
         Left = 0
@@ -360,11 +361,11 @@ object frConfirmationDialog: TfrConfirmationDialog
         Brush.Color = 15576924
         Pen.Color = clMaroon
         Pen.Style = psClear
+        Shape = stRoundRect
         OnChangeBounds = shpConfirmChangeBounds
         OnMouseEnter = shpConfirmMouseEnter
         OnMouseLeave = shpConfirmMouseLeave
         OnMouseUp = shpConfirmMouseUp
-        Shape = stRoundRect
       end
       object lblConfirm: TLabel
         Cursor = crHandPoint

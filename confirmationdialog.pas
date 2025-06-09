@@ -96,15 +96,15 @@ begin
   if Assigned(form) then
     form.BringToFront;
 
-  ResultConfirmation := Ternary(CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
+  ResultConfirmation := Ternary(SDConfirmationDialogForm.CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
 
-  if Assigned(FOnConfirmation) then
-  begin
-    if ResultConfirmation then
-      FOnConfirmation()
-    else
-      FOnCanceled();
-  end;
+  if (Assigned(FOnConfirmation) AND ResultConfirmation) then
+    FOnConfirmation();
+
+  if (Assigned(FOnCanceled) AND (not ResultConfirmation)) then
+    FOnCanceled();
+
+  Result := ResultConfirmation;
 end;
 
 procedure Register;
