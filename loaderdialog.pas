@@ -58,15 +58,18 @@ end;
 
 procedure TLoaderDialog.ShowLoaderDialog(Form: TForm);
 var
-  CenterLeft, CenterTop: Integer;
+  CenterLeft: Integer=0;
+  CenterTop: Integer=0;
 begin
   SDfunctions.ShowSDBackgroundFullScreen(Form);
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Application);
 
+  frLoaderDialog.Position := poDesigned;
+
   SDfunctions.GetFormCenters(
-      form,
+      Form,
       frLoaderDialog,
       CenterLeft,
       CenterTop
