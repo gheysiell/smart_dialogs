@@ -8,24 +8,83 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   SDBackgroundFullScreen;
 
-procedure ShowSDBackgroundFullScreen();
-procedure CloseSDBackgroundFullScreen();
+procedure ShowSDBackgroundFullScreen(FormRef: TForm);
+procedure CloseSDBackgroundFullScreen;
+procedure GetFormCenters(
+   Form: TForm;
+   FormDialog: TForm;
+   var CenterLeft: Integer;
+   var CenterTop: Integer
+);
 function Ternary(ACondition: Boolean; ATrueValue, AFalseValue: Variant): Variant;
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
 
 implementation
 
-procedure ShowSDBackgroundFullScreen();
+procedure ShowSDBackgroundFullScreen(FormRef: TForm);
+var
+  Monitor: TMonitor;
+  CenterLeft, CenterTop: Integer;
+  FormWidth, FormHeight: Integer;
 begin
   if not Assigned(frmSDBackgroundFullScreen) then
     frmSDBackgroundFullScreen := TfrmSDBackgroundFullScreen.Create(Application);
 
-  frmSDBackgroundFullScreen.Show;
-  frmSDBackgroundFullScreen.BringToFront;
+  frmSDBackgroundFullScreen.Position := poDesigned;
+
+  if Assigned(formRef) then
+    Monitor := Screen.MonitorFromWindow(formRef.Handle)
+  else
+    Monitor := Screen.PrimaryMonitor;
+
+  FormWidth := Monitor.Width;
+  FormHeight := Monitor.Height;
+
+  if Assigned(formRef) then
+  begin
+    CenterLeft := FormRef.Left + (FormRef.Width - FormWidth) div 2;
+    CenterTop  := FormRef.Top  + (FormRef.Height - FormHeight) div 2;
+  end
+  else
+  begin
+    CenterLeft := Monitor.Left + (Monitor.Width - FormWidth) div 2;
+    CenterTop  := Monitor.Top  + (Monitor.Height - FormHeight) div 2;
+  end;
+
+  with frmSDBackgroundFullScreen do
+  begin
+    BorderStyle := bsNone;
+    FormStyle := fsStayOnTop;
+    Left := CenterLeft;
+    Top := CenterTop;
+    Width := FormWidth;
+    Height := FormHeight;
+    Show;
+    BringToFront;
+  end;
 end;
 
-procedure CloseSDBackgroundFullScreen();
+procedure GetFormCenters(
+   Form: TForm;
+   FormDialog: TForm;
+   var CenterLeft: Integer;
+   var CenterTop: Integer
+);
+begin
+  if Assigned(Form) then
+  begin
+    CenterLeft := Form.Left + (Form.Width - FormDialog.Width) div 2;
+    CenterTop := Form.Top + (Form.Height - FormDialog.Height) div 2;
+  end
+  else
+  begin
+    CenterLeft := (Form.Width - FormDialog.Width) div 2;
+    CenterTop := (Form.Height - FormDialog.Height) div 2;
+  end;
+end;
+
+procedure CloseSDBackgroundFullScreen;
 begin
   if Assigned(SDBackgroundFullScreen.frmSDBackgroundFullScreen) then
   begin
@@ -35,7 +94,10 @@ begin
   end;
 end;
 
-function Ternary(ACondition: Boolean; ATrueValue, AFalseValue: Variant): Variant;
+function Ternary(
+   ACondition: Boolean;
+   ATrueValue, AFalseValue: Variant
+): Variant;
 begin
   if ACondition then
     Result := ATrueValue

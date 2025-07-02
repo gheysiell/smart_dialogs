@@ -78,18 +78,35 @@ begin
   FMessage := AValue;
 end;
 
-function TConfirmationDialog.ShowConfirmationDialog(title: string; subTitle: string; typeMessage: TTypeMessage; form: TForm): Boolean;
+function TConfirmationDialog.ShowConfirmationDialog(
+  Title: string;
+  SubTitle: string;
+  TypeMessage: TTypeMessage;
+  Form: TForm
+): Boolean;
 var
   ResultConfirmation: Boolean;
+  CenterLeft, CenterTop: Integer;
 begin
-  SDfunctions.ShowSDBackgroundFullScreen();
+  SDfunctions.ShowSDBackgroundFullScreen(Form);
 
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Application);
 
-  frConfirmationDialog.lblTitle.Caption := title;
-  frConfirmationDialog.lblSubTitle.Caption := subTitle;
-  SDConfirmationDialogForm.typeMessage := typeMessage;
+  frConfirmationDialog.lblTitle.Caption := Title;
+  frConfirmationDialog.lblSubTitle.Caption := SubTitle;
+  SDConfirmationDialogForm.typeMessage := TypeMessage;
+  frConfirmationDialog.Position := poDesigned;
+
+  SDfunctions.GetFormCenters(
+      form,
+      frConfirmationDialog,
+      CenterLeft,
+      CenterTop
+  );
+
+  frConfirmationDialog.Left := CenterLeft;
+  frConfirmationDialog.Top := CenterTop;
 
   frConfirmationDialog.ShowModal;
 
