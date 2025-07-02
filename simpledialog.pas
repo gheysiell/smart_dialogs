@@ -11,11 +11,6 @@ uses
 type
   TTypeMessage = SDenums.TTypeMessage;
 
-procedure ShowAlertDialog(
-  SubTitle: String;
-  TypeMessage: TTypeMessage;
-  Form: TForm
-);
 type
   TSimpleDialog = class(TComponent)
   private
@@ -25,6 +20,11 @@ type
     procedure SetVisible(AValue: Boolean);
     procedure SetTypeMessage(AValue: TTypeMessage);
     procedure SetMessage(AValue: String);
+    procedure ShowSimpleDialog(
+      SubTitle: String;
+      TypeMessage: TTypeMessage;
+      Form: TForm
+    );
   protected
 
   public
@@ -62,7 +62,7 @@ begin
   ParentForm := SDfunctions.GetParentForm(Owner);
 
   if FVisible then
-    ShowAlertDialog(FMessage, FTypeMessage, ParentForm)
+    ShowSimpleDialog(FMessage, FTypeMessage, ParentForm)
   else if Assigned(frSimpleDialog) then
     frSimpleDialog.Close();
 end;
@@ -79,13 +79,14 @@ begin
   FMessage := AValue;
 end;
 
-procedure ShowAlertDialog(
+procedure TSimpleDialog.ShowSimpleDialog(
   SubTitle: string;
   TypeMessage: TTypeMessage;
   Form: TForm
 );
 var
-  CenterLeft, CenterTop: Integer;
+  CenterLeft: Integer=0;
+  CenterTop: Integer=0;
 begin
   SDfunctions.ShowSDBackgroundFullScreen(Form);
 
@@ -94,11 +95,10 @@ begin
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
   SDSimpleDialogForm.typeMessage := TypeMessage;
-
   frSimpleDialog.Position := poDesigned;
 
   SDfunctions.GetFormCenters(
-    form,
+    Form,
     frSimpleDialog,
     CenterLeft,
     CenterTop
@@ -109,7 +109,7 @@ begin
 
   frSimpleDialog.ShowModal;
 
-  if Assigned(form) then
+  if Assigned(Form) then
     form.BringToFront;
 end;
 

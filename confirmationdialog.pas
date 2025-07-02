@@ -16,7 +16,12 @@ type
   TOnCanceled = procedure() of Object;
 
   TConfirmationDialog = class(TComponent)
-    function ShowConfirmationDialog(title: String; subTitle: String; typeMessage: TTypeMessage; form: TForm): Boolean;
+    function ShowConfirmationDialog(
+      Title: String;
+      SubTitle: String;
+      TypeMessage: TTypeMessage;
+      Form: TForm
+    ): Boolean;
   private
     FVisible: Boolean;
     FMessage: String;
@@ -86,7 +91,8 @@ function TConfirmationDialog.ShowConfirmationDialog(
 ): Boolean;
 var
   ResultConfirmation: Boolean;
-  CenterLeft, CenterTop: Integer;
+  CenterLeft: Integer=0;
+  CenterTop: Integer=0;
 begin
   SDfunctions.ShowSDBackgroundFullScreen(Form);
 
@@ -99,10 +105,10 @@ begin
   frConfirmationDialog.Position := poDesigned;
 
   SDfunctions.GetFormCenters(
-      form,
-      frConfirmationDialog,
-      CenterLeft,
-      CenterTop
+    Form,
+    frConfirmationDialog,
+    CenterLeft,
+    CenterTop
   );
 
   frConfirmationDialog.Left := CenterLeft;
@@ -110,8 +116,8 @@ begin
 
   frConfirmationDialog.ShowModal;
 
-  if Assigned(form) then
-    form.BringToFront;
+  if Assigned(Form) then
+    Form.BringToFront;
 
   ResultConfirmation := Ternary(SDConfirmationDialogForm.CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
 

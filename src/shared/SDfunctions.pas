@@ -16,7 +16,11 @@ procedure GetFormCenters(
    var CenterLeft: Integer;
    var CenterTop: Integer
 );
-function Ternary(ACondition: Boolean; ATrueValue, AFalseValue: Variant): Variant;
+function Ternary(
+   ACondition: Boolean;
+   ATrueValue,
+   AFalseValue: Variant
+): Variant;
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
 
@@ -25,23 +29,25 @@ implementation
 procedure ShowSDBackgroundFullScreen(FormRef: TForm);
 var
   Monitor: TMonitor;
-  CenterLeft, CenterTop: Integer;
-  FormWidth, FormHeight: Integer;
+  FormWidth, FormHeight, TaskBarHeight: Integer;
+  CenterLeft: Integer=0;
+  CenterTop: Integer=0;
 begin
   if not Assigned(frmSDBackgroundFullScreen) then
     frmSDBackgroundFullScreen := TfrmSDBackgroundFullScreen.Create(Application);
 
   frmSDBackgroundFullScreen.Position := poDesigned;
 
-  if Assigned(formRef) then
-    Monitor := Screen.MonitorFromWindow(formRef.Handle)
+  if Assigned(FormRef) then
+    Monitor := Screen.MonitorFromWindow(FormRef.Handle)
   else
     Monitor := Screen.PrimaryMonitor;
 
+  TaskBarHeight := frmSDBackgroundFullScreen.GetTaskBarHeight;
   FormWidth := Monitor.Width;
-  FormHeight := Monitor.Height;
+  FormHeight := Monitor.Height - TaskBarHeight;
 
-  if Assigned(formRef) then
+  if Assigned(FormRef) then
   begin
     CenterLeft := FormRef.Left + (FormRef.Width - FormWidth) div 2;
     CenterTop  := FormRef.Top  + (FormRef.Height - FormHeight) div 2;
@@ -54,7 +60,6 @@ begin
 
   with frmSDBackgroundFullScreen do
   begin
-    BorderStyle := bsNone;
     FormStyle := fsStayOnTop;
     Left := CenterLeft;
     Top := CenterTop;
