@@ -11,8 +11,11 @@ uses
 type
   TTypeMessage = SDenums.TTypeMessage;
 
-procedure ShowAlertDialog(subTitle: String; typeMessage: TTypeMessage; form: TForm);
-
+procedure ShowAlertDialog(
+  SubTitle: String;
+  TypeMessage: TTypeMessage;
+  Form: TForm
+);
 type
   TSimpleDialog = class(TComponent)
   private
@@ -76,15 +79,33 @@ begin
   FMessage := AValue;
 end;
 
-procedure ShowAlertDialog(subTitle: string; typeMessage: TTypeMessage; form: TForm);
+procedure ShowAlertDialog(
+  SubTitle: string;
+  TypeMessage: TTypeMessage;
+  Form: TForm
+);
+var
+  CenterLeft, CenterTop: Integer;
 begin
-  SDfunctions.ShowSDBackgroundFullScreen();
+  SDfunctions.ShowSDBackgroundFullScreen(Form);
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Application);
 
-  frSimpleDialog.lblSubTitle.Caption := subTitle;
-  SDSimpleDialogForm.typeMessage := typeMessage;
+  frSimpleDialog.lblSubTitle.Caption := SubTitle;
+  SDSimpleDialogForm.typeMessage := TypeMessage;
+
+  frSimpleDialog.Position := poDesigned;
+
+  SDfunctions.GetFormCenters(
+    form,
+    frSimpleDialog,
+    CenterLeft,
+    CenterTop
+  );
+
+  frSimpleDialog.Left := CenterLeft;
+  frSimpleDialog.Top := CenterTop;
 
   frSimpleDialog.ShowModal;
 

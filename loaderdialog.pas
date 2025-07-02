@@ -17,7 +17,7 @@ type
     FVisible: Boolean;
     FSlowProcess: TSlowProcess;
     procedure SetVisible(AValue: Boolean);
-    procedure ShowLoaderDialog;
+    procedure ShowLoaderDialog(Form: TForm);
     procedure CloseLoader;
   protected
 
@@ -42,25 +42,42 @@ begin
 end;
 
 procedure TLoaderDialog.SetVisible(AValue: Boolean);
+var
+  ParentForm: TForm;
 begin
   if FVisible = AValue then Exit;
   FVisible := AValue;
 
+  ParentForm := SDfunctions.GetParentForm(Owner);
+
   if FVisible then
-    ShowLoaderDialog()
+    ShowLoaderDialog(ParentForm)
   else
     frLoaderDialog.Close();
 end;
 
-procedure TLoaderDialog.ShowLoaderDialog;
+procedure TLoaderDialog.ShowLoaderDialog(Form: TForm);
+var
+  CenterLeft, CenterTop: Integer;
 begin
-  SDfunctions.ShowSDBackgroundFullScreen();
+  SDfunctions.ShowSDBackgroundFullScreen(Form);
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Application);
 
+  SDfunctions.GetFormCenters(
+      form,
+      frLoaderDialog,
+      CenterLeft,
+      CenterTop
+  );
+
+  frLoaderDialog.Left := CenterLeft;
+  frLoaderDialog.Top := CenterTop;
+
   frLoaderDialog.FormStyle := fsStayOnTop;
   frLoaderDialog.Show;
+
   frLoaderDialog.BringToFront;
 
   if Assigned(FSlowProcess) then
