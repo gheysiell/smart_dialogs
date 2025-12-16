@@ -15,8 +15,10 @@ type
   TLoaderDialog = class(TComponent)
   private
     FVisible: Boolean;
+    FFullScreen: Boolean;
     FSlowProcess: TSlowProcess;
     procedure SetVisible(AValue: Boolean);
+    procedure SetFullScreen(AValue: Boolean);
     procedure ShowLoaderDialog(Form: TForm);
     procedure CloseLoader;
   protected
@@ -26,6 +28,7 @@ type
     property SlowProcess: TSlowProcess read FSlowProcess write FSlowProcess;
   published
     property Visible: Boolean read FVisible write SetVisible default False;
+    property FullScreen: Boolean read FFullScreen write SetFullScreen default False;
   end;
 
 procedure Register;
@@ -56,12 +59,17 @@ begin
     frLoaderDialog.Close();
 end;
 
+procedure TLoaderDialog.SetFullScreen(AValue: Boolean);
+begin
+  FFullScreen := AValue;
+end;
+
 procedure TLoaderDialog.ShowLoaderDialog(Form: TForm);
 var
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
 begin
-  SDfunctions.ShowSDBackgroundFullScreen(Form);
+  SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Application);

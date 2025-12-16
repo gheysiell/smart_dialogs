@@ -8,10 +8,10 @@ object frLoaderDialog: TfrLoaderDialog
   ClientHeight = 155
   ClientWidth = 180
   FormStyle = fsMDIChild
+  Position = poWorkAreaCenter
+  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnShow = FormShow
-  Position = poWorkAreaCenter
-  LCLVersion = '3.8.0.0'
   object BCFluentProgressRing1: TBCFluentProgressRing
     Left = 41
     Height = 100

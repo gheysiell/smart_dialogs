@@ -24,11 +24,13 @@ type
     ): Boolean;
   private
     FVisible: Boolean;
+    FFullScreen: Boolean;
     FMessage: String;
     FTypeMessage: TTypeMessage;
     FOnConfirmation: TOnConfirmation;
     FOnCanceled: TOnCanceled;
     procedure SetVisible(AValue: Boolean);
+    procedure SetFullScreen(AValue: Boolean);
     procedure SetMessage(AValue: String);
     procedure SetTypeMessage(AValue: TTypeMessage);
   protected
@@ -37,6 +39,7 @@ type
     constructor Create(AOwner: TComponent); override;
   published
     property Visible: Boolean read FVisible write SetVisible default False;
+    property FullScreen: Boolean read FFullScreen write SetFullScreen default False;
     property Message: String read FMessage write SetMessage;
     property TypeMessage: TTypeMessage read FTypeMessage write SetTypeMessage default TTypeMessage.tmWarning;
     property OnConfirmation: TOnConfirmation read FOnConfirmation write FOnConfirmation;
@@ -51,6 +54,7 @@ constructor TConfirmationDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FVisible := False;
+  FFullScreen := False;
   FMessage := 'Tem certeza que deseja realizar essa operação ?';
   TypeMessage := TTypeMessage.tmWarning;
 end;
@@ -70,6 +74,11 @@ begin
     ShowConfirmationDialog('Atenção', FMessage, FTypeMessage, ParentForm)
   else
     frConfirmationDialog.Close();
+end;
+
+procedure TConfirmationDialog.SetFullScreen(AValue: Boolean);
+begin
+  FFullScreen := AValue;
 end;
 
 procedure TConfirmationDialog.SetTypeMessage(AValue: TTypeMessage);
@@ -94,7 +103,7 @@ var
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
 begin
-  SDfunctions.ShowSDBackgroundFullScreen(Form);
+  SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Application);

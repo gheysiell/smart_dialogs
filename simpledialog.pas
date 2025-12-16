@@ -15,9 +15,11 @@ type
   TSimpleDialog = class(TComponent)
   private
     FVisible: Boolean;
+    FFullScreen: Boolean;
     FTypeMessage: TTypeMessage;
-    FMessage: String;
+    FMessage: String;    
     procedure SetVisible(AValue: Boolean);
+    procedure SetFullScreen(AValue: Boolean);
     procedure SetTypeMessage(AValue: TTypeMessage);
     procedure SetMessage(AValue: String);
     procedure ShowSimpleDialog(
@@ -31,6 +33,7 @@ type
     constructor Create(AOwner: TComponent); override;
   published
     property Visible: Boolean read FVisible write SetVisible default False;
+    property FullScreen: Boolean read FFullScreen write SetFUllScreen default False;
     property TypeMessage: TTypeMessage read FTypeMessage write SetTypeMessage default TTypeMessage.tmInfo;
     property Message: String read FMessage write SetMessage;
   end;
@@ -46,6 +49,7 @@ constructor TSimpleDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FVisible := False;
+  FFullScreen := False;
   Message := 'Olá';
   TypeMessage := TTypeMessage.tmInfo;
 end;
@@ -67,6 +71,11 @@ begin
     frSimpleDialog.Close();
 end;
 
+procedure TSimpleDialog.SetFullScreen(AValue: Boolean);
+begin
+  FFullScreen := AValue;
+end;
+
 procedure TSimpleDialog.SetTypeMessage(AValue: TTypeMessage);
 begin
   if FTypeMessage = AValue then Exit;
@@ -81,14 +90,14 @@ end;
 
 procedure TSimpleDialog.ShowSimpleDialog(
   SubTitle: string;
-  TypeMessage: TTypeMessage;
+  TypeMessage: TTypeMessage;  
   Form: TForm
 );
 var
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
 begin
-  SDfunctions.ShowSDBackgroundFullScreen(Form);
+  SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Application);

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   SDBackgroundFullScreen;
 
-procedure ShowSDBackgroundFullScreen(FormRef: TForm);
+procedure ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
 procedure CloseSDBackgroundFullScreen;
 procedure GetFormCenters(
    Form: TForm;
@@ -26,7 +26,7 @@ function GetLabelHeight(ALabel: TLabel): Integer;
 
 implementation
 
-procedure ShowSDBackgroundFullScreen(FormRef: TForm);
+procedure ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
 var
   Monitor: TMonitor;
   FormWidth, FormHeight, TaskBarHeight: Integer;
@@ -43,26 +43,15 @@ begin
   else
     Monitor := Screen.PrimaryMonitor;
 
-  TaskBarHeight := frmSDBackgroundFullScreen.GetTaskBarHeight;
+  TaskBarHeight := Ternary(FullScreen, 0, frmSDBackgroundFullScreen.GetTaskBarHeight);
   FormWidth := Monitor.Width;
   FormHeight := Monitor.Height - TaskBarHeight;
-
-  if Assigned(FormRef) then
-  begin
-    CenterLeft := FormRef.Left + (FormRef.Width - FormWidth) div 2;
-    CenterTop  := FormRef.Top  + (FormRef.Height - FormHeight) div 2;
-  end
-  else
-  begin
-    CenterLeft := Monitor.Left + (Monitor.Width - FormWidth) div 2;
-    CenterTop  := Monitor.Top  + (Monitor.Height - FormHeight) div 2;
-  end;
 
   with frmSDBackgroundFullScreen do
   begin
     FormStyle := fsStayOnTop;
-    Left := CenterLeft;
-    Top := CenterTop;
+    Left := 0;
+    Top := 0;
     Width := FormWidth;
     Height := FormHeight;
     Show;

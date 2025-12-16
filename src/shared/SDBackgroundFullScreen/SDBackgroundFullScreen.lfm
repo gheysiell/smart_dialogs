@@ -4,8 +4,8 @@ object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
   Top = 330
   Width = 256
   Caption = 'frmSDBackgroundFullScreen'
+  LCLVersion = '4.0.0.4'
   OnClick = FormClick
   OnDblClick = FormClick
   OnMouseDown = FormMouseDown
-  LCLVersion = '3.4.0.0'
 end

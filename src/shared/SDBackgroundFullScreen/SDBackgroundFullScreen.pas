@@ -67,10 +67,7 @@ begin
   hTaskbar := FindWindow('Shell_TrayWnd', nil);
 
   if hTaskbar = 0 then
-  begin
-    RaiseLastOSError;
-    Exit;
-  end;
+    Exit(0);
 
   if not GetWindowRect(hTaskbar, Rect) then
   begin
