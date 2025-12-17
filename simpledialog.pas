@@ -100,7 +100,7 @@ begin
   SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
-    frSimpleDialog := TfrSimpleDialog.Create(Application);
+    frSimpleDialog := TfrSimpleDialog.Create(Form);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
   SDSimpleDialogForm.typeMessage := TypeMessage;

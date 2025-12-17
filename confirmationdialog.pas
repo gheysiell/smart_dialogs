@@ -106,7 +106,7 @@ begin
   SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
-    frConfirmationDialog := TfrConfirmationDialog.Create(Application);
+    frConfirmationDialog := TfrConfirmationDialog.Create(Form);
 
   frConfirmationDialog.lblTitle.Caption := Title;
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;

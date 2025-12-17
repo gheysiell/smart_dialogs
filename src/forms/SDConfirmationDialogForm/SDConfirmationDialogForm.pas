@@ -43,16 +43,18 @@ type
     procedure shpCancelMouseLeave(Sender: TObject);
     procedure shpCancelMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure shpConfirmChangeBounds(Sender: TObject);
-    procedure SetRoundedCorners(Radius: Integer);
+    procedure shpConfirmChangeBounds(Sender: TObject);    
     procedure shpConfirmMouseEnter(Sender: TObject);
     procedure shpConfirmMouseLeave(Sender: TObject);
     procedure shpConfirmMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure RestoreOwnerFocus(Data: PtrInt);
   private
+    FOwnerForm: TForm;
 
+    procedure SetRoundedCorners(Radius: Integer);
   public
-
+    constructor Create(AOwner: TComponent); override;
   end;
 
 var
@@ -69,10 +71,41 @@ uses
 
 { TfrConfirmationDialog }
 
+constructor TfrConfirmationDialog.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  if AOwner is TForm then
+    FOwnerForm := TForm(AOwner);
+end;
+
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   SDfunctions.closeSDBackgroundFullScreen();
+
+  CloseAction := caFree;
+  frConfirmationDialog := nil;
+
+  if Assigned(FOwnerForm) then
+    Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));
+end;
+
+procedure TfrConfirmationDialog.RestoreOwnerFocus(Data: PtrInt);
+var
+  TargetForm: TCustomForm;
+begin
+  TargetForm := SDfunctions.GetTopMostModalForm(Self);
+
+  if not Assigned(TargetForm) then
+    TargetForm := Application.MainForm;
+
+  if Assigned(TargetForm) then
+  begin
+    TargetForm.Show;
+    TargetForm.BringToFront;
+    TargetForm.SetFocus;
+  end;
 end;
 
 procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;
@@ -222,4 +255,3 @@ begin
 end;
 
 end.
-

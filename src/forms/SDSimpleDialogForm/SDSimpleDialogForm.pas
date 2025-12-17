@@ -23,11 +23,14 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure imgCloseClick(Sender: TObject);    
+    procedure imgCloseClick(Sender: TObject);
+    procedure RestoreOwnerFocus(Data: PtrInt);
   private
+    FOwnerForm: TForm;
+    
     procedure SetRoundedCorners(Radius: Integer);
   public
-
+    constructor Create(AOwner: TComponent); override;
   end;
 
 var
@@ -43,10 +46,41 @@ uses
 
 { TfrSimpleDialog }
 
+constructor TfrSimpleDialog.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  if AOwner is TForm then
+    FOwnerForm := TForm(AOwner);
+end;
+
 procedure TfrSimpleDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   SDfunctions.closeSDBackgroundFullScreen();
+
+  CloseAction := caFree;
+  frSimpleDialog := nil;
+
+  if Assigned(FOwnerForm) then
+    Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));
+end;
+
+procedure TfrSimpleDialog.RestoreOwnerFocus(Data: PtrInt);
+var
+  TargetForm: TCustomForm;
+begin
+  TargetForm := SDfunctions.GetTopMostModalForm(Self);
+
+  if not Assigned(TargetForm) then
+    TargetForm := Application.MainForm;
+
+  if Assigned(TargetForm) then
+  begin
+    TargetForm.Show;
+    TargetForm.BringToFront;
+    TargetForm.SetFocus;
+  end;
 end;
 
 procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
