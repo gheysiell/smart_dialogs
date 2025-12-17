@@ -13,6 +13,10 @@ type
 
 type
   TSimpleDialog = class(TComponent)
+    procedure ShowSimpleDialog(
+      SubTitle: String;
+      TypeMessage: TTypeMessage      
+    );
   private
     FVisible: Boolean;
     FFullScreen: Boolean;
@@ -22,11 +26,6 @@ type
     procedure SetFullScreen(AValue: Boolean);
     procedure SetTypeMessage(AValue: TTypeMessage);
     procedure SetMessage(AValue: String);
-    procedure ShowSimpleDialog(
-      SubTitle: String;
-      TypeMessage: TTypeMessage;
-      Form: TForm
-    );
   protected
 
   public
@@ -55,18 +54,14 @@ begin
 end;
 
 procedure TSimpleDialog.SetVisible(AValue: Boolean);
-var
-  ParentForm: TForm;
 begin
   FVisible := AValue;
 
   if (csDesigning in ComponentState) then
     Exit;
 
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
   if FVisible then
-    ShowSimpleDialog(FMessage, FTypeMessage, ParentForm)
+    ShowSimpleDialog(FMessage, FTypeMessage)
   else if Assigned(frSimpleDialog) then
     frSimpleDialog.Close();
 end;
@@ -90,17 +85,19 @@ end;
 
 procedure TSimpleDialog.ShowSimpleDialog(
   SubTitle: string;
-  TypeMessage: TTypeMessage;  
-  Form: TForm
+  TypeMessage: TTypeMessage  
 );
 var
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
+  Form: TForm;
 begin
+  Form := SDfunctions.GetParentForm(Owner);
+
   SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
-    frSimpleDialog := TfrSimpleDialog.Create(Application);
+    frSimpleDialog := TfrSimpleDialog.Create(Form);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
   SDSimpleDialogForm.typeMessage := TypeMessage;

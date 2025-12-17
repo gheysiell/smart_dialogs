@@ -72,7 +72,7 @@ begin
   SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frLoaderDialog) then
-    frLoaderDialog := TfrLoaderDialog.Create(Application);
+    frLoaderDialog := TfrLoaderDialog.Create(Form);
 
   frLoaderDialog.Position := poDesigned;
 

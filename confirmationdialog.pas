@@ -19,8 +19,7 @@ type
     function ShowConfirmationDialog(
       Title: String;
       SubTitle: String;
-      TypeMessage: TTypeMessage;
-      Form: TForm
+      TypeMessage: TTypeMessage      
     ): Boolean;
   private
     FVisible: Boolean;
@@ -60,18 +59,14 @@ begin
 end;
 
 procedure TConfirmationDialog.SetVisible(AValue: Boolean);
-var
-  ParentForm: TForm;
 begin
   FVisible := AValue;
 
   if (csDesigning in ComponentState) then
-    Exit;
-
-  ParentForm := SDfunctions.GetParentForm(Owner);
+    Exit;  
 
   if FVisible then
-    ShowConfirmationDialog('Atenção', FMessage, FTypeMessage, ParentForm)
+    ShowConfirmationDialog('Atenção', FMessage, FTypeMessage)
   else
     frConfirmationDialog.Close();
 end;
@@ -95,18 +90,20 @@ end;
 function TConfirmationDialog.ShowConfirmationDialog(
   Title: string;
   SubTitle: string;
-  TypeMessage: TTypeMessage;
-  Form: TForm
+  TypeMessage: TTypeMessage
 ): Boolean;
 var
   ResultConfirmation: Boolean;
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
+  Form: TForm;
 begin
+  Form := SDfunctions.GetParentForm(Owner);
+
   SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
-    frConfirmationDialog := TfrConfirmationDialog.Create(Application);
+    frConfirmationDialog := TfrConfirmationDialog.Create(Form);
 
   frConfirmationDialog.lblTitle.Caption := Title;
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;

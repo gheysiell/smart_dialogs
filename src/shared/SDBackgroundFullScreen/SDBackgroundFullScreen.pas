@@ -49,7 +49,6 @@ var
 begin
   inherited Create(AOwner);
   BorderStyle := bsNone;
-  FormStyle := fsStayOnTop;
   Color := clBlack;
   AlphaBlend := True;
   AlphaBlendValue := 128;

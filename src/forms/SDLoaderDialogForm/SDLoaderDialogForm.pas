@@ -17,10 +17,13 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure CloseLoader();
+    procedure RestoreOwnerFocus(Data: PtrInt);
   private
+    FOwnerForm: TForm;
+
     procedure SetRoundedCorners(Radius: Integer);
   public
-
+    constructor Create(AOwner: TComponent); override;
   end;
 
 var
@@ -33,6 +36,14 @@ uses
 
 {$R *.lfm}
 
+constructor TfrLoaderDialog.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+
+  if AOwner is TForm then
+    FOwnerForm := TForm(AOwner);
+end;
+
 procedure TfrLoaderDialog.FormShow(Sender: TObject);
 begin
   SetRoundedCorners(50);
@@ -42,6 +53,29 @@ procedure TfrLoaderDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   SDfunctions.closeSDBackgroundFullScreen();
+
+  CloseAction := caFree;
+  frLoaderDialog := nil;
+
+  if Assigned(FOwnerForm) then
+    Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));  
+end;
+
+procedure TfrLoaderDialog.RestoreOwnerFocus(Data: PtrInt);
+var
+  TargetForm: TCustomForm;
+begin
+  TargetForm := SDfunctions.GetTopMostModalForm(Self);
+
+  if not Assigned(TargetForm) then
+    TargetForm := Application.MainForm;
+
+  if Assigned(TargetForm) then
+  begin
+    TargetForm.Show;
+    TargetForm.BringToFront;
+    TargetForm.SetFocus;
+  end;
 end;
 
 procedure TfrLoaderDialog.SetRoundedCorners(Radius: Integer);

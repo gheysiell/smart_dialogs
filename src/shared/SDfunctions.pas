@@ -23,6 +23,7 @@ function Ternary(
 ): Variant;
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
+function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
 
 implementation
 
@@ -49,7 +50,6 @@ begin
 
   with frmSDBackgroundFullScreen do
   begin
-    FormStyle := fsStayOnTop;
     Left := 0;
     Top := 0;
     Width := FormWidth;
@@ -101,7 +101,15 @@ end;
 
 function GetParentForm(Owner: TComponent): TForm;
 begin
-  Result := TForm(Owner);
+  Result := nil;
+
+  while Assigned(Owner) do
+  begin
+    if Owner is TForm then
+      Exit(TForm(Owner));
+
+    Owner := Owner.Owner;
+  end;
 end;
 
 function GetLabelHeight(ALabel: TLabel): Integer;
@@ -120,6 +128,27 @@ begin
     Result := LabelHeight;
   finally
     TmpBitmap.Free;
+  end;
+end;
+
+function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
+var
+  I: Integer;
+  F: TCustomForm;
+begin
+  Result := nil;
+
+  for I := Screen.FormCount - 1 downto 0 do
+  begin
+    F := Screen.Forms[I];
+
+    if (F <> Exclude)
+      and F.Visible
+      and (fsModal in F.FormState)
+      and F.Enabled then
+    begin
+      Exit(F);
+    end;
   end;
 end;
 
