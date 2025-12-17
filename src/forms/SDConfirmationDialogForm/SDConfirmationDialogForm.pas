@@ -102,7 +102,6 @@ begin
 
   if Assigned(TargetForm) then
   begin
-    TargetForm.Show;
     TargetForm.BringToFront;
     TargetForm.SetFocus;
   end;
