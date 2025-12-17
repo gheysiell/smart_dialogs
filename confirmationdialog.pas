@@ -16,7 +16,7 @@ type
   TOnCanceled = procedure() of Object;
 
   TConfirmationDialog = class(TComponent)
-    function ShowConfirmationDialog(
+    function Show(
       Title: String;
       SubTitle: String;
       TypeMessage: TTypeMessage      
@@ -66,7 +66,7 @@ begin
     Exit;  
 
   if FVisible then
-    ShowConfirmationDialog('Atenção', FMessage, FTypeMessage)
+    Show('Atenção', FMessage, FTypeMessage)
   else
     frConfirmationDialog.Close();
 end;
@@ -87,7 +87,7 @@ begin
   FMessage := AValue;
 end;
 
-function TConfirmationDialog.ShowConfirmationDialog(
+function TConfirmationDialog.Show(
   Title: string;
   SubTitle: string;
   TypeMessage: TTypeMessage

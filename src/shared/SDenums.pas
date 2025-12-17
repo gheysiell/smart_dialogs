@@ -8,10 +8,9 @@ uses
   Classes, SysUtils;
 
 type
-  TTypeMessage = (tmInfo, tmWarning, tmError);
-  TCanceledOrConfirmed = (Canceled, Confirmed);  
+  TTypeMessage = (tmInfo, tmWarning, tmError, tmQuestion);
+  TCanceledOrConfirmed = (Canceled, Confirmed);
 
 implementation
 
 end.
-

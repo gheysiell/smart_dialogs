@@ -104,23 +104,31 @@ begin
   frSimpleDialog.Height := 255;
   frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height - 30;
 
-  if typeMessage = TTypeMessage.tmInfo then
-  begin
-    frSimpleDialog.lblTitle.Caption := 'Olá';
-    ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
-    frSimpleDialog.Color := $00FFF1E8;
-  end
-  else if typeMessage = TTypeMessage.tmWarning then
-  begin
-    frSimpleDialog.lblTitle.Caption := 'Atenção';
-    ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
-    frSimpleDialog.Color := $00E8FFFA;
-  end
-  else if typeMessage = TTypeMessage.tmError then
-  begin
-    frSimpleDialog.lblTitle.Caption := 'Erro';
-    ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
-    frSimpleDialog.Color := $00E8ECFF;
+  case typeMessage of
+    TTypeMessage.tmInfo:
+      begin
+        frSimpleDialog.lblTitle.Caption := 'Olá';
+        ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
+        frSimpleDialog.Color := $00FFF1E8;
+      end;
+    TTypeMessage.tmWarning:
+      begin
+        frSimpleDialog.lblTitle.Caption := 'Atenção';
+        ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
+        frSimpleDialog.Color := $00E8FFFA;
+      end;
+    TTypeMessage.tmError:
+      begin
+        frSimpleDialog.lblTitle.Caption := 'Erro';
+        ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
+        frSimpleDialog.Color := $00E8ECFF;
+      end;
+     TTypeMessage.tmQuestion:
+       begin
+         frSimpleDialog.lblTitle.Caption := 'Pergunta';
+         ImageList1.GetBitmap(3, Self.Image.Picture.Bitmap);
+         frSimpleDialog.Color := $00FFF1E8;
+       end;
   end;
 
   SetRoundedCorners(50);
@@ -140,4 +148,3 @@ begin
 end;
 
 end.
-
