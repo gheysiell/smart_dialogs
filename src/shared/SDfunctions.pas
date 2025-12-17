@@ -50,7 +50,6 @@ begin
 
   with frmSDBackgroundFullScreen do
   begin
-    FormStyle := fsStayOnTop;
     Left := 0;
     Top := 0;
     Width := FormWidth;
