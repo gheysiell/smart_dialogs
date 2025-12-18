@@ -60,7 +60,7 @@ type
 var
   frConfirmationDialog: TfrConfirmationDialog;
   CanceledOrConfirmed: TCanceledOrConfirmed=TCanceledOrConfirmed.Canceled;
-  typeMessage: TTypeMessage = TTypeMessage.tmWarning;
+  typeMessage: TTypeMessage = TTypeMessage.tmQuestion;
 
 implementation
 
@@ -102,7 +102,6 @@ begin
 
   if Assigned(TargetForm) then
   begin
-    TargetForm.Show;
     TargetForm.BringToFront;
     TargetForm.SetFocus;
   end;
@@ -132,23 +131,31 @@ begin
   frConfirmationDialog.Height := 305;
   frConfirmationDialog.Height := frConfirmationDialog.Height + lblSubTitle.Height;
 
-  if typeMessage = TTypeMessage.tmInfo then
-  begin
-    frConfirmationDialog.lblTitle.Caption := 'Olá';
-    ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
-    frConfirmationDialog.Color := $00FFF1E8;
-  end
-  else if typeMessage = TTypeMessage.tmWarning then
-  begin
-    frConfirmationDialog.lblTitle.Caption := 'Atenção';
-    ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
-    frConfirmationDialog.Color := $00E8FFFA;
-  end
-  else if typeMessage = TTypeMessage.tmError then
-  begin
-    frConfirmationDialog.lblTitle.Caption := 'Erro';
-    ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
-    frConfirmationDialog.Color := $00E8ECFF;
+  case typeMessage of
+    TTypeMessage.tmInfo:
+      begin
+        frConfirmationDialog.lblTitle.Caption := 'Olá';
+        ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
+        frConfirmationDialog.Color := $00FFF1E8;
+      end;
+    TTypeMessage.tmWarning:
+      begin
+        frConfirmationDialog.lblTitle.Caption := 'Atenção';
+        ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
+        frConfirmationDialog.Color := $00E8FFFA;
+      end;
+    TTypeMessage.tmError:
+      begin
+        frConfirmationDialog.lblTitle.Caption := 'Erro';
+        ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
+        frConfirmationDialog.Color := $00E8ECFF;
+      end;
+     TTypeMessage.tmQuestion:
+       begin
+         frConfirmationDialog.lblTitle.Caption := 'Pergunta';
+         ImageList1.GetBitmap(3, Self.Image.Picture.Bitmap);
+         frConfirmationDialog.Color := $00FFFBE8;
+       end;
   end;
 
   CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;

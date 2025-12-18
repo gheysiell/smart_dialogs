@@ -13,7 +13,7 @@ type
 
 type
   TSimpleDialog = class(TComponent)
-    procedure ShowSimpleDialog(
+    procedure Show(
       SubTitle: String;
       TypeMessage: TTypeMessage      
     );
@@ -61,7 +61,7 @@ begin
     Exit;
 
   if FVisible then
-    ShowSimpleDialog(FMessage, FTypeMessage)
+    Show(FMessage, FTypeMessage)
   else if Assigned(frSimpleDialog) then
     frSimpleDialog.Close();
 end;
@@ -83,7 +83,7 @@ begin
   FMessage := AValue;
 end;
 
-procedure TSimpleDialog.ShowSimpleDialog(
+procedure TSimpleDialog.Show(
   SubTitle: string;
   TypeMessage: TTypeMessage  
 );
