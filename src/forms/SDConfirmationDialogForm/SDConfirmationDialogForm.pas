@@ -60,7 +60,7 @@ type
 var
   frConfirmationDialog: TfrConfirmationDialog;
   CanceledOrConfirmed: TCanceledOrConfirmed=TCanceledOrConfirmed.Canceled;
-  typeMessage: TTypeMessage = TTypeMessage.tmWarning;
+  typeMessage: TTypeMessage = TTypeMessage.tmQuestion;
 
 implementation
 

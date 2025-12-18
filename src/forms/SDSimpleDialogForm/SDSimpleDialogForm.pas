@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  LCLType, LCLIntf, LCLProc, SimpleDialog;
+  LCLType, LCLIntf, LCLProc, SimpleDialog, SDenums;
 
 type
 
@@ -40,7 +40,7 @@ var
 implementation
 
 uses
-  SDfunctions, SDenums;
+  SDfunctions;
 
 {$R *.lfm}
 
