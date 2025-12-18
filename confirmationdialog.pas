@@ -17,7 +17,6 @@ type
 
   TConfirmationDialog = class(TComponent)
     function Show(
-      Title: String;
       SubTitle: String;
       TypeMessage: TTypeMessage      
     ): Boolean;
@@ -66,7 +65,7 @@ begin
     Exit;  
 
   if FVisible then
-    Show('Atenção', FMessage, FTypeMessage)
+    Show(FMessage, FTypeMessage)
   else
     frConfirmationDialog.Close();
 end;
@@ -88,7 +87,6 @@ begin
 end;
 
 function TConfirmationDialog.Show(
-  Title: string;
   SubTitle: string;
   TypeMessage: TTypeMessage
 ): Boolean;
@@ -105,7 +103,6 @@ begin
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Form);
 
-  frConfirmationDialog.lblTitle.Caption := Title;
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;
   SDConfirmationDialogForm.typeMessage := TypeMessage;
   frConfirmationDialog.Position := poDesigned;
