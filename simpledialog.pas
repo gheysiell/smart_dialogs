@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDenums;
+  SDenums, SDBackgroundFullScreen;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -94,7 +94,7 @@ var
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Form);

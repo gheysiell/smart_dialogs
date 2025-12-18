@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  SDConfirmationDialogForm, SDfunctions, SDenums;
+  SDConfirmationDialogForm, SDfunctions, SDenums, SDBackgroundFullScreen;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -100,7 +100,7 @@ var
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Form);

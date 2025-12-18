@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
-  SDLoaderDialogForm, SDMyThread;
+  SDLoaderDialogForm, SDMyThread, SDBackgroundFullScreen;
 
 type
   TSlowProcess = procedure of object;
@@ -68,7 +68,7 @@ var
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  SDfunctions.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Form);

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  Windows, SDenums;
+  Windows, SDenums, SDBackgroundFullScreen;
 
 type
 
@@ -82,7 +82,7 @@ end;
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  SDfunctions.closeSDBackgroundFullScreen();
+  TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
 
   CloseAction := caFree;
   frConfirmationDialog := nil;

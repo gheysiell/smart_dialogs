@@ -5,8 +5,8 @@ unit SDBackgroundFullScreen;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, SDLoaderDialogForm,
-  Windows, ShellApi;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs,
+  Windows, ShellApi, Math;
 
 type
 
@@ -17,16 +17,20 @@ type
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     function GetTaskBarHeight: Integer;
-  private
-
   public
     constructor Create(AOwner: TComponent); override;
+
+    class procedure ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
+    class procedure CloseSDBackgroundFullScreen;
   end;
 
 var
   frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen;
 
 implementation
+
+uses
+  SDLoaderDialogForm;
 
 {$R *.lfm}
 
@@ -48,6 +52,7 @@ var
   TaskbarHeight: Integer;
 begin
   inherited Create(AOwner);
+
   BorderStyle := bsNone;
   Color := clBlack;
   AlphaBlend := True;
@@ -69,13 +74,46 @@ begin
     Exit(0);
 
   if not GetWindowRect(hTaskbar, Rect) then
-  begin
     RaiseLastOSError;
-    Exit;
-  end;
 
   Result := Rect.Bottom - Rect.Top;
 end;
 
-end.
+class procedure TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
+var
+  AMonitor: TMonitor;
+  TaskBarHeight: Integer;
+begin
+  if not Assigned(frmSDBackgroundFullScreen) then
+    frmSDBackgroundFullScreen :=
+      TfrmSDBackgroundFullScreen.Create(Application);
 
+  if Assigned(FormRef) then
+    AMonitor := Screen.MonitorFromWindow(FormRef.Handle)
+  else
+    AMonitor := Screen.PrimaryMonitor;
+
+  TaskBarHeight := IfThen(FullScreen, 0,
+    frmSDBackgroundFullScreen.GetTaskBarHeight);
+
+  with frmSDBackgroundFullScreen do
+  begin
+    Left   := AMonitor.Left;
+    Top    := AMonitor.Top;
+    Width  := AMonitor.Width;
+    Height := AMonitor.Height - TaskBarHeight;
+    Show;
+    BringToFront;
+  end;
+end;
+
+class procedure TfrmSDBackgroundFullScreen.CloseSDBackgroundFullScreen;
+begin
+  if Assigned(frmSDBackgroundFullScreen) then
+  begin
+    frmSDBackgroundFullScreen.Close;
+    FreeAndNil(frmSDBackgroundFullScreen);
+  end;
+end;
+
+end.
