@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-  LCLType, LCLIntf, LCLProc, SimpleDialog, SDenums;
+  LCLType, LCLIntf, LCLProc, SimpleDialog, SDenums, SDBackgroundFullScreen;
 
 type
 
@@ -57,7 +57,7 @@ end;
 procedure TfrSimpleDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  SDfunctions.closeSDBackgroundFullScreen();
+  TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
 
   CloseAction := caFree;
   frSimpleDialog := nil;

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LCLType, LCLIntf, LCLProc, BCFluentProgressRing;
+  LCLType, LCLIntf, LCLProc, BCFluentProgressRing, SDBackgroundFullScreen;
 
 type
 
@@ -52,7 +52,7 @@ end;
 procedure TfrLoaderDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  SDfunctions.closeSDBackgroundFullScreen();
+  TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
 
   CloseAction := caFree;
   frLoaderDialog := nil;

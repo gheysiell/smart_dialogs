@@ -11,6 +11,7 @@ object frSimpleDialog: TfrSimpleDialog
   FormStyle = fsMDIForm
   KeyPreview = True
   Position = poWorkAreaCenter
+  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnResize = FormResize

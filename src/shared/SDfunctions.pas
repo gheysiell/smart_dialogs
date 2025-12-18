@@ -8,8 +8,6 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   SDBackgroundFullScreen;
 
-procedure ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
-procedure CloseSDBackgroundFullScreen;
 procedure GetFormCenters(
    Form: TForm;
    FormDialog: TForm;
@@ -27,38 +25,6 @@ function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
 
 implementation
 
-procedure ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
-var
-  Monitor: TMonitor;
-  FormWidth, FormHeight, TaskBarHeight: Integer;
-  CenterLeft: Integer=0;
-  CenterTop: Integer=0;
-begin
-  if not Assigned(frmSDBackgroundFullScreen) then
-    frmSDBackgroundFullScreen := TfrmSDBackgroundFullScreen.Create(Application);
-
-  frmSDBackgroundFullScreen.Position := poDesigned;
-
-  if Assigned(FormRef) then
-    Monitor := Screen.MonitorFromWindow(FormRef.Handle)
-  else
-    Monitor := Screen.PrimaryMonitor;
-
-  TaskBarHeight := Ternary(FullScreen, 0, frmSDBackgroundFullScreen.GetTaskBarHeight);
-  FormWidth := Monitor.Width;
-  FormHeight := Monitor.Height - TaskBarHeight;
-
-  with frmSDBackgroundFullScreen do
-  begin
-    Left := 0;
-    Top := 0;
-    Width := FormWidth;
-    Height := FormHeight;
-    Show;
-    BringToFront;
-  end;
-end;
-
 procedure GetFormCenters(
    Form: TForm;
    FormDialog: TForm;
@@ -75,16 +41,6 @@ begin
   begin
     CenterLeft := (Form.Width - FormDialog.Width) div 2;
     CenterTop := (Form.Height - FormDialog.Height) div 2;
-  end;
-end;
-
-procedure CloseSDBackgroundFullScreen;
-begin
-  if Assigned(SDBackgroundFullScreen.frmSDBackgroundFullScreen) then
-  begin
-    SDBackgroundFullScreen.frmSDBackgroundFullScreen.Close;
-    SDBackgroundFullScreen.frmSDBackgroundFullScreen.Free;
-    SDBackgroundFullScreen.frmSDBackgroundFullScreen := nil;
   end;
 end;
 
