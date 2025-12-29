@@ -10,7 +10,6 @@ object frConfirmationDialog: TfrConfirmationDialog
   Color = 15269882
   FormStyle = fsMDIForm
   Position = poWorkAreaCenter
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnResize = FormResize
@@ -317,14 +316,17 @@ object frConfirmationDialog: TfrConfirmationDialog
       end
       object lblCancel: TLabel
         Cursor = crHandPoint
-        Left = 32
-        Height = 37
-        Top = 3
-        Width = 110
+        Left = 24
+        Height = 25
+        Top = 10
+        Width = 122
         Alignment = taCenter
-        Caption = 'Cancelar'
+        Caption = 'Cancelar (esc)'
+        Font.CharSet = ANSI_CHARSET
         Font.Color = 4342338
-        Font.Height = -27
+        Font.Height = -19
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = lblCancelClick
@@ -370,14 +372,17 @@ object frConfirmationDialog: TfrConfirmationDialog
       end
       object lblConfirm: TLabel
         Cursor = crHandPoint
-        Left = 21
-        Height = 37
-        Top = 3
-        Width = 130
+        Left = 7
+        Height = 25
+        Top = 10
+        Width = 157
         Alignment = taCenter
-        Caption = 'Confirmar'
+        Caption = 'Confirmar (enter)'
+        Font.CharSet = ANSI_CHARSET
         Font.Color = clWhite
-        Font.Height = -27
+        Font.Height = -19
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = lblConfirmClick
