@@ -3,8 +3,11 @@ object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
   Height = 192
   Top = 330
   Width = 256
+  AlphaBlend = True
+  AlphaBlendValue = 128
+  BorderStyle = bsNone
   Caption = 'frmSDBackgroundFullScreen'
-  LCLVersion = '4.0.0.4'
+  Color = clBlack
   OnClick = FormClick
   OnDblClick = FormClick
   OnMouseDown = FormMouseDown

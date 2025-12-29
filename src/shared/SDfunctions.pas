@@ -5,8 +5,7 @@ unit SDfunctions;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  SDBackgroundFullScreen;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
 
 procedure GetFormCenters(
    Form: TForm;

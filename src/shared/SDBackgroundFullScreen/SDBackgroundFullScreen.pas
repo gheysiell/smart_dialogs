@@ -52,31 +52,6 @@ var
   TaskbarHeight: Integer;
 begin
   inherited Create(AOwner);
-
-  BorderStyle := bsNone;
-  Color := clBlack;
-  AlphaBlend := True;
-  AlphaBlendValue := 128;
-
-  TaskbarHeight := GetTaskBarHeight;
-
-  SetBounds(0, 0, Screen.Width, Screen.Height - TaskbarHeight);
-end;
-
-function TfrmSDBackgroundFullScreen.GetTaskBarHeight: Integer;
-var
-  hTaskbar: HWND;
-  Rect: TRect;
-begin
-  hTaskbar := FindWindow('Shell_TrayWnd', nil);
-
-  if hTaskbar = 0 then
-    Exit(0);
-
-  if not GetWindowRect(hTaskbar, Rect) then
-    RaiseLastOSError;
-
-  Result := Rect.Bottom - Rect.Top;
 end;
 
 class procedure TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(FormRef: TForm; FullScreen: Boolean);
@@ -103,7 +78,6 @@ begin
     Width  := AMonitor.Width;
     Height := AMonitor.Height - TaskBarHeight;
     Show;
-    BringToFront;
   end;
 end;
 
@@ -111,9 +85,24 @@ class procedure TfrmSDBackgroundFullScreen.CloseSDBackgroundFullScreen;
 begin
   if Assigned(frmSDBackgroundFullScreen) then
   begin
-    frmSDBackgroundFullScreen.Close;
-    FreeAndNil(frmSDBackgroundFullScreen);
+    frmSDBackgroundFullScreen.Hide;
   end;
+end;
+
+function TfrmSDBackgroundFullScreen.GetTaskBarHeight: Integer;
+var
+  hTaskbar: HWND;
+  Rect: TRect;
+begin
+  hTaskbar := FindWindow('Shell_TrayWnd', nil);
+
+  if hTaskbar = 0 then
+    Exit(0);
+
+  if not GetWindowRect(hTaskbar, Rect) then
+    RaiseLastOSError;
+
+  Result := Rect.Bottom - Rect.Top;
 end;
 
 end.
