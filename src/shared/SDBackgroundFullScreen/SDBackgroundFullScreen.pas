@@ -85,8 +85,7 @@ class procedure TfrmSDBackgroundFullScreen.CloseSDBackgroundFullScreen;
 begin
   if Assigned(frmSDBackgroundFullScreen) then
   begin
-    frmSDBackgroundFullScreen.Close;
-    FreeAndNil(frmSDBackgroundFullScreen);
+    frmSDBackgroundFullScreen.Hide;
   end;
 end;
 
