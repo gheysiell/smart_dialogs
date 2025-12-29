@@ -40,3 +40,29 @@ procedure TForm1.SampleSlowProcess;
 begin  
   Sleep(4000);
 end;
+```
+
+## SimpleDialog
+
+To use `SimpleDialog`, call the Show() function.
+
+### Example Code
+
+```Object Pascal
+SimpleDialog.Show('System info message here', TTypeMessage.tmInfo);
+```
+
+## ConfirmationDialog
+
+To use `ConfirmationDialog`, call the Show() function, which returns a Boolean value.
+
+### Example Code
+
+```Object Pascal
+if ConfirmationDialog.Show(
+  'Do you really want to perform this operation ?', 
+  TTypeMessage.tmQuestion) then
+begin
+  // make something here
+end;
+```
