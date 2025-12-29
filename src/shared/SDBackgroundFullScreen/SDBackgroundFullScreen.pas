@@ -48,8 +48,6 @@ begin
 end;
 
 constructor TfrmSDBackgroundFullScreen.Create(AOwner: TComponent);
-var
-  TaskbarHeight: Integer;
 begin
   inherited Create(AOwner);
 end;
