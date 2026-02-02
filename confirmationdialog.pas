@@ -66,7 +66,7 @@ begin
 
   if FVisible then
     Show(FMessage, FTypeMessage)
-  else
+  else if Assigned(frConfirmationDialog) then
     frConfirmationDialog.Close();
 end;
 
@@ -77,7 +77,6 @@ end;
 
 procedure TConfirmationDialog.SetTypeMessage(AValue: TTypeMessage);
 begin
-  if FTypeMessage = AValue then Exit;
   FTypeMessage := AValue;
 end;
 
