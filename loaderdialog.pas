@@ -18,9 +18,11 @@ type
     FVisible: Boolean;
     FFullScreen: Boolean;
     FSlowProcess: TSlowProcess;
+    FMessage: String;
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
     procedure CloseLoader;
+    procedure SetMessage(AValue: String);
   protected
 
   public
@@ -29,6 +31,7 @@ type
   published
     property Visible: Boolean read FVisible write SetVisible default False;
     property FullScreen: Boolean read FFullScreen write SetFullScreen default False;
+    property Message: String read FMessage write SetMessage;
   end;
 
 procedure Register;
@@ -42,15 +45,17 @@ constructor TLoaderDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FVisible := False;
+  Message := '';
 end;
 
 procedure TLoaderDialog.SetVisible(AValue: Boolean);
 begin
-  if FVisible = AValue then Exit;
-  FVisible := AValue;  
+  FVisible := AValue;
+
+  Application.ProcessMessages;
 
   if FVisible then
-    Show
+    Show()
   else
     frLoaderDialog.Close();
 end;
@@ -58,6 +63,11 @@ end;
 procedure TLoaderDialog.SetFullScreen(AValue: Boolean);
 begin
   FFullScreen := AValue;
+end;
+
+procedure TLoaderDialog.SetMessage(AValue: String);
+begin
+  FMessage := AValue;
 end;
 
 procedure TLoaderDialog.Show;
@@ -73,13 +83,15 @@ begin
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(Form);
 
+  frLoaderDialog.lblMessage.Caption := FMessage;
   frLoaderDialog.Position := poDesigned;
+  frLoaderDialog.FullScreen := FFullScreen;
 
   SDfunctions.GetFormCenters(
-      Form,
-      frLoaderDialog,
-      CenterLeft,
-      CenterTop
+    Form,
+    frLoaderDialog,
+    CenterLeft,
+    CenterTop
   );
 
   frLoaderDialog.Left := CenterLeft;
@@ -89,7 +101,7 @@ begin
     CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
   );
 
-  frLoaderDialog.ShowModal;
+  frLoaderDialog.Show;
 
   if Assigned(Form) then
     Form.BringToFront;
@@ -102,7 +114,6 @@ procedure TLoaderDialog.CloseLoader;
 begin
   SetVisible(False);
 end;
-
 
 procedure Register;
 begin

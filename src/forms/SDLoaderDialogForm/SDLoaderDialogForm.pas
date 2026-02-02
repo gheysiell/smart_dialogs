@@ -5,25 +5,31 @@ unit SDLoaderDialogForm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  LCLType, LCLIntf, LCLProc, BCFluentProgressRing, SDBackgroundFullScreen;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType, Math,
+  LCLIntf, LCLProc, StdCtrls, BCFluentProgressRing, SDBackgroundFullScreen;
 
 type
 
   { TfrLoaderDialog }
 
   TfrLoaderDialog = class(TForm)
-    BCFluentProgressRing1: TBCFluentProgressRing;
+    Loader: TBCFluentProgressRing;
+    lblMessage: TLabel;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CloseLoader();
     procedure RestoreOwnerFocus(Data: PtrInt);
   private
     FOwnerForm: TForm;
+    FFullScreen: Boolean;
 
     procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
+    property FullScreen: Boolean read FFullScreen write FFullScreen;
+
+    procedure Recenter;
   end;
 
 var
@@ -45,8 +51,20 @@ begin
 end;
 
 procedure TfrLoaderDialog.FormShow(Sender: TObject);
+var
+  InitialHeight: Integer=0;
 begin
+  if Trim(lblMessage.Caption) = '' then
+    Loader.Top := 64
+  else
+    Loader.Top := 40;
+
+  lblMessage.Height := SDfunctions.GetLabelHeight(lblMessage);
+  frLoaderDialog.Height := 230;
+  frLoaderDialog.Height := frLoaderDialog.Height + lblMessage.Height - 30;
+
   SetRoundedCorners(50);
+  Recenter;
 end;
 
 procedure TfrLoaderDialog.FormClose(Sender: TObject;
@@ -59,6 +77,11 @@ begin
 
   if Assigned(FOwnerForm) then
     Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));  
+end;
+
+procedure TfrLoaderDialog.FormResize(Sender: TObject);
+begin
+  lblMessage.Left := (ClientWidth - lblMessage.Width) div 2;
 end;
 
 procedure TfrLoaderDialog.RestoreOwnerFocus(Data: PtrInt);
@@ -88,6 +111,28 @@ end;
 procedure TfrLoaderDialog.CloseLoader;
 begin
   ModalResult := mrOK;
+end;
+
+procedure TfrLoaderDialog.Recenter;
+var
+  CenterLeft, CenterTop: Integer;
+  ParentForm: TForm;
+begin
+  ParentForm := SDfunctions.GetParentForm(Owner);
+
+  SDfunctions.GetFormCenters(
+    ParentForm,
+    Self,
+    CenterLeft,
+    CenterTop
+  );
+
+  Left := CenterLeft;
+  Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 end;
 
 end.

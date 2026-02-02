@@ -8,9 +8,10 @@ object frSimpleDialog: TfrSimpleDialog
   ClientHeight = 255
   ClientWidth = 440
   Color = 16773608
-  FormStyle = fsMDIForm
+  FormStyle = fsStayOnTop
   KeyPreview = True
   Position = poWorkAreaCenter
+  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnResize = FormResize
