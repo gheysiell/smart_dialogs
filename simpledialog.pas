@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDenums, SDBackgroundFullScreen;
+  SDenums, SDBackgroundFullScreen, Math;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -100,8 +100,10 @@ begin
     frSimpleDialog := TfrSimpleDialog.Create(Form);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
-  SDSimpleDialogForm.typeMessage := TypeMessage;
   frSimpleDialog.Position := poDesigned;
+  frSimpleDialog.FullScreen := FFullScreen;
+
+  SDSimpleDialogForm.typeMessage := TypeMessage;
 
   SDfunctions.GetFormCenters(
     Form,
@@ -111,7 +113,11 @@ begin
   );
 
   frSimpleDialog.Left := CenterLeft;
-  frSimpleDialog.Top := CenterTop;
+  frSimpleDialog.Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 
   frSimpleDialog.ShowModal;
 

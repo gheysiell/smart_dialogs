@@ -5,7 +5,7 @@ unit SDSimpleDialogForm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Math,
   LCLType, LCLIntf, LCLProc, SimpleDialog, SDenums, SDBackgroundFullScreen;
 
 type
@@ -27,10 +27,14 @@ type
     procedure RestoreOwnerFocus(Data: PtrInt);
   private
     FOwnerForm: TForm;
+    FFullScreen: Boolean;
     
     procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
+    property FullScreen: Boolean read FFullScreen write FFullScreen;
+
+    procedure Recenter;
   end;
 
 var
@@ -131,6 +135,7 @@ begin
   end;
 
   SetRoundedCorners(50);
+  Recenter;
 end;
 
 procedure TfrSimpleDialog.imgCloseClick(Sender: TObject);
@@ -144,6 +149,28 @@ var
 begin
   Rgn := CreateRoundRectRgn(0, 0, Width + 1, Height + 1, Radius, Radius);
   SetWindowRgn(Handle, Rgn, True);
+end;
+
+procedure TfrSimpleDialog.Recenter;
+var
+  CenterLeft, CenterTop: Integer;
+  ParentForm: TForm;
+begin
+  ParentForm := SDfunctions.GetParentForm(Owner);
+
+  SDfunctions.GetFormCenters(
+    ParentForm,
+    Self,
+    CenterLeft,
+    CenterTop
+  );
+
+  Left := CenterLeft;
+  Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 end;
 
 end.

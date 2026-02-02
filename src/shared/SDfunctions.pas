@@ -5,7 +5,7 @@ unit SDfunctions;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows;
 
 procedure GetFormCenters(
    Form: TForm;
@@ -21,6 +21,7 @@ function Ternary(
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
 function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
+function GetTaskBarHeight: Integer;
 
 implementation
 
@@ -69,10 +70,11 @@ end;
 
 function GetLabelHeight(ALabel: TLabel): Integer;
 var
-  TmpBitmap: TBitmap;
+  TmpBitmap: Graphics.TBitmap;
   TextHeight, Lines, LabelHeight: Integer;
 begin
-  TmpBitmap := TBitmap.Create;
+  TmpBitmap := Graphics.TBitmap.Create;
+
   try
     TmpBitmap.Canvas.Font.Assign(ALabel.Font);
     TextHeight := TmpBitmap.Canvas.TextHeight('W');
@@ -105,6 +107,22 @@ begin
       Exit(F);
     end;
   end;
+end;
+
+function GetTaskBarHeight: Integer;
+var
+  hTaskbar: HWND;
+  Rect: TRect;
+begin
+  hTaskbar := FindWindow('Shell_TrayWnd', nil);
+
+  if hTaskbar = 0 then
+    Exit(0);
+
+  if not GetWindowRect(hTaskbar, Rect) then
+    RaiseLastOSError;
+
+  Result := Rect.Bottom - Rect.Top;
 end;
 
 end.
