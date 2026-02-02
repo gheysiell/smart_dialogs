@@ -5,7 +5,7 @@ unit SDConfirmationDialogForm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Math,
   Windows, SDenums, SDBackgroundFullScreen;
 
 type
@@ -51,10 +51,14 @@ type
     procedure RestoreOwnerFocus(Data: PtrInt);
   private
     FOwnerForm: TForm;
+    FFullScreen: Boolean;
 
     procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
+    property FullScreen: Boolean read FFullScreen write FFullScreen;
+
+    procedure Recenter;
   end;
 
 var
@@ -160,6 +164,7 @@ begin
 
   CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;
   SetRoundedCorners(50);
+  Recenter;
 end;
 
 procedure TfrConfirmationDialog.shpCancelChangeBounds(Sender: TObject);
@@ -259,6 +264,28 @@ end;
 procedure TfrConfirmationDialog.shpConfirmMouseLeave(Sender: TObject);
 begin
   shpConfirm.Brush.Color := $00EDAF5C;
+end;
+
+procedure TfrConfirmationDialog.Recenter;
+var
+  CenterLeft, CenterTop: Integer;
+  ParentForm: TForm;
+begin
+  ParentForm := SDfunctions.GetParentForm(Owner);
+
+  SDfunctions.GetFormCenters(
+    ParentForm,
+    Self,
+    CenterLeft,
+    CenterTop
+  );
+
+  Left := CenterLeft;
+  Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 end;
 
 end.

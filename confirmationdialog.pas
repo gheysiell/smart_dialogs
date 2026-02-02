@@ -5,7 +5,7 @@ unit ConfirmationDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Math,
   SDConfirmationDialogForm, SDfunctions, SDenums, SDBackgroundFullScreen;
 
 type
@@ -66,7 +66,7 @@ begin
 
   if FVisible then
     Show(FMessage, FTypeMessage)
-  else
+  else if Assigned(frConfirmationDialog) then
     frConfirmationDialog.Close();
 end;
 
@@ -77,7 +77,6 @@ end;
 
 procedure TConfirmationDialog.SetTypeMessage(AValue: TTypeMessage);
 begin
-  if FTypeMessage = AValue then Exit;
   FTypeMessage := AValue;
 end;
 
@@ -104,8 +103,10 @@ begin
     frConfirmationDialog := TfrConfirmationDialog.Create(Form);
 
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;
-  SDConfirmationDialogForm.typeMessage := TypeMessage;
   frConfirmationDialog.Position := poDesigned;
+  frConfirmationDialog.FullScreen := FFullScreen;
+
+  SDConfirmationDialogForm.typeMessage := TypeMessage;
 
   SDfunctions.GetFormCenters(
     Form,
@@ -115,7 +116,11 @@ begin
   );
 
   frConfirmationDialog.Left := CenterLeft;
-  frConfirmationDialog.Top := CenterTop;
+  frConfirmationDialog.Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 
   frConfirmationDialog.ShowModal;
 

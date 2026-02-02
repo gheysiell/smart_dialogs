@@ -5,8 +5,7 @@ unit SDBackgroundFullScreen;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs,
-  Windows, ShellApi, Math;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Windows, ShellApi, Math;
 
 type
 
@@ -16,7 +15,6 @@ type
     procedure FormClick(Sender: TObject);
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    function GetTaskBarHeight: Integer;
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -30,7 +28,7 @@ var
 implementation
 
 uses
-  SDLoaderDialogForm;
+  SDLoaderDialogForm, SDfunctions;
 
 {$R *.lfm}
 
@@ -66,8 +64,7 @@ begin
   else
     AMonitor := Screen.PrimaryMonitor;
 
-  TaskBarHeight := IfThen(FullScreen, 0,
-    frmSDBackgroundFullScreen.GetTaskBarHeight);
+  TaskBarHeight := IfThen(FullScreen, 0, SDfunctions.GetTaskBarHeight);
 
   with frmSDBackgroundFullScreen do
   begin
@@ -85,22 +82,6 @@ begin
   begin
     frmSDBackgroundFullScreen.Hide;
   end;
-end;
-
-function TfrmSDBackgroundFullScreen.GetTaskBarHeight: Integer;
-var
-  hTaskbar: HWND;
-  Rect: TRect;
-begin
-  hTaskbar := FindWindow('Shell_TrayWnd', nil);
-
-  if hTaskbar = 0 then
-    Exit(0);
-
-  if not GetWindowRect(hTaskbar, Rect) then
-    RaiseLastOSError;
-
-  Result := Rect.Bottom - Rect.Top;
 end;
 
 end.

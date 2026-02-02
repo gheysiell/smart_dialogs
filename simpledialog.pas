@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDenums, SDBackgroundFullScreen;
+  SDenums, SDBackgroundFullScreen, Math;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -32,7 +32,7 @@ type
     constructor Create(AOwner: TComponent); override;
   published
     property Visible: Boolean read FVisible write SetVisible default False;
-    property FullScreen: Boolean read FFullScreen write SetFUllScreen default False;
+    property FullScreen: Boolean read FFullScreen write SetFullScreen default False;
     property TypeMessage: TTypeMessage read FTypeMessage write SetTypeMessage default TTypeMessage.tmInfo;
     property Message: String read FMessage write SetMessage;
   end;
@@ -73,13 +73,11 @@ end;
 
 procedure TSimpleDialog.SetTypeMessage(AValue: TTypeMessage);
 begin
-  if FTypeMessage = AValue then Exit;
   FTypeMessage := AValue;
 end;
 
 procedure TSimpleDialog.SetMessage(AValue: String);
 begin
-  if FMessage = AValue then Exit;
   FMessage := AValue;
 end;
 
@@ -100,8 +98,10 @@ begin
     frSimpleDialog := TfrSimpleDialog.Create(Form);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
-  SDSimpleDialogForm.typeMessage := TypeMessage;
   frSimpleDialog.Position := poDesigned;
+  frSimpleDialog.FullScreen := FFullScreen;
+
+  SDSimpleDialogForm.typeMessage := TypeMessage;
 
   SDfunctions.GetFormCenters(
     Form,
@@ -111,12 +111,16 @@ begin
   );
 
   frSimpleDialog.Left := CenterLeft;
-  frSimpleDialog.Top := CenterTop;
+  frSimpleDialog.Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 
   frSimpleDialog.ShowModal;
 
   if Assigned(Form) then
-    form.BringToFront;
+    Form.BringToFront;
 end;
 
 procedure Register;

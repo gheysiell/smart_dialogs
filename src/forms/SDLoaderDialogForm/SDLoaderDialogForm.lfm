@@ -1,26 +1,45 @@
 object frLoaderDialog: TfrLoaderDialog
   Left = 391
-  Height = 155
+  Height = 230
   Top = 116
-  Width = 180
+  Width = 230
   BorderStyle = bsNone
   Caption = 'frLoaderDialog'
-  ClientHeight = 155
-  ClientWidth = 180
-  FormStyle = fsMDIChild
+  ClientHeight = 230
+  ClientWidth = 230
+  FormStyle = fsStayOnTop
   Position = poWorkAreaCenter
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
+  OnResize = FormResize
   OnShow = FormShow
-  object BCFluentProgressRing1: TBCFluentProgressRing
-    Left = 41
+  object Loader: TBCFluentProgressRing
+    Left = 65
     Height = 100
-    Top = 27
+    Top = 40
     Width = 100
     Color = clWhite
     ColorOpacity = 128
     Alignment = taCenter
-    Caption = 'BCFluentProgressRing1'
+    Caption = 'Loader'
     Indeterminate = True
+  end
+  object lblMessage: TLabel
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Side = asrBottom
+    Left = 24
+    Height = 30
+    Top = 184
+    Width = 182
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = False
+    BorderSpacing.Left = 30
+    BorderSpacing.Top = 10
+    BorderSpacing.Right = 30
+    Caption = 'Message'
+    Font.Color = 4342338
+    Font.Height = -20
+    ParentFont = False
+    WordWrap = True
   end
 end

@@ -1,14 +1,14 @@
 object frSimpleDialog: TfrSimpleDialog
   Left = 423
-  Height = 250
+  Height = 255
   Top = 255
   Width = 440
   BorderStyle = bsNone
   Caption = 'frSimpleDialog'
-  ClientHeight = 250
+  ClientHeight = 255
   ClientWidth = 440
   Color = 16773608
-  FormStyle = fsMDIForm
+  FormStyle = fsStayOnTop
   KeyPreview = True
   Position = poWorkAreaCenter
   LCLVersion = '4.0.0.4'
@@ -18,13 +18,13 @@ object frSimpleDialog: TfrSimpleDialog
   OnShow = FormShow
   object pnlContainer: TPanel
     Left = 8
-    Height = 234
+    Height = 239
     Top = 8
     Width = 424
     Align = alClient
     BorderSpacing.Around = 8
     BevelOuter = bvNone
-    ClientHeight = 234
+    ClientHeight = 239
     ClientWidth = 424
     ParentBackground = False
     TabOrder = 0
