@@ -122,7 +122,7 @@ begin
   frSimpleDialog.ShowModal;
 
   if Assigned(Form) then
-    form.BringToFront;
+    Form.BringToFront;
 end;
 
 procedure Register;

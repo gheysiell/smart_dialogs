@@ -7,9 +7,8 @@ object frLoaderDialog: TfrLoaderDialog
   Caption = 'frLoaderDialog'
   ClientHeight = 155
   ClientWidth = 180
-  FormStyle = fsMDIChild
+  FormStyle = fsMDIForm
   Position = poWorkAreaCenter
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnShow = FormShow
   object BCFluentProgressRing1: TBCFluentProgressRing

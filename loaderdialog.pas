@@ -5,7 +5,7 @@ unit LoaderDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs,
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Math,
   SDLoaderDialogForm, SDMyThread, SDBackgroundFullScreen;
 
 type
@@ -83,12 +83,16 @@ begin
   );
 
   frLoaderDialog.Left := CenterLeft;
-  frLoaderDialog.Top := CenterTop;
+  frLoaderDialog.Top := IfThen(
+    FFullScreen,
+    CenterTop,
+    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
+  );
 
-  frLoaderDialog.FormStyle := fsStayOnTop;
-  frLoaderDialog.Show;
+  frLoaderDialog.ShowModal;
 
-  frLoaderDialog.BringToFront;
+  if Assigned(Form) then
+    Form.BringToFront;
 
   if Assigned(FSlowProcess) then
     TSDMyThread.Create(FSlowProcess, @CloseLoader);
