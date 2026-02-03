@@ -114,9 +114,6 @@ begin
   frSimpleDialog.Top := CenterTop;
 
   frSimpleDialog.ShowModal;
-
-  if Assigned(Form) then
-    Form.BringToFront;
 end;
 
 procedure Register;

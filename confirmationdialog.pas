@@ -120,9 +120,6 @@ begin
 
   frConfirmationDialog.ShowModal;
 
-  if Assigned(Form) then
-    Form.BringToFront;
-
   ResultConfirmation := Ternary(SDConfirmationDialogForm.CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
 
   if (Assigned(FOnConfirmation) AND ResultConfirmation) then
