@@ -109,18 +109,14 @@ begin
   SDConfirmationDialogForm.typeMessage := TypeMessage;
 
   SDfunctions.GetFormCenters(
-    Form,
+    FullScreen,
     frConfirmationDialog,
     CenterLeft,
     CenterTop
   );
 
   frConfirmationDialog.Left := CenterLeft;
-  frConfirmationDialog.Top := IfThen(
-    FFullScreen,
-    CenterTop,
-    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
-  );
+  frConfirmationDialog.Top := CenterTop;
 
   frConfirmationDialog.ShowModal;
 

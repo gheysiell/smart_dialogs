@@ -159,18 +159,14 @@ begin
   ParentForm := SDfunctions.GetParentForm(Owner);
 
   SDfunctions.GetFormCenters(
-    ParentForm,
+    FullScreen,
     Self,
     CenterLeft,
     CenterTop
   );
 
   Left := CenterLeft;
-  Top := IfThen(
-    FFullScreen,
-    CenterTop,
-    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
-  );
+  Top := CenterTop;
 end;
 
 end.

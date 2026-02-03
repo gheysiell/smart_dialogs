@@ -104,18 +104,14 @@ begin
   SDSimpleDialogForm.typeMessage := TypeMessage;
 
   SDfunctions.GetFormCenters(
-    Form,
+    FullScreen,
     frSimpleDialog,
     CenterLeft,
     CenterTop
   );
 
   frSimpleDialog.Left := CenterLeft;
-  frSimpleDialog.Top := IfThen(
-    FFullScreen,
-    CenterTop,
-    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
-  );
+  frSimpleDialog.Top := CenterTop;
 
   frSimpleDialog.ShowModal;
 
