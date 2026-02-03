@@ -88,18 +88,14 @@ begin
   frLoaderDialog.FullScreen := FFullScreen;
 
   SDfunctions.GetFormCenters(
-    Form,
+    FullScreen,
     frLoaderDialog,
     CenterLeft,
     CenterTop
   );
 
   frLoaderDialog.Left := CenterLeft;
-  frLoaderDialog.Top := IfThen(
-    FFullScreen,
-    CenterTop,
-    CenterTop - Trunc(SDFunctions.GetTaskBarHeight div 2)
-  );
+  frLoaderDialog.Top := CenterTop;
 
   frLoaderDialog.Show;
 

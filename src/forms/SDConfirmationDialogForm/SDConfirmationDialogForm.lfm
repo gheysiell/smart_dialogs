@@ -10,6 +10,7 @@ object frConfirmationDialog: TfrConfirmationDialog
   Color = 15269882
   FormStyle = fsStayOnTop
   Position = poWorkAreaCenter
+  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnResize = FormResize

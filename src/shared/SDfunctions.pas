@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows;
 
 procedure GetFormCenters(
-   Form: TForm;
+   FullScreen: Boolean;
    FormDialog: TForm;
    var CenterLeft: Integer;
    var CenterTop: Integer
@@ -26,22 +26,22 @@ function GetTaskBarHeight: Integer;
 implementation
 
 procedure GetFormCenters(
-   Form: TForm;
+   FullScreen: Boolean;
    FormDialog: TForm;
    var CenterLeft: Integer;
    var CenterTop: Integer
 );
+var
+  R: TRect;
 begin
-  if Assigned(Form) then
-  begin
-    CenterLeft := Form.Left + (Form.Width - FormDialog.Width) div 2;
-    CenterTop := Form.Top + (Form.Height - FormDialog.Height) div 2;
-  end
+  R := Screen.WorkAreaRect;
+
+  CenterLeft := R.Left + (R.Width - FormDialog.Width) div 2;
+
+  if FullScreen then
+    CenterTop := R.Top + ((R.Height + GetTaskBarHeight) - FormDialog.Height) div 2
   else
-  begin
-    CenterLeft := (Form.Width - FormDialog.Width) div 2;
-    CenterTop := (Form.Height - FormDialog.Height) div 2;
-  end;
+    CenterTop := R.Top + (R.Height - FormDialog.Height) div 2;
 end;
 
 function Ternary(
