@@ -9,12 +9,11 @@ object frLoaderDialog: TfrLoaderDialog
   ClientWidth = 230
   FormStyle = fsStayOnTop
   Position = poWorkAreaCenter
-  LCLVersion = '4.0.0.4'
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
   object Loader: TBCFluentProgressRing
-    Left = 65
+    Left = 66
     Height = 100
     Top = 40
     Width = 100

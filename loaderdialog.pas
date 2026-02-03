@@ -97,13 +97,10 @@ begin
   frLoaderDialog.Left := CenterLeft;
   frLoaderDialog.Top := CenterTop;
 
-  frLoaderDialog.Show;
-
-  if Assigned(Form) then
-    Form.BringToFront;
-
   if Assigned(FSlowProcess) then
     TSDMyThread.Create(FSlowProcess, @CloseLoader);
+
+  frLoaderDialog.ShowModal;
 end;
 
 procedure TLoaderDialog.CloseLoader;
