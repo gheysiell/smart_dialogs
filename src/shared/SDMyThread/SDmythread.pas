@@ -5,7 +5,7 @@ unit SDMyThread;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, SDLoaderContext;
 
 type
   TSlowProcess = procedure of object;
@@ -35,8 +35,14 @@ end;
 
 procedure TSDMyThread.Execute;
 begin
-  if Assigned(FSlowProcess) then
-    FSlowProcess();
+  IsInsideLoader := True;
+
+  try
+    if Assigned(FSlowProcess) then
+      FSlowProcess();
+  finally
+    IsInsideLoader := False;
+  end;
 
   Synchronize(@DoOnFinished);
 end;

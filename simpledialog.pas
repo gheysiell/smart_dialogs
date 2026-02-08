@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDenums, SDBackgroundFullScreen;
+  SDenums, SDBackgroundFullScreen, SDLoaderContext;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -24,7 +24,7 @@ type
     FMessage: String;
     FSyncSubTitle: String;
     FSyncTypeMessage: TTypeMessage;
-    FCalledFromMainThread: Boolean;
+    FCalledFromLoader: Boolean;
 
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
@@ -95,17 +95,17 @@ procedure TSimpleDialog.Show(
   TypeMessage: TTypeMessage
 );
 begin
-  if TThread.CurrentThread.ThreadID = MainThreadID then
+  if ((TThread.CurrentThread.ThreadID <> MainThreadID) and (SDLoaderContext.IsInsideLoader))then
   begin
-    FCalledFromMainThread := True;
-    InternalShow(SubTitle, TypeMessage);
-  end
-  else
-  begin
-    FCalledFromMainThread := False;
+    FCalledFromLoader := True;
     FSyncSubTitle := SubTitle;
     FSyncTypeMessage := TypeMessage;
     TThread.Synchronize(nil, @SyncShow);
+  end
+  else
+  begin
+    FCalledFromLoader := False;
+    InternalShow(SubTitle, TypeMessage);
   end;
 end;
 
@@ -125,7 +125,7 @@ var
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  if FCalledFromMainThread then
+  if not FCalledFromLoader then
     TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
@@ -133,7 +133,7 @@ begin
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
   frSimpleDialog.FullScreen := FFullScreen;
-  frSimpleDialog.CalledFromMainThread := FCalledFromMainThread;
+  frSimpleDialog.CalledFromLoader := FCalledFromLoader;
 
   SDSimpleDialogForm.typeMessage := TypeMessage;
 

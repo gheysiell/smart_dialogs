@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDConfirmationDialogForm, SDenums, SDBackgroundFullScreen;
+  SDConfirmationDialogForm, SDenums, SDBackgroundFullScreen, SDLoaderContext;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -30,7 +30,7 @@ type
     FSyncSubTitle: String;
     FSyncTypeMessage: TTypeMessage;
     FSyncResult: Boolean;
-    FCalledFromMainThread: Boolean;
+    FCalledFromLoader: Boolean;
 
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
@@ -100,20 +100,18 @@ function TConfirmationDialog.Show(
   TypeMessage: TTypeMessage
 ): Boolean;
 begin
-  if TThread.CurrentThread.ThreadID = MainThreadID then
+  if ((TThread.CurrentThread.ThreadID <> MainThreadID) and (SDLoaderContext.IsInsideLoader)) then
   begin
-    FCalledFromMainThread := True;
-    Result := InternalShow(SubTitle, TypeMessage);
+    FCalledFromLoader := True;
+    FSyncSubTitle := SubTitle;
+    FSyncTypeMessage := TypeMessage;
+    TThread.Synchronize(nil, @SyncShow);
+    Result := FSyncResult;
   end
   else
   begin
-    FCalledFromMainThread := False;
-    FSyncSubTitle := SubTitle;
-    FSyncTypeMessage := TypeMessage;
-
-    TThread.Synchronize(nil, @SyncShow);
-
-    Result := FSyncResult;
+    FCalledFromLoader := False;
+    Result := InternalShow(SubTitle, TypeMessage)
   end;
 end;
 
@@ -133,7 +131,7 @@ var
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  if FCalledFromMainThread then
+  if not FCalledFromLoader then
     TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
@@ -141,7 +139,7 @@ begin
 
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;
   frConfirmationDialog.FullScreen := FFullScreen;
-  frConfirmationDialog.CalledFromMainThread := FCalledFromMainThread;
+  frConfirmationDialog.CalledFromLoader := FCalledFromLoader;
 
   SDConfirmationDialogForm.typeMessage := TypeMessage;
 

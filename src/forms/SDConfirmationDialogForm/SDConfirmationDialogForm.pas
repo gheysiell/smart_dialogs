@@ -52,13 +52,13 @@ type
   private
     FOwnerForm: TForm;
     FFullScreen: Boolean;
-    FCalledFromMainThread: Boolean;
+    FCalledFromLoader: Boolean;
 
     procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     property FullScreen: Boolean read FFullScreen write FFullScreen;
-    property CalledFromMainThread: Boolean read FCalledFromMainThread write FCalledFromMainThread;
+    property CalledFromLoader: Boolean read FCalledFromLoader write FCalledFromLoader;
 
     procedure Recenter;
   end;
@@ -88,7 +88,7 @@ end;
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  if FCalledFromMainThread then
+  if not FCalledFromLoader then
     TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
 
   CloseAction := caFree;

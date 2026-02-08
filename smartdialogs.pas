@@ -10,7 +10,7 @@ interface
 uses
   SimpleDialog, ConfirmationDialog, LoaderDialog, SDConfirmationDialogForm, 
   SDLoaderDialogForm, SDSimpleDialogForm, SDBackgroundFullScreen, SDmythread, 
-  SDenums, SDfunctions, LazarusPackageIntf;
+  SDenums, SDfunctions, SDLoaderContext, LazarusPackageIntf;
 
 implementation
 
