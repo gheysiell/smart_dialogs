@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDenums, SDBackgroundFullScreen, Math;
+  SDenums, SDBackgroundFullScreen;
 
 type
   TTypeMessage = SDenums.TTypeMessage;

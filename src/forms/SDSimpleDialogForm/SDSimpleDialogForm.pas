@@ -5,8 +5,8 @@ unit SDSimpleDialogForm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, Math,
-  LCLType, LCLIntf, LCLProc, SimpleDialog, SDenums, SDBackgroundFullScreen;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, LCLType,
+  LCLIntf, LCLProc, SDenums, SDBackgroundFullScreen;
 
 type
 
@@ -156,11 +156,9 @@ end;
 
 procedure TfrSimpleDialog.Recenter;
 var
-  CenterLeft, CenterTop: Integer;
-  ParentForm: TForm;
+  CenterLeft: Integer = 0;
+  CenterTop: Integer = 0;
 begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
   SDfunctions.GetFormCenters(
     FullScreen,
     Self,

@@ -5,8 +5,8 @@ unit ConfirmationDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Math,
-  SDConfirmationDialogForm, SDfunctions, SDenums, SDBackgroundFullScreen;
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
+  SDConfirmationDialogForm, SDenums, SDBackgroundFullScreen;
 
 type
   TTypeMessage = SDenums.TTypeMessage;

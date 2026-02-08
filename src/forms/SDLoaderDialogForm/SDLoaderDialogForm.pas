@@ -5,8 +5,8 @@ unit SDLoaderDialogForm;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType, Math,
-  LCLIntf, LCLProc, StdCtrls, BCFluentProgressRing, SDBackgroundFullScreen;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, LCLType, LCLIntf,
+  LCLProc, StdCtrls, BCFluentProgressRing, SDBackgroundFullScreen;
 
 type
 
@@ -51,8 +51,6 @@ begin
 end;
 
 procedure TfrLoaderDialog.FormShow(Sender: TObject);
-var
-  InitialHeight: Integer=0;
 begin
   if Trim(lblMessage.Caption) = '' then
     Loader.Top := 64
@@ -115,11 +113,9 @@ end;
 
 procedure TfrLoaderDialog.Recenter;
 var
-  CenterLeft, CenterTop: Integer;
-  ParentForm: TForm;
+  CenterLeft: Integer = 0;
+  CenterTop: Integer = 0;
 begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
   SDfunctions.GetFormCenters(
     FullScreen,
     Self,

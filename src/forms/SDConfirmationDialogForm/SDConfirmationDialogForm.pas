@@ -271,11 +271,9 @@ end;
 
 procedure TfrConfirmationDialog.Recenter;
 var
-  CenterLeft, CenterTop: Integer;
-  ParentForm: TForm;
+  CenterLeft: Integer = 0;
+  CenterTop: Integer = 0;
 begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
   SDfunctions.GetFormCenters(
     FullScreen,
     Self,
