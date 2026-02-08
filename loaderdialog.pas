@@ -5,8 +5,8 @@ unit LoaderDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Math,
-  SDLoaderDialogForm, SDMyThread, SDBackgroundFullScreen;
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDMyThread,
+  SDLoaderDialogForm, SDBackgroundFullScreen;
 
 type
   TSlowProcess = procedure of object;

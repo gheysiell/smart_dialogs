@@ -5,7 +5,7 @@ unit SDBackgroundFullScreen;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Windows, ShellApi, Math;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Math;
 
 type
 

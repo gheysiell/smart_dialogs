@@ -52,11 +52,13 @@ type
   private
     FOwnerForm: TForm;
     FFullScreen: Boolean;
+    FCalledFromLoader: Boolean;
 
     procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     property FullScreen: Boolean read FFullScreen write FFullScreen;
+    property CalledFromLoader: Boolean read FCalledFromLoader write FCalledFromLoader;
 
     procedure Recenter;
   end;
@@ -86,7 +88,8 @@ end;
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
+  if not FCalledFromLoader then
+    TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
 
   CloseAction := caFree;
   frConfirmationDialog := nil;
@@ -268,11 +271,9 @@ end;
 
 procedure TfrConfirmationDialog.Recenter;
 var
-  CenterLeft, CenterTop: Integer;
-  ParentForm: TForm;
+  CenterLeft: Integer = 0;
+  CenterTop: Integer = 0;
 begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
   SDfunctions.GetFormCenters(
     FullScreen,
     Self,

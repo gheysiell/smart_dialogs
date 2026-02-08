@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
-  SDenums, SDBackgroundFullScreen, Math;
+  SDenums, SDBackgroundFullScreen, SDLoaderContext;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -21,11 +21,20 @@ type
     FVisible: Boolean;
     FFullScreen: Boolean;
     FTypeMessage: TTypeMessage;
-    FMessage: String;    
+    FMessage: String;
+    FSyncSubTitle: String;
+    FSyncTypeMessage: TTypeMessage;
+    FCalledFromLoader: Boolean;
+
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
     procedure SetTypeMessage(AValue: TTypeMessage);
     procedure SetMessage(AValue: String);
+    procedure SyncShow;
+    procedure InternalShow(
+      SubTitle: string;
+      TypeMessage: TTypeMessage
+    );
   protected
 
   public
@@ -83,23 +92,48 @@ end;
 
 procedure TSimpleDialog.Show(
   SubTitle: string;
-  TypeMessage: TTypeMessage  
+  TypeMessage: TTypeMessage
+);
+begin
+  if ((TThread.CurrentThread.ThreadID <> MainThreadID) and (SDLoaderContext.IsInsideLoader))then
+  begin
+    FCalledFromLoader := True;
+    FSyncSubTitle := SubTitle;
+    FSyncTypeMessage := TypeMessage;
+    TThread.Synchronize(nil, @SyncShow);
+  end
+  else
+  begin
+    FCalledFromLoader := False;
+    InternalShow(SubTitle, TypeMessage);
+  end;
+end;
+
+procedure TSimpleDialog.SyncShow;
+begin
+  InternalShow(FSyncSubTitle, FSyncTypeMessage);
+end;
+
+procedure TSimpleDialog.InternalShow(
+  SubTitle: string;
+  TypeMessage: TTypeMessage
 );
 var
-  CenterLeft: Integer=0;
-  CenterTop: Integer=0;
+  CenterTop: Integer = 0;
+  CenterLeft: Integer = 0;
   Form: TForm;
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  if not FCalledFromLoader then
+    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Form);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
-  frSimpleDialog.Position := poDesigned;
   frSimpleDialog.FullScreen := FFullScreen;
+  frSimpleDialog.CalledFromLoader := FCalledFromLoader;
 
   SDSimpleDialogForm.typeMessage := TypeMessage;
 

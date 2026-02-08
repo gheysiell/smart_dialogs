@@ -67,11 +67,15 @@
       </Item>
       <Item>
         <Filename Value="src\shared\SDEnums.pas"/>
-        <UnitName Value="SDenums"/>
+        <UnitName Value="SDEnums"/>
       </Item>
       <Item>
         <Filename Value="src\shared\SDFunctions.pas"/>
-        <UnitName Value="SDfunctions"/>
+        <UnitName Value="SDFunctions"/>
+      </Item>
+      <Item>
+        <Filename Value="src\shared\SDLoaderContext.pas"/>
+        <UnitName Value="SDLoaderContext"/>
       </Item>
     </Files>
     <RequiredPkgs>

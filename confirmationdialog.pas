@@ -5,8 +5,8 @@ unit ConfirmationDialog;
 interface
 
 uses
-  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Math,
-  SDConfirmationDialogForm, SDfunctions, SDenums, SDBackgroundFullScreen;
+  Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, SDfunctions,
+  SDConfirmationDialogForm, SDenums, SDBackgroundFullScreen, SDLoaderContext;
 
 type
   TTypeMessage = SDenums.TTypeMessage;
@@ -27,10 +27,20 @@ type
     FTypeMessage: TTypeMessage;
     FOnConfirmation: TOnConfirmation;
     FOnCanceled: TOnCanceled;
+    FSyncSubTitle: String;
+    FSyncTypeMessage: TTypeMessage;
+    FSyncResult: Boolean;
+    FCalledFromLoader: Boolean;
+
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
     procedure SetMessage(AValue: String);
     procedure SetTypeMessage(AValue: TTypeMessage);
+    procedure SyncShow;
+    function InternalShow(
+      SubTitle: string;
+      TypeMessage: TTypeMessage
+    ): Boolean;
   protected
 
   public
@@ -89,22 +99,47 @@ function TConfirmationDialog.Show(
   SubTitle: string;
   TypeMessage: TTypeMessage
 ): Boolean;
+begin
+  if ((TThread.CurrentThread.ThreadID <> MainThreadID) and (SDLoaderContext.IsInsideLoader)) then
+  begin
+    FCalledFromLoader := True;
+    FSyncSubTitle := SubTitle;
+    FSyncTypeMessage := TypeMessage;
+    TThread.Synchronize(nil, @SyncShow);
+    Result := FSyncResult;
+  end
+  else
+  begin
+    FCalledFromLoader := False;
+    Result := InternalShow(SubTitle, TypeMessage)
+  end;
+end;
+
+procedure TConfirmationDialog.SyncShow;
+begin
+  FSyncResult := InternalShow(FSyncSubTitle, FSyncTypeMessage);
+end;
+
+function TConfirmationDialog.InternalShow(
+  SubTitle: string;
+  TypeMessage: TTypeMessage
+): Boolean;
 var
-  ResultConfirmation: Boolean;
-  CenterLeft: Integer=0;
-  CenterTop: Integer=0;
+  CenterLeft: Integer = 0;
+  CenterTop: Integer = 0;
   Form: TForm;
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  if not FCalledFromLoader then
+    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Form);
 
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;
-  frConfirmationDialog.Position := poDesigned;
   frConfirmationDialog.FullScreen := FFullScreen;
+  frConfirmationDialog.CalledFromLoader := FCalledFromLoader;
 
   SDConfirmationDialogForm.typeMessage := TypeMessage;
 
@@ -120,15 +155,15 @@ begin
 
   frConfirmationDialog.ShowModal;
 
-  ResultConfirmation := Ternary(SDConfirmationDialogForm.CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
+  Result :=
+    SDConfirmationDialogForm.CanceledOrConfirmed =
+    TCanceledOrConfirmed.Confirmed;
 
-  if (Assigned(FOnConfirmation) AND ResultConfirmation) then
+  if Assigned(FOnConfirmation) and Result then
     FOnConfirmation();
 
-  if (Assigned(FOnCanceled) AND (not ResultConfirmation)) then
+  if Assigned(FOnCanceled) and (not Result) then
     FOnCanceled();
-
-  Result := ResultConfirmation;
 end;
 
 procedure Register;
