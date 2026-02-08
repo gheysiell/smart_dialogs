@@ -7,7 +7,7 @@ with UI components.
 
 ## Project statatistics
 
-- **Lines of code**: 2.851
+- **Lines of code**: 2.926
 - **Files**: 11
 - **Folders**: 7
 - **Screens**: 3

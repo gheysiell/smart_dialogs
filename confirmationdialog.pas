@@ -27,10 +27,20 @@ type
     FTypeMessage: TTypeMessage;
     FOnConfirmation: TOnConfirmation;
     FOnCanceled: TOnCanceled;
+    FSyncSubTitle: String;
+    FSyncTypeMessage: TTypeMessage;
+    FSyncResult: Boolean;
+    FCalledFromMainThread: Boolean;
+
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
     procedure SetMessage(AValue: String);
     procedure SetTypeMessage(AValue: TTypeMessage);
+    procedure SyncShow;
+    function InternalShow(
+      SubTitle: string;
+      TypeMessage: TTypeMessage
+    ): Boolean;
   protected
 
   public
@@ -89,22 +99,49 @@ function TConfirmationDialog.Show(
   SubTitle: string;
   TypeMessage: TTypeMessage
 ): Boolean;
+begin
+  if TThread.CurrentThread.ThreadID = MainThreadID then
+  begin
+    FCalledFromMainThread := True;
+    Result := InternalShow(SubTitle, TypeMessage);
+  end
+  else
+  begin
+    FCalledFromMainThread := False;
+    FSyncSubTitle := SubTitle;
+    FSyncTypeMessage := TypeMessage;
+
+    TThread.Synchronize(nil, @SyncShow);
+
+    Result := FSyncResult;
+  end;
+end;
+
+procedure TConfirmationDialog.SyncShow;
+begin
+  FSyncResult := InternalShow(FSyncSubTitle, FSyncTypeMessage);
+end;
+
+function TConfirmationDialog.InternalShow(
+  SubTitle: string;
+  TypeMessage: TTypeMessage
+): Boolean;
 var
-  ResultConfirmation: Boolean;
-  CenterLeft: Integer=0;
-  CenterTop: Integer=0;
+  CenterLeft: Integer = 0;
+  CenterTop: Integer = 0;
   Form: TForm;
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  if FCalledFromMainThread then
+    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(Form);
 
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;
-  frConfirmationDialog.Position := poDesigned;
   frConfirmationDialog.FullScreen := FFullScreen;
+  frConfirmationDialog.CalledFromMainThread := FCalledFromMainThread;
 
   SDConfirmationDialogForm.typeMessage := TypeMessage;
 
@@ -120,15 +157,15 @@ begin
 
   frConfirmationDialog.ShowModal;
 
-  ResultConfirmation := Ternary(SDConfirmationDialogForm.CanceledOrConfirmed = TCanceledOrConfirmed.Confirmed, True, False);
+  Result :=
+    SDConfirmationDialogForm.CanceledOrConfirmed =
+    TCanceledOrConfirmed.Confirmed;
 
-  if (Assigned(FOnConfirmation) AND ResultConfirmation) then
+  if Assigned(FOnConfirmation) and Result then
     FOnConfirmation();
 
-  if (Assigned(FOnCanceled) AND (not ResultConfirmation)) then
+  if Assigned(FOnCanceled) and (not Result) then
     FOnCanceled();
-
-  Result := ResultConfirmation;
 end;
 
 procedure Register;

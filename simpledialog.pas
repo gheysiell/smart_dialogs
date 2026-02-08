@@ -21,11 +21,20 @@ type
     FVisible: Boolean;
     FFullScreen: Boolean;
     FTypeMessage: TTypeMessage;
-    FMessage: String;    
+    FMessage: String;
+    FSyncSubTitle: String;
+    FSyncTypeMessage: TTypeMessage;
+    FCalledFromMainThread: Boolean;
+
     procedure SetVisible(AValue: Boolean);
     procedure SetFullScreen(AValue: Boolean);
     procedure SetTypeMessage(AValue: TTypeMessage);
     procedure SetMessage(AValue: String);
+    procedure SyncShow;
+    procedure InternalShow(
+      SubTitle: string;
+      TypeMessage: TTypeMessage
+    );
   protected
 
   public
@@ -83,23 +92,48 @@ end;
 
 procedure TSimpleDialog.Show(
   SubTitle: string;
-  TypeMessage: TTypeMessage  
+  TypeMessage: TTypeMessage
+);
+begin
+  if TThread.CurrentThread.ThreadID = MainThreadID then
+  begin
+    FCalledFromMainThread := True;
+    InternalShow(SubTitle, TypeMessage);
+  end
+  else
+  begin
+    FCalledFromMainThread := False;
+    FSyncSubTitle := SubTitle;
+    FSyncTypeMessage := TypeMessage;
+    TThread.Synchronize(nil, @SyncShow);
+  end;
+end;
+
+procedure TSimpleDialog.SyncShow;
+begin
+  InternalShow(FSyncSubTitle, FSyncTypeMessage);
+end;
+
+procedure TSimpleDialog.InternalShow(
+  SubTitle: string;
+  TypeMessage: TTypeMessage
 );
 var
-  CenterLeft: Integer=0;
-  CenterTop: Integer=0;
+  CenterTop: Integer = 0;
+  CenterLeft: Integer = 0;
   Form: TForm;
 begin
   Form := SDfunctions.GetParentForm(Owner);
 
-  TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
+  if FCalledFromMainThread then
+    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(Form);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
-  frSimpleDialog.Position := poDesigned;
   frSimpleDialog.FullScreen := FFullScreen;
+  frSimpleDialog.CalledFromMainThread := FCalledFromMainThread;
 
   SDSimpleDialogForm.typeMessage := TypeMessage;
 
