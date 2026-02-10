@@ -8,15 +8,16 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows;
 
 procedure GetFormCenters(
-   FullScreen: Boolean;
-   FormDialog: TForm;
-   var CenterLeft: Integer;
-   var CenterTop: Integer
+  FullScreen: Boolean;
+  BaseForm: TCustomForm;
+  DialogForm: TForm;
+  var CenterLeft: Integer;
+  var CenterTop: Integer
 );
 function Ternary(
-   ACondition: Boolean;
-   ATrueValue,
-   AFalseValue: Variant
+  ACondition: Boolean;
+  ATrueValue,
+  AFalseValue: Variant
 ): Variant;
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
@@ -26,22 +27,29 @@ function GetTaskBarHeight: Integer;
 implementation
 
 procedure GetFormCenters(
-   FullScreen: Boolean;
-   FormDialog: TForm;
-   var CenterLeft: Integer;
-   var CenterTop: Integer
+  FullScreen: Boolean;
+  BaseForm: TCustomForm;
+  DialogForm: TForm;
+  var CenterLeft: Integer;
+  var CenterTop: Integer
 );
 var
+  M: TMonitor;
   R: TRect;
 begin
-  R := Screen.WorkAreaRect;
+  if Assigned(BaseForm) then
+    M := BaseForm.Monitor
+  else
+    M := Screen.PrimaryMonitor;
 
-  CenterLeft := R.Left + (R.Width - FormDialog.Width) div 2;
+  R := M.WorkAreaRect;
+
+  CenterLeft := R.Left + (R.Width - DialogForm.Width) div 2;
 
   if FullScreen then
-    CenterTop := R.Top + ((R.Height + GetTaskBarHeight) - FormDialog.Height) div 2
+    CenterTop := R.Top + ((R.Height + GetTaskBarHeight) - DialogForm.Height) div 2
   else
-    CenterTop := R.Top + (R.Height - FormDialog.Height) div 2;
+    CenterTop := R.Top + (R.Height - DialogForm.Height) div 2;
 end;
 
 function Ternary(

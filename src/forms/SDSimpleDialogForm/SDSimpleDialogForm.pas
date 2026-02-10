@@ -158,9 +158,13 @@ procedure TfrSimpleDialog.Recenter;
 var
   CenterLeft: Integer = 0;
   CenterTop: Integer = 0;
+  ParentForm: TForm;
 begin
+  ParentForm := SDfunctions.GetParentForm(Owner);
+
   SDfunctions.GetFormCenters(
     FullScreen,
+    ParentForm,
     Self,
     CenterLeft,
     CenterTop
