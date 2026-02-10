@@ -127,15 +127,15 @@ function TConfirmationDialog.InternalShow(
 var
   CenterLeft: Integer = 0;
   CenterTop: Integer = 0;
-  Form: TForm;
+  ParentForm: TForm;
 begin
-  Form := SDfunctions.GetParentForm(Owner);
+  ParentForm := SDfunctions.GetParentForm(Owner);
 
   if not FCalledFromLoader then
-    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
+    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(ParentForm, FFullScreen);
 
   if not Assigned(frConfirmationDialog) then
-    frConfirmationDialog := TfrConfirmationDialog.Create(Form);
+    frConfirmationDialog := TfrConfirmationDialog.Create(ParentForm);
 
   frConfirmationDialog.lblSubTitle.Caption := SubTitle;
   frConfirmationDialog.FullScreen := FFullScreen;
@@ -145,6 +145,7 @@ begin
 
   SDfunctions.GetFormCenters(
     FullScreen,
+    ParentForm,
     frConfirmationDialog,
     CenterLeft,
     CenterTop

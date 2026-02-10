@@ -121,15 +121,15 @@ procedure TSimpleDialog.InternalShow(
 var
   CenterTop: Integer = 0;
   CenterLeft: Integer = 0;
-  Form: TForm;
+  ParentForm: TForm;
 begin
-  Form := SDfunctions.GetParentForm(Owner);
+  ParentForm := SDfunctions.GetParentForm(Owner);
 
   if not FCalledFromLoader then
-    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(Form, FFullScreen);
+    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(ParentForm, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
-    frSimpleDialog := TfrSimpleDialog.Create(Form);
+    frSimpleDialog := TfrSimpleDialog.Create(ParentForm);
 
   frSimpleDialog.lblSubTitle.Caption := SubTitle;
   frSimpleDialog.FullScreen := FFullScreen;
@@ -139,6 +139,7 @@ begin
 
   SDfunctions.GetFormCenters(
     FullScreen,
+    ParentForm,
     frSimpleDialog,
     CenterLeft,
     CenterTop
