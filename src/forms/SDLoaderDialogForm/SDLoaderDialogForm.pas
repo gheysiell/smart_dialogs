@@ -18,18 +18,14 @@ type
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure CloseLoader();
-    procedure RestoreOwnerFocus(Data: PtrInt);
+    procedure CloseLoader;
+    procedure AsyncRestoreFormFocus(Data: PtrInt);
   private
     FOwnerForm: TForm;
     FFullScreen: Boolean;
-
-    procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     property FullScreen: Boolean read FFullScreen write FFullScreen;
-
-    procedure Recenter;
   end;
 
 var
@@ -61,8 +57,8 @@ begin
   frLoaderDialog.Height := 230;
   frLoaderDialog.Height := frLoaderDialog.Height + lblMessage.Height - 30;
 
-  SetRoundedCorners(50);
-  Recenter;
+  SetRoundedCorners(Self, 50);
+  CenterForm(Self, Owner, FullScreen);
 end;
 
 procedure TfrLoaderDialog.FormClose(Sender: TObject;
@@ -74,7 +70,12 @@ begin
   frLoaderDialog := nil;
 
   if Assigned(FOwnerForm) then
-    Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));  
+    Application.QueueAsyncCall(@AsyncRestoreFormFocus, PtrInt(FOwnerForm));
+end;
+
+procedure TfrLoaderDialog.AsyncRestoreFormFocus(Data: PtrInt);
+begin
+  RestoreFormFocus(TCustomForm(Data));
 end;
 
 procedure TfrLoaderDialog.FormResize(Sender: TObject);
@@ -82,53 +83,9 @@ begin
   lblMessage.Left := (ClientWidth - lblMessage.Width) div 2;
 end;
 
-procedure TfrLoaderDialog.RestoreOwnerFocus(Data: PtrInt);
-var
-  TargetForm: TCustomForm;
-begin
-  TargetForm := SDfunctions.GetTopMostModalForm(Self);
-
-  if not Assigned(TargetForm) then
-    TargetForm := Application.MainForm;
-
-  if Assigned(TargetForm) then
-  begin
-    TargetForm.BringToFront;
-    TargetForm.SetFocus;
-  end;
-end;
-
-procedure TfrLoaderDialog.SetRoundedCorners(Radius: Integer);
-var
-  Rgn: HRGN;
-begin
-  Rgn := CreateRoundRectRgn(0, 0, Width + 1, Height + 1, Radius, Radius);
-  SetWindowRgn(Handle, Rgn, True);
-end;
-
 procedure TfrLoaderDialog.CloseLoader;
 begin
   ModalResult := mrOK;
-end;
-
-procedure TfrLoaderDialog.Recenter;
-var
-  CenterLeft: Integer = 0;
-  CenterTop: Integer = 0;
-  ParentForm: TForm;
-begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
-  SDfunctions.GetFormCenters(
-    FullScreen,
-    ParentForm,
-    Self,
-    CenterLeft,
-    CenterTop
-  );
-
-  Left := CenterLeft;
-  Top := CenterTop;
 end;
 
 end.
