@@ -19,9 +19,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CloseLoader;
-    procedure AsyncRestoreFormFocus(Data: PtrInt);
   private
-    FOwnerForm: TForm;
     FFullScreen: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
@@ -41,9 +39,6 @@ uses
 constructor TfrLoaderDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-
-  if AOwner is TForm then
-    FOwnerForm := TForm(AOwner);
 end;
 
 procedure TfrLoaderDialog.FormShow(Sender: TObject);
@@ -68,14 +63,6 @@ begin
 
   CloseAction := caFree;
   frLoaderDialog := nil;
-
-  if Assigned(FOwnerForm) then
-    Application.QueueAsyncCall(@AsyncRestoreFormFocus, PtrInt(FOwnerForm));
-end;
-
-procedure TfrLoaderDialog.AsyncRestoreFormFocus(Data: PtrInt);
-begin
-  RestoreFormFocus(TCustomForm(Data));
 end;
 
 procedure TfrLoaderDialog.FormResize(Sender: TObject);

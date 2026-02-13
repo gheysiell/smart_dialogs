@@ -24,7 +24,6 @@ procedure GetFormCenters(
   var CenterTop: Integer
 );
 procedure SetRoundedCorners(Form: TForm; Radius: Integer);
-procedure RestoreFormFocus(Caller: TCustomForm);
 procedure CenterForm(AForm: TForm; AOwner: TComponent; FullScreen: Boolean);
 
 implementation
@@ -142,22 +141,6 @@ var
 begin
   Rgn := CreateRoundRectRgn(0, 0, Form.Width + 1, Form.Height + 1, Radius, Radius);
   SetWindowRgn(Form.Handle, Rgn, True);
-end;
-
-procedure RestoreFormFocus(Caller: TCustomForm);
-var
-  TargetForm: TCustomForm;
-begin
-  TargetForm := GetTopMostModalForm(Caller);
-
-  if not Assigned(TargetForm) then
-    TargetForm := Application.MainForm;
-
-  if Assigned(TargetForm) then
-  begin
-    TargetForm.BringToFront;
-    TargetForm.SetFocus;
-  end;
 end;
 
 procedure CenterForm(AForm: TForm; AOwner: TComponent; FullScreen: Boolean);

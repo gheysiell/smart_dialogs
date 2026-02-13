@@ -48,9 +48,7 @@ type
     procedure shpConfirmMouseLeave(Sender: TObject);
     procedure shpConfirmMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure AsyncRestoreFormFocus(Data: PtrInt);
   private
-    FOwnerForm: TForm;
     FFullScreen: Boolean;
     FCalledFromLoader: Boolean;
   public
@@ -76,9 +74,6 @@ uses
 constructor TfrConfirmationDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-
-  if AOwner is TForm then
-    FOwnerForm := TForm(AOwner);
 end;
 
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
@@ -89,14 +84,6 @@ begin
 
   CloseAction := caFree;
   frConfirmationDialog := nil;
-
-  if Assigned(FOwnerForm) then
-    Application.QueueAsyncCall(@AsyncRestoreFormFocus, PtrInt(FOwnerForm));
-end;
-
-procedure TfrConfirmationDialog.AsyncRestoreFormFocus(Data: PtrInt);
-begin
-  RestoreFormFocus(TCustomForm(Data));
 end;
 
 procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;

@@ -24,9 +24,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure imgCloseClick(Sender: TObject);
-    procedure AsyncRestoreFormFocus(Data: PtrInt);
   private
-    FOwnerForm: TForm;
     FFullScreen: Boolean;
     FCalledFromLoader: Boolean;
   public
@@ -51,9 +49,6 @@ uses
 constructor TfrSimpleDialog.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-
-  if AOwner is TForm then
-    FOwnerForm := TForm(AOwner);
 end;
 
 procedure TfrSimpleDialog.FormClose(Sender: TObject;
@@ -64,14 +59,6 @@ begin
 
   CloseAction := caFree;
   frSimpleDialog := nil;
-
-  if Assigned(FOwnerForm) then
-    Application.QueueAsyncCall(@AsyncRestoreFormFocus, PtrInt(FOwnerForm));
-end;
-
-procedure TfrSimpleDialog.AsyncRestoreFormFocus(Data: PtrInt);
-begin
-  RestoreFormFocus(TCustomForm(Data));
 end;
 
 procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
