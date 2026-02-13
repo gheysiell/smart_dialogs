@@ -12,9 +12,6 @@ type
   { TfrmSDBackgroundFullScreen }
 
   TfrmSDBackgroundFullScreen = class(TForm)
-    procedure FormClick(Sender: TObject);
-    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
   public
     constructor Create(AOwner: TComponent); override;
 
@@ -31,19 +28,6 @@ uses
   SDLoaderDialogForm, SDfunctions;
 
 {$R *.lfm}
-
-procedure TfrmSDBackgroundFullScreen.FormClick(Sender: TObject);
-begin
-  if Assigned(frLoaderDialog) then
-    frLoaderDialog.BringToFront;
-end;
-
-procedure TfrmSDBackgroundFullScreen.FormMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  if Button = mbLeft then
-    FormClick(Sender);
-end;
 
 constructor TfrmSDBackgroundFullScreen.Create(AOwner: TComponent);
 begin
