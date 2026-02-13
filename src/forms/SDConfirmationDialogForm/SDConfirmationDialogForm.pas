@@ -48,19 +48,15 @@ type
     procedure shpConfirmMouseLeave(Sender: TObject);
     procedure shpConfirmMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure RestoreOwnerFocus(Data: PtrInt);
+    procedure AsyncRestoreFormFocus(Data: PtrInt);
   private
     FOwnerForm: TForm;
     FFullScreen: Boolean;
     FCalledFromLoader: Boolean;
-
-    procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     property FullScreen: Boolean read FFullScreen write FFullScreen;
     property CalledFromLoader: Boolean read FCalledFromLoader write FCalledFromLoader;
-
-    procedure Recenter;
   end;
 
 var
@@ -95,23 +91,12 @@ begin
   frConfirmationDialog := nil;
 
   if Assigned(FOwnerForm) then
-    Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));
+    Application.QueueAsyncCall(@AsyncRestoreFormFocus, PtrInt(FOwnerForm));
 end;
 
-procedure TfrConfirmationDialog.RestoreOwnerFocus(Data: PtrInt);
-var
-  TargetForm: TCustomForm;
+procedure TfrConfirmationDialog.AsyncRestoreFormFocus(Data: PtrInt);
 begin
-  TargetForm := SDfunctions.GetTopMostModalForm(Self);
-
-  if not Assigned(TargetForm) then
-    TargetForm := Application.MainForm;
-
-  if Assigned(TargetForm) then
-  begin
-    TargetForm.BringToFront;
-    TargetForm.SetFocus;
-  end;
+  RestoreFormFocus(TCustomForm(Data));
 end;
 
 procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;
@@ -166,8 +151,8 @@ begin
   end;
 
   CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;
-  SetRoundedCorners(50);
-  Recenter;
+  SetRoundedCorners(Self, 50);
+  CenterForm(Self, Owner, FullScreen);
 end;
 
 procedure TfrConfirmationDialog.shpCancelChangeBounds(Sender: TObject);
@@ -251,14 +236,6 @@ begin
   shpCancel.Brush.Color := $00C8C8C8;
 end;
 
-procedure TfrConfirmationDialog.SetRoundedCorners(Radius: Integer);
-var
-  Rgn: HRGN;
-begin
-  Rgn := CreateRoundRectRgn(0, 0, Width + 1, Height + 1, Radius, Radius);
-  SetWindowRgn(Handle, Rgn, True);
-end;
-
 procedure TfrConfirmationDialog.shpConfirmMouseEnter(Sender: TObject);
 begin
   shpConfirm.Brush.Color := $00BE8C5C;
@@ -267,26 +244,6 @@ end;
 procedure TfrConfirmationDialog.shpConfirmMouseLeave(Sender: TObject);
 begin
   shpConfirm.Brush.Color := $00EDAF5C;
-end;
-
-procedure TfrConfirmationDialog.Recenter;
-var
-  CenterLeft: Integer = 0;
-  CenterTop: Integer = 0;
-  ParentForm: TForm;
-begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
-  SDfunctions.GetFormCenters(
-    FullScreen,
-    ParentForm,
-    Self,
-    CenterLeft,
-    CenterTop
-  );
-
-  Left := CenterLeft;
-  Top := CenterTop;
 end;
 
 end.

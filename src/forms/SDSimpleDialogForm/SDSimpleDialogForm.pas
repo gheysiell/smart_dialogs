@@ -24,19 +24,15 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure imgCloseClick(Sender: TObject);
-    procedure RestoreOwnerFocus(Data: PtrInt);
+    procedure AsyncRestoreFormFocus(Data: PtrInt);
   private
     FOwnerForm: TForm;
     FFullScreen: Boolean;
     FCalledFromLoader: Boolean;
-    
-    procedure SetRoundedCorners(Radius: Integer);
   public
     constructor Create(AOwner: TComponent); override;
     property FullScreen: Boolean read FFullScreen write FFullScreen;
     property CalledFromLoader: Boolean read FCalledFromLoader write FCalledFromLoader;
-
-    procedure Recenter;
   end;
 
 var
@@ -70,23 +66,12 @@ begin
   frSimpleDialog := nil;
 
   if Assigned(FOwnerForm) then
-    Application.QueueAsyncCall(@RestoreOwnerFocus, PtrInt(FOwnerForm));
+    Application.QueueAsyncCall(@AsyncRestoreFormFocus, PtrInt(FOwnerForm));
 end;
 
-procedure TfrSimpleDialog.RestoreOwnerFocus(Data: PtrInt);
-var
-  TargetForm: TCustomForm;
+procedure TfrSimpleDialog.AsyncRestoreFormFocus(Data: PtrInt);
 begin
-  TargetForm := SDfunctions.GetTopMostModalForm(Self);
-
-  if not Assigned(TargetForm) then
-    TargetForm := Application.MainForm;
-
-  if Assigned(TargetForm) then
-  begin
-    TargetForm.BringToFront;
-    TargetForm.SetFocus;
-  end;
+  RestoreFormFocus(TCustomForm(Data));
 end;
 
 procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
@@ -137,41 +122,13 @@ begin
        end;
   end;
 
-  SetRoundedCorners(50);
-  Recenter;
+  SetRoundedCorners(Self, 50);
+  CenterForm(Self, Owner, FullScreen);
 end;
 
 procedure TfrSimpleDialog.imgCloseClick(Sender: TObject);
 begin
   Self.Close;
-end;
-
-procedure TfrSimpleDialog.SetRoundedCorners(Radius: Integer);
-var
-  Rgn: HRGN;
-begin
-  Rgn := CreateRoundRectRgn(0, 0, Width + 1, Height + 1, Radius, Radius);
-  SetWindowRgn(Handle, Rgn, True);
-end;
-
-procedure TfrSimpleDialog.Recenter;
-var
-  CenterLeft: Integer = 0;
-  CenterTop: Integer = 0;
-  ParentForm: TForm;
-begin
-  ParentForm := SDfunctions.GetParentForm(Owner);
-
-  SDfunctions.GetFormCenters(
-    FullScreen,
-    ParentForm,
-    Self,
-    CenterLeft,
-    CenterTop
-  );
-
-  Left := CenterLeft;
-  Top := CenterTop;
 end;
 
 end.

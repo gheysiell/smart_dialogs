@@ -9,7 +9,4 @@ object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
   Caption = 'frmSDBackgroundFullScreen'
   Color = clBlack
   LCLVersion = '4.0.0.4'
-  OnClick = FormClick
-  OnDblClick = FormClick
-  OnMouseDown = FormMouseDown
 end
