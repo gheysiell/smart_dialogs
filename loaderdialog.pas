@@ -102,6 +102,9 @@ begin
     TSDMyThread.Create(FSlowProcess, @CloseLoader);
 
   frLoaderDialog.ShowModal;
+
+  ParentForm.BringToFront;
+  ParentForm.SetFocus;
 end;
 
 procedure TLoaderDialog.CloseLoader;

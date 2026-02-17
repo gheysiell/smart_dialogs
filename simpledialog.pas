@@ -149,6 +149,9 @@ begin
   frSimpleDialog.Top := CenterTop;
 
   frSimpleDialog.ShowModal;
+  
+  ParentForm.BringToFront;
+  ParentForm.SetFocus;  
 end;
 
 procedure Register;
