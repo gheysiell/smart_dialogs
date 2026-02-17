@@ -165,6 +165,9 @@ begin
 
   if Assigned(FOnCanceled) and (not Result) then
     FOnCanceled();
+
+  ParentForm.BringToFront;
+  ParentForm.SetFocus;    
 end;
 
 procedure Register;
