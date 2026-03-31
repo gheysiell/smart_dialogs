@@ -314,19 +314,27 @@ object frConfirmationDialog: TfrConfirmationDialog
         OnMouseUp = shpCancelMouseUp
       end
       object lblCancel: TLabel
+        AnchorSideLeft.Control = shpCancel
+        AnchorSideTop.Control = shpCancel
+        AnchorSideRight.Control = shpCancel
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = shpCancel
+        AnchorSideBottom.Side = asrBottom
         Cursor = crHandPoint
-        Left = 24
-        Height = 25
-        Top = 10
-        Width = 122
+        Left = 0
+        Height = 50
+        Top = 0
+        Width = 170
         Alignment = taCenter
-        Caption = 'Cancelar (esc)'
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Caption = 'Não (esc)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = 4342338
         Font.Height = -19
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
         Font.Style = [fsBold]
+        Layout = tlCenter
         ParentFont = False
         OnClick = lblCancelClick
         OnMouseEnter = lblCancelMouseEnter
@@ -370,19 +378,27 @@ object frConfirmationDialog: TfrConfirmationDialog
         OnMouseUp = shpConfirmMouseUp
       end
       object lblConfirm: TLabel
+        AnchorSideLeft.Control = shpConfirm
+        AnchorSideTop.Control = shpConfirm
+        AnchorSideRight.Control = shpConfirm
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = shpConfirm
+        AnchorSideBottom.Side = asrBottom
         Cursor = crHandPoint
-        Left = 7
-        Height = 25
-        Top = 10
-        Width = 157
+        Left = 0
+        Height = 50
+        Top = 0
+        Width = 170
         Alignment = taCenter
-        Caption = 'Confirmar (enter)'
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Caption = 'Sim (enter)'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clWhite
         Font.Height = -19
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
         Font.Style = [fsBold]
+        Layout = tlCenter
         ParentFont = False
         OnClick = lblConfirmClick
         OnMouseEnter = lblConfirmMouseEnter
