@@ -5,7 +5,8 @@ unit SDfunctions;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows,
+  LCLIntf, LCLType, Types;
 
 function Ternary(
   ACondition: Boolean;
@@ -80,22 +81,18 @@ end;
 
 function GetLabelHeight(ALabel: TLabel): Integer;
 var
-  TmpBitmap: Graphics.TBitmap;
-  TextHeight, Lines, LabelHeight: Integer;
+  R: TRect;
+  Flags: Cardinal;
 begin
-  TmpBitmap := Graphics.TBitmap.Create;
+  R := Rect(0, 0, ALabel.Width, 0);
 
-  try
-    TmpBitmap.Canvas.Font.Assign(ALabel.Font);
-    TextHeight := TmpBitmap.Canvas.TextHeight('W');
-    Lines := (TmpBitmap.Canvas.TextWidth(ALabel.Caption) div ALabel.Width) + 1;
+  Flags := DT_WORDBREAK or DT_CALCRECT or DT_EXPANDTABS;
 
-    LabelHeight := Lines * TextHeight;
+  ALabel.Canvas.Font.Assign(ALabel.Font);
 
-    Result := LabelHeight;
-  finally
-    TmpBitmap.Free;
-  end;
+  DrawText(ALabel.Canvas.Handle, PChar(ALabel.Caption), -1, R, Flags);
+
+  Result := R.Bottom;
 end;
 
 function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
@@ -129,7 +126,7 @@ begin
   if hTaskbar = 0 then
     Exit(0);
 
-  if not GetWindowRect(hTaskbar, Rect) then
+  if not Windows.GetWindowRect(hTaskbar, Rect) then
     RaiseLastOSError;
 
   Result := Rect.Bottom - Rect.Top;
