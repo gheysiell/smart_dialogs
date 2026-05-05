@@ -7,7 +7,7 @@ with UI components.
 
 ## Project statatistics
 
-- **Lines of code**: 2.805
+- **Lines of code**: 2.857
 - **Files**: 16
 - **Folders**: 7
 - **Screens**: 3
@@ -65,4 +65,20 @@ if ConfirmationDialog.Show(
 begin
   // make something here
 end;
+```
+
+## BackgroundFullScreen
+
+To use `BackgroundFullScreen`, call the PushBackground() procedure, and after to close
+call the PopBackground() procedure.
+
+### Example Code
+
+```Object Pascal
+TSDBackgroundManager.PushBackground(SampleForm, False);
+
+// Show another modal form here
+SampleForm.ShowModal;
+
+TSDBackgroundManager.PopBackground;
 ```

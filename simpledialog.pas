@@ -126,7 +126,7 @@ begin
   ParentForm := SDfunctions.GetParentForm(Owner);
 
   if not FCalledFromLoader then
-    TfrmSDBackgroundFullScreen.ShowSDBackgroundFullScreen(ParentForm, FFullScreen);
+    TSDBackgroundManager.PushBackground(ParentForm, FFullScreen);
 
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(ParentForm);

@@ -8,5 +8,6 @@ object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
   BorderStyle = bsNone
   Caption = 'frmSDBackgroundFullScreen'
   Color = clBlack
-  LCLVersion = '4.0.0.4'
+  FormStyle = fsStayOnTop
+  LCLVersion = '4.6.0.0'
 end
