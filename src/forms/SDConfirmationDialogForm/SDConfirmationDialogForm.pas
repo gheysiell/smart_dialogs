@@ -80,7 +80,7 @@ procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   if not FCalledFromLoader then
-    TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
+    TSDBackgroundManager.PopBackground;
 
   CloseAction := caFree;
   frConfirmationDialog := nil;

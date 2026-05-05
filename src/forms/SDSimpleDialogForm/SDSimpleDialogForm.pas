@@ -55,7 +55,7 @@ procedure TfrSimpleDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
   if not FCalledFromLoader then
-    TfrmSDBackgroundFullScreen.closeSDBackgroundFullScreen();
+    TSDBackgroundManager.PopBackground;
 
   CloseAction := caFree;
   frSimpleDialog := nil;
