@@ -89,10 +89,10 @@ end;
 procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key <> 13 then
-    Self.Close
-  else
-    shpConfirmChangeBounds(Sender);
+  if Key = VK_RETURN then
+    shpConfirmChangeBounds(Sender)
+  else if Key = VK_ESCAPE then
+    Self.Close;
 end;
 
 procedure TfrConfirmationDialog.FormResize(Sender: TObject);
@@ -107,7 +107,7 @@ begin
   inherited;
 
   lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
-  frConfirmationDialog.Height := 305;
+  frConfirmationDialog.Height := 350;
   frConfirmationDialog.Height := frConfirmationDialog.Height + lblSubTitle.Height;
 
   case typeMessage of

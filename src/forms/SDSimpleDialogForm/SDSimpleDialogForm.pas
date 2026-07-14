@@ -64,7 +64,8 @@ end;
 procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  Self.Close;
+  if (Key = VK_ESCAPE) or (Key = VK_RETURN) then
+    Self.Close;
 end;
 
 procedure TfrSimpleDialog.FormResize(Sender: TObject);
