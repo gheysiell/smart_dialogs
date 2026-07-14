@@ -1,30 +1,31 @@
 object frSimpleDialog: TfrSimpleDialog
   Left = 423
-  Height = 255
+  Height = 280
   Top = 255
-  Width = 440
+  Width = 550
   BorderStyle = bsNone
   Caption = 'frSimpleDialog'
-  ClientHeight = 255
-  ClientWidth = 440
+  ClientHeight = 280
+  ClientWidth = 550
   Color = 16773608
+  DesignTimePPI = 120
   FormStyle = fsStayOnTop
   KeyPreview = True
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
   OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   OnShow = FormShow
   object pnlContainer: TPanel
-    Left = 8
-    Height = 239
-    Top = 8
-    Width = 424
+    Left = 10
+    Height = 260
+    Top = 10
+    Width = 530
     Align = alClient
-    BorderSpacing.Around = 8
+    BorderSpacing.Around = 10
     BevelOuter = bvNone
-    ClientHeight = 239
-    ClientWidth = 424
+    ClientHeight = 260
+    ClientWidth = 530
     ParentBackground = False
     TabOrder = 0
     object imgClose: TImage
@@ -32,10 +33,10 @@ object frSimpleDialog: TfrSimpleDialog
       AnchorSideRight.Control = pnlContainer
       AnchorSideRight.Side = asrBottom
       Cursor = crHandPoint
-      Left = 400
-      Height = 24
+      Left = 500
+      Height = 30
       Top = 0
-      Width = 24
+      Width = 30
       Anchors = [akTop, akRight]
       Center = True
       Picture.Data = {
@@ -60,15 +61,15 @@ object frSimpleDialog: TfrSimpleDialog
       AnchorSideRight.Control = pnlContainer
       AnchorSideRight.Side = asrBottom
       Left = 0
-      Height = 37
-      Top = 148
-      Width = 424
+      Height = 46
+      Top = 154
+      Width = 530
       Alignment = taCenter
       Anchors = [akTop, akLeft, akRight]
-      BorderSpacing.Top = 15
+      BorderSpacing.Top = 20
       Caption = 'Title'
       Font.Color = 4342338
-      Font.Height = -27
+      Font.Height = -34
       Font.Style = [fsBold]
       Layout = tlCenter
       ParentFont = False
@@ -79,31 +80,31 @@ object frSimpleDialog: TfrSimpleDialog
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = pnlContainer
       AnchorSideRight.Side = asrBottom
-      Left = 30
-      Height = 30
-      Top = 195
-      Width = 364
+      Left = 38
+      Height = 38
+      Top = 212
+      Width = 454
       Alignment = taCenter
       Anchors = [akTop, akLeft, akRight]
       AutoSize = False
-      BorderSpacing.Left = 30
-      BorderSpacing.Top = 10
-      BorderSpacing.Right = 30
+      BorderSpacing.Left = 38
+      BorderSpacing.Top = 12
+      BorderSpacing.Right = 38
       Caption = 'SubTitle'
       Font.Color = 4342338
-      Font.Height = -20
+      Font.Height = -25
       ParentFont = False
       WordWrap = True
     end
     object Image: TImage
       AnchorSideTop.Control = pnlContainer
-      Left = 146
+      Left = 199
       Height = 128
-      Top = 5
+      Top = 6
       Width = 128
       Anchors = [akTop]
       AutoSize = True
-      BorderSpacing.Top = 5
+      BorderSpacing.Top = 6
       Center = True
       Picture.Data = {
         1754506F727461626C654E6574776F726B47726170686963460D000089504E47
@@ -220,8 +221,8 @@ object frSimpleDialog: TfrSimpleDialog
   object ImageList1: TImageList
     Height = 128
     Width = 128
-    Left = 336
-    Top = 56
+    Left = 420
+    Top = 70
     Bitmap = {
       4C7A040000008000000080000000393400000000000078DAED9D077814C5FBC7
       CF8280027F051444F9A114511104C142CFDD851420F4D07B0984DE116CA10928

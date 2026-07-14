@@ -7,7 +7,7 @@ with UI components.
 
 ## Project statatistics
 
-- **Lines of code**: 2.857
+- **Lines of code**: 2.869
 - **Files**: 16
 - **Folders**: 7
 - **Screens**: 3
@@ -33,7 +33,7 @@ begin
   LoaderDialog1.SlowProcess := @SampleSlowProcess;
 
   // Make the LoaderDialog visible while the process is running
-  LoaderDialog1.Visible := True;
+  LoaderDialog1.Show('Loading...');
 end;
 
 procedure TForm1.SampleSlowProcess;

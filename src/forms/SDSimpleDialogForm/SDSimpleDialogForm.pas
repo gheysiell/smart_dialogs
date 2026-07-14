@@ -79,8 +79,8 @@ begin
   inherited;
 
   lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
-  frSimpleDialog.Height := 255;
-  frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height - 30;
+  frSimpleDialog.Height := 242;
+  frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height;
 
   case typeMessage of
     TTypeMessage.tmInfo:
