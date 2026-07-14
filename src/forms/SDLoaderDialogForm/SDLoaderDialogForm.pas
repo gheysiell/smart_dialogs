@@ -44,13 +44,18 @@ end;
 procedure TfrLoaderDialog.FormShow(Sender: TObject);
 begin
   if Trim(lblMessage.Caption) = '' then
-    Loader.Top := 64
+  begin
+    Loader.Top := 64;
+    frLoaderDialog.Height := 254;
+  end
   else
-    Loader.Top := 40;
+  begin
+    lblMessage.Height := SDfunctions.GetLabelHeight(lblMessage);
 
-  lblMessage.Height := SDfunctions.GetLabelHeight(lblMessage);
-  frLoaderDialog.Height := 230;
-  frLoaderDialog.Height := frLoaderDialog.Height + lblMessage.Height - 30;
+    Loader.Top := 40;
+    frLoaderDialog.Height := 247;
+    frLoaderDialog.Height := frLoaderDialog.Height + lblMessage.Height;
+  end;
 
   SetRoundedCorners(Self, 50);
   CenterForm(Self, Owner, FullScreen);

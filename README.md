@@ -7,11 +7,12 @@ with UI components.
 
 ## Project statatistics
 
-- **Lines of code**: 2.857
+- **Lines of code**: 2.871
 - **Files**: 16
 - **Folders**: 7
 - **Screens**: 3
 - **Dependencies**: 3
+- **Average lines per file**: 180
 
 ## Steps to add package in your project
 
@@ -32,8 +33,8 @@ begin
   // Assign the slow process to the LoaderDialog
   LoaderDialog1.SlowProcess := @SampleSlowProcess;
 
-  // Make the LoaderDialog visible while the process is running
-  LoaderDialog1.Visible := True;
+  // Show the LoaderDialog while the process is running
+  LoaderDialog1.Show('Loading...');
 end;
 
 procedure TForm1.SampleSlowProcess;

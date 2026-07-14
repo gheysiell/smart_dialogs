@@ -13,7 +13,7 @@ type
 
 type
   TLoaderDialog = class(TComponent)
-    procedure Show;
+    procedure Show(Message: String);
   private
     FVisible: Boolean;
     FFullScreen: Boolean;
@@ -55,7 +55,7 @@ begin
   Application.ProcessMessages;
 
   if FVisible then
-    Show()
+    Show(FMessage)
   else
     frLoaderDialog.Close();
 end;
@@ -70,7 +70,7 @@ begin
   FMessage := AValue;
 end;
 
-procedure TLoaderDialog.Show;
+procedure TLoaderDialog.Show(Message: String);
 var
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
@@ -83,7 +83,7 @@ begin
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(ParentForm);
 
-  frLoaderDialog.lblMessage.Caption := FMessage;
+  frLoaderDialog.lblMessage.Caption := Message;
   frLoaderDialog.Position := poDesigned;
   frLoaderDialog.FullScreen := FFullScreen;
 
