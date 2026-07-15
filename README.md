@@ -7,12 +7,12 @@ with UI components.
 
 ## Project statatistics
 
-- **Lines of code**: 2.871
+- **Lines of code**: 1.425
 - **Files**: 16
 - **Folders**: 7
 - **Screens**: 3
 - **Dependencies**: 3
-- **Average lines per file**: 180
+- **Average lines per file**: 89
 
 ## Steps to add package in your project
 
