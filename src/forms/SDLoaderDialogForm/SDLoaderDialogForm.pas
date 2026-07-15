@@ -45,15 +45,15 @@ procedure TfrLoaderDialog.FormShow(Sender: TObject);
 begin
   if Trim(lblMessage.Caption) = '' then
   begin
-    Loader.Top := 64;
-    frLoaderDialog.Height := 254;
+    Loader.Top := Scale96ToForm(65);
+    frLoaderDialog.Height := Scale96ToForm(231);
   end
   else
   begin
     lblMessage.Height := SDfunctions.GetLabelHeight(lblMessage);
 
-    Loader.Top := 40;
-    frLoaderDialog.Height := 247;
+    Loader.Top := Scale96ToForm(40);
+    frLoaderDialog.Height := Scale96ToForm(200);
     frLoaderDialog.Height := frLoaderDialog.Height + lblMessage.Height;
   end;
 

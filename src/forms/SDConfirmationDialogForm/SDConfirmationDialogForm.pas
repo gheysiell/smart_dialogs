@@ -107,7 +107,7 @@ begin
   inherited;
 
   lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
-  frConfirmationDialog.Height := 350;
+  frConfirmationDialog.Height := Scale96ToForm(300);
   frConfirmationDialog.Height := frConfirmationDialog.Height + lblSubTitle.Height;
 
   case typeMessage of

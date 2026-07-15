@@ -5,8 +5,8 @@ unit SDfunctions;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Windows,
-  LCLIntf, LCLType, Types;
+  Classes, SysUtils, Forms, Graphics, Dialogs, StdCtrls, Windows,
+  LCLIntf, LCLType, Types, Controls;
 
 function Ternary(
   ACondition: Boolean;
@@ -135,8 +135,17 @@ end;
 procedure SetRoundedCorners(Form: TForm; Radius: Integer);
 var
   Rgn: HRGN;
+  ScaledRadius: Integer;
 begin
-  Rgn := CreateRoundRectRgn(0, 0, Form.Width + 1, Form.Height + 1, Radius, Radius);
+  ScaledRadius := Form.Scale96ToForm(Radius);
+
+  Rgn := CreateRoundRectRgn(
+    0,
+    0, Form.Width + 1,
+    Form.Height + 1,
+    ScaledRadius,
+    ScaledRadius
+  );
   SetWindowRgn(Form.Handle, Rgn, True);
 end;
 
