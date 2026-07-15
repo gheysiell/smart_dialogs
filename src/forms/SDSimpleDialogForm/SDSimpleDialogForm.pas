@@ -80,7 +80,7 @@ begin
   inherited;
 
   lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
-  frSimpleDialog.Height := 242;
+  frSimpleDialog.Height := Scale96ToForm(220);
   frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height;
 
   case typeMessage of

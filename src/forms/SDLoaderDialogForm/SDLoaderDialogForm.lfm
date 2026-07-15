@@ -1,13 +1,12 @@
 object frLoaderDialog: TfrLoaderDialog
   Left = 391
-  Height = 285
+  Height = 230
   Top = 116
-  Width = 288
+  Width = 230
   BorderStyle = bsNone
   Caption = 'frLoaderDialog'
-  ClientHeight = 285
-  ClientWidth = 288
-  DesignTimePPI = 120
+  ClientHeight = 230
+  ClientWidth = 230
   FormStyle = fsStayOnTop
   Position = poWorkAreaCenter
   LCLVersion = '4.8.0.0'
@@ -15,10 +14,10 @@ object frLoaderDialog: TfrLoaderDialog
   OnResize = FormResize
   OnShow = FormShow
   object Loader: TBCFluentProgressRing
-    Left = 82
-    Height = 125
+    Left = 66
+    Height = 100
     Top = 40
-    Width = 125
+    Width = 100
     Color = clWhite
     ColorOpacity = 128
     Alignment = taCenter
@@ -32,20 +31,20 @@ object frLoaderDialog: TfrLoaderDialog
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 30
-    Height = 38
-    Top = 232
-    Width = 228
+    Left = 24
+    Height = 30
+    Top = 188
+    Width = 182
     Alignment = taCenter
     Anchors = [akLeft, akRight, akBottom]
     AutoSize = False
-    BorderSpacing.Left = 30
-    BorderSpacing.Top = 12
-    BorderSpacing.Right = 30
-    BorderSpacing.Bottom = 15
+    BorderSpacing.Left = 24
+    BorderSpacing.Top = 10
+    BorderSpacing.Right = 24
+    BorderSpacing.Bottom = 12
     Caption = 'Message'
     Font.Color = 4342338
-    Font.Height = -25
+    Font.Height = -20
     ParentFont = False
     WordWrap = True
   end
