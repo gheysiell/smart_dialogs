@@ -38,16 +38,16 @@ type
     procedure lblConfirmMouseLeave(Sender: TObject);
     procedure pnlWrapperCancelClick(Sender: TObject);
     procedure pnlWrapperConfirmClick(Sender: TObject);
-    procedure shpCancelChangeBounds(Sender: TObject);
     procedure shpCancelMouseEnter(Sender: TObject);
     procedure shpCancelMouseLeave(Sender: TObject);
     procedure shpCancelMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure shpConfirmChangeBounds(Sender: TObject);    
     procedure shpConfirmMouseEnter(Sender: TObject);
     procedure shpConfirmMouseLeave(Sender: TObject);
     procedure shpConfirmMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure ConfirmAndClose;
+    procedure CancelAndClose;
   private
     FFullScreen: Boolean;
     FCalledFromLoader: Boolean;
@@ -90,9 +90,9 @@ procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
-    shpConfirmChangeBounds(Sender)
+    ConfirmAndClose
   else if Key = VK_ESCAPE then
-    Self.Close;
+    CancelAndClose;
 end;
 
 procedure TfrConfirmationDialog.FormResize(Sender: TObject);
@@ -142,13 +142,13 @@ begin
   CenterForm(Self, Owner, FullScreen);
 end;
 
-procedure TfrConfirmationDialog.shpCancelChangeBounds(Sender: TObject);
+procedure TfrConfirmationDialog.CancelAndClose;
 begin
   CanceledOrConfirmed := TCanceledOrConfirmed.Canceled;
   Self.Close;
 end;
 
-procedure TfrConfirmationDialog.shpConfirmChangeBounds(Sender: TObject);
+procedure TfrConfirmationDialog.ConfirmAndClose;
 begin
   CanceledOrConfirmed := TCanceledOrConfirmed.Confirmed;
   Self.Close;
@@ -156,41 +156,41 @@ end;
 
 procedure TfrConfirmationDialog.imgCloseClick(Sender: TObject);
 begin
-  shpCancelChangeBounds(Sender);
+  CancelAndClose
 end;
 
 procedure TfrConfirmationDialog.lblCancelClick(Sender: TObject);
 begin
-  shpCancelChangeBounds(Sender);
+  CancelAndClose;
 end;
 
 procedure TfrConfirmationDialog.pnlWrapperCancelClick(Sender: TObject);
 begin
-  shpCancelChangeBounds(Sender);
+  CancelAndClose;
 end;
 
 procedure TfrConfirmationDialog.shpCancelMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbLeft then
-    shpCancelChangeBounds(Sender);
+    CancelAndClose;
 end;
 
 procedure TfrConfirmationDialog.pnlWrapperConfirmClick(Sender: TObject);
 begin
-  shpConfirmChangeBounds(Sender);
+  ConfirmAndClose;
 end;
 
 procedure TfrConfirmationDialog.lblConfirmClick(Sender: TObject);
 begin
-  shpConfirmChangeBounds(Sender);
+  ConfirmAndClose;
 end;
 
 procedure TfrConfirmationDialog.shpConfirmMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbLeft then
-    shpConfirmChangeBounds(Sender);
+    ConfirmAndClose;
 end;
 
 procedure TfrConfirmationDialog.lblCancelMouseEnter(Sender: TObject);
