@@ -83,7 +83,7 @@ begin
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(ParentForm);
 
-  frLoaderDialog.lblMessage.Caption := Message;
+  frLoaderDialog.lbMessage.Caption := Message;
   frLoaderDialog.Position := poDesigned;
   frLoaderDialog.FullScreen := FFullScreen;
 

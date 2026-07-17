@@ -9,9 +9,9 @@ uses
 
 type
 
-  { TfrmSDBackgroundFullScreen }
+  { TfrSDBackgroundFullScreen }
 
-  TfrmSDBackgroundFullScreen = class(TForm)
+  TfrSDBackgroundFullScreen = class(TForm)
   public
     constructor Create(AOwner: TComponent); override;
   end;
@@ -50,9 +50,9 @@ class procedure TSDBackgroundManager.PushBackground(FormRef: TForm; FullScreen: 
 var
   AMonitor: TMonitor;
   TaskBarHeight: Integer;
-  NewBG: TfrmSDBackgroundFullScreen;
+  NewBG: TfrSDBackgroundFullScreen;
 begin
-  NewBG := TfrmSDBackgroundFullScreen.Create(Application);
+  NewBG := TfrSDBackgroundFullScreen.Create(Application);
 
   if Assigned(FormRef) then
     AMonitor := Screen.MonitorFromWindow(FormRef.Handle)
@@ -93,9 +93,9 @@ begin
     FreeAndNil(FBackgroundStack);
 end;
 
-{ TfrmSDBackgroundFullScreen }
+{ TfrSDBackgroundFullScreen }
 
-constructor TfrmSDBackgroundFullScreen.Create(AOwner: TComponent);
+constructor TfrSDBackgroundFullScreen.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
   Enabled := False;

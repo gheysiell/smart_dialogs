@@ -137,7 +137,7 @@ begin
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(ParentForm);
 
-  frConfirmationDialog.lblSubTitle.Caption := SubTitle;
+  frConfirmationDialog.lbSubTitle.Caption := SubTitle;
   frConfirmationDialog.FullScreen := FFullScreen;
   frConfirmationDialog.CalledFromLoader := FCalledFromLoader;
 

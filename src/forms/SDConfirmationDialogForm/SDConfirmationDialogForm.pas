@@ -13,38 +13,39 @@ type
   { TfrConfirmationDialog }
 
   TfrConfirmationDialog = class(TForm)
-    Image: TImage;
-    ImageList1: TImageList;
-    imgClose: TImage;
-    lblCancel: TLabel;
-    lblConfirm: TLabel;
-    lblSubTitle: TLabel;
-    lblTitle: TLabel;
-    pnlWrapperCancel: TPanel;
-    pnlContainer: TPanel;
-    pnlWrapperConfirm: TPanel;
-    shpCancel: TShape;
-    shpConfirm: TShape;
+    ilClose: TImageList;
+    ilIcons: TImageList;
+    imMain: TImage;
+    imClose: TImage;
+    lbCancel: TLabel;
+    lbConfirm: TLabel;
+    lbSubTitle: TLabel;
+    lbTitle: TLabel;
+    pnWrapperCancel: TPanel;
+    pnContainer: TPanel;
+    pnWrapperConfirm: TPanel;
+    spCancel: TShape;
+    spConfirm: TShape;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure imgCloseClick(Sender: TObject);
-    procedure lblCancelClick(Sender: TObject);
-    procedure lblCancelMouseEnter(Sender: TObject);
-    procedure lblCancelMouseLeave(Sender: TObject);
-    procedure lblConfirmClick(Sender: TObject);
-    procedure lblConfirmMouseEnter(Sender: TObject);
-    procedure lblConfirmMouseLeave(Sender: TObject);
-    procedure pnlWrapperCancelClick(Sender: TObject);
-    procedure pnlWrapperConfirmClick(Sender: TObject);
-    procedure shpCancelMouseEnter(Sender: TObject);
-    procedure shpCancelMouseLeave(Sender: TObject);
-    procedure shpCancelMouseUp(Sender: TObject; Button: TMouseButton;
+    procedure imCloseClick(Sender: TObject);
+    procedure lbCancelClick(Sender: TObject);
+    procedure lbCancelMouseEnter(Sender: TObject);
+    procedure lbCancelMouseLeave(Sender: TObject);
+    procedure lbConfirmClick(Sender: TObject);
+    procedure lbConfirmMouseEnter(Sender: TObject);
+    procedure lbConfirmMouseLeave(Sender: TObject);
+    procedure pnWrapperCancelClick(Sender: TObject);
+    procedure pnWrapperConfirmClick(Sender: TObject);
+    procedure spCancelMouseEnter(Sender: TObject);
+    procedure spCancelMouseLeave(Sender: TObject);
+    procedure spCancelMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure shpConfirmMouseEnter(Sender: TObject);
-    procedure shpConfirmMouseLeave(Sender: TObject);
-    procedure shpConfirmMouseUp(Sender: TObject; Button: TMouseButton;
+    procedure spConfirmMouseEnter(Sender: TObject);
+    procedure spConfirmMouseLeave(Sender: TObject);
+    procedure spConfirmMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure ConfirmAndClose;
     procedure CancelAndClose;
@@ -97,42 +98,42 @@ end;
 
 procedure TfrConfirmationDialog.FormResize(Sender: TObject);
 begin
-  Image.Left := (pnlContainer.Width - Image.Width) div 2;
-  lblTitle.Left := (ClientWidth - lblTitle.Width) div 2;
-  lblSubTitle.Left := (ClientWidth - lblSubTitle.Width) div 2;
+  imMain.Left := (pnContainer.Width - imMain.Width) div 2;
+  lbTitle.Left := (ClientWidth - lbTitle.Width) div 2;
+  lbSubTitle.Left := (ClientWidth - lbSubTitle.Width) div 2;
 end;
 
 procedure TfrConfirmationDialog.FormShow(Sender: TObject);
 begin
   inherited;
 
-  lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
+  lbSubTitle.Height := SDfunctions.GetLabelHeight(lbSubTitle);
   frConfirmationDialog.Height := Scale96ToForm(300);
-  frConfirmationDialog.Height := frConfirmationDialog.Height + lblSubTitle.Height;
+  frConfirmationDialog.Height := frConfirmationDialog.Height + lbSubTitle.Height;
 
   case typeMessage of
     TTypeMessage.tmInfo:
       begin
-        frConfirmationDialog.lblTitle.Caption := 'Olá';
-        ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
+        frConfirmationDialog.lbTitle.Caption := 'Olá';
+        imMain.ImageIndex := 0;
         frConfirmationDialog.Color := $00FFF1E8;
       end;
     TTypeMessage.tmWarning:
       begin
-        frConfirmationDialog.lblTitle.Caption := 'Atenção';
-        ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
+        frConfirmationDialog.lbTitle.Caption := 'Atenção';
+        imMain.ImageIndex := 1;
         frConfirmationDialog.Color := $00E8FFFA;
       end;
     TTypeMessage.tmError:
       begin
-        frConfirmationDialog.lblTitle.Caption := 'Erro';
-        ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
+        frConfirmationDialog.lbTitle.Caption := 'Erro';
+        imMain.ImageIndex := 2;
         frConfirmationDialog.Color := $00E8ECFF;
       end;
      TTypeMessage.tmQuestion:
        begin
-         frConfirmationDialog.lblTitle.Caption := 'Pergunta';
-         ImageList1.GetBitmap(3, Self.Image.Picture.Bitmap);
+         frConfirmationDialog.lbTitle.Caption := 'Pergunta';
+         imMain.ImageIndex := 3;
          frConfirmationDialog.Color := $00FFFBE8;
        end;
   end;
@@ -154,83 +155,83 @@ begin
   Self.Close;
 end;
 
-procedure TfrConfirmationDialog.imgCloseClick(Sender: TObject);
+procedure TfrConfirmationDialog.imCloseClick(Sender: TObject);
 begin
   CancelAndClose
 end;
 
-procedure TfrConfirmationDialog.lblCancelClick(Sender: TObject);
+procedure TfrConfirmationDialog.lbCancelClick(Sender: TObject);
 begin
   CancelAndClose;
 end;
 
-procedure TfrConfirmationDialog.pnlWrapperCancelClick(Sender: TObject);
+procedure TfrConfirmationDialog.pnWrapperCancelClick(Sender: TObject);
 begin
   CancelAndClose;
 end;
 
-procedure TfrConfirmationDialog.shpCancelMouseUp(Sender: TObject;
+procedure TfrConfirmationDialog.spCancelMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbLeft then
     CancelAndClose;
 end;
 
-procedure TfrConfirmationDialog.pnlWrapperConfirmClick(Sender: TObject);
+procedure TfrConfirmationDialog.pnWrapperConfirmClick(Sender: TObject);
 begin
   ConfirmAndClose;
 end;
 
-procedure TfrConfirmationDialog.lblConfirmClick(Sender: TObject);
+procedure TfrConfirmationDialog.lbConfirmClick(Sender: TObject);
 begin
   ConfirmAndClose;
 end;
 
-procedure TfrConfirmationDialog.shpConfirmMouseUp(Sender: TObject;
+procedure TfrConfirmationDialog.spConfirmMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if Button = mbLeft then
     ConfirmAndClose;
 end;
 
-procedure TfrConfirmationDialog.lblCancelMouseEnter(Sender: TObject);
+procedure TfrConfirmationDialog.lbCancelMouseEnter(Sender: TObject);
 begin
-  shpCancelMouseEnter(Sender);
+  spCancelMouseEnter(Sender);
 end;
 
-procedure TfrConfirmationDialog.lblCancelMouseLeave(Sender: TObject);
+procedure TfrConfirmationDialog.lbCancelMouseLeave(Sender: TObject);
 begin
-  shpCancelMouseLeave(Sender);
+  spCancelMouseLeave(Sender);
 end;
 
-procedure TfrConfirmationDialog.lblConfirmMouseEnter(Sender: TObject);
+procedure TfrConfirmationDialog.lbConfirmMouseEnter(Sender: TObject);
 begin
-  shpConfirmMouseEnter(Sender);
+  spConfirmMouseEnter(Sender);
 end;
 
-procedure TfrConfirmationDialog.lblConfirmMouseLeave(Sender: TObject);
+procedure TfrConfirmationDialog.lbConfirmMouseLeave(Sender: TObject);
 begin
-  shpConfirmMouseLeave(Sender);
+  spConfirmMouseLeave(Sender);
 end;
 
-procedure TfrConfirmationDialog.shpCancelMouseEnter(Sender: TObject);
+procedure TfrConfirmationDialog.spCancelMouseEnter(Sender: TObject);
 begin
-  shpCancel.Brush.Color := $00A0A0A0;
+  spCancel.Brush.Color := $00A0A0A0;
 end;
 
-procedure TfrConfirmationDialog.shpCancelMouseLeave(Sender: TObject);
+procedure TfrConfirmationDialog.spCancelMouseLeave(Sender: TObject);
 begin
-  shpCancel.Brush.Color := $00C8C8C8;
+  spCancel.Brush.Color := $00C8C8C8;
 end;
 
-procedure TfrConfirmationDialog.shpConfirmMouseEnter(Sender: TObject);
+procedure TfrConfirmationDialog.spConfirmMouseEnter(Sender: TObject);
 begin
-  shpConfirm.Brush.Color := $00BE8C5C;
+  spConfirm.Brush.Color := $00BE8C5C;
 end;
 
-procedure TfrConfirmationDialog.shpConfirmMouseLeave(Sender: TObject);
+procedure TfrConfirmationDialog.spConfirmMouseLeave(Sender: TObject);
 begin
-  shpConfirm.Brush.Color := $00EDAF5C;
+  spConfirm.Brush.Color := $00EDAF5C;
 end;
 
 end.

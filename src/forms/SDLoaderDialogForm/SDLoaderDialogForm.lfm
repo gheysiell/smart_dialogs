@@ -24,7 +24,7 @@ object frLoaderDialog: TfrLoaderDialog
     Caption = 'Loader'
     Indeterminate = True
   end
-  object lblMessage: TLabel
+  object lbMessage: TLabel
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner

@@ -13,17 +13,18 @@ type
   { TfrSimpleDialog }
 
   TfrSimpleDialog = class(TForm)
-    Image: TImage;
-    ImageList1: TImageList;
-    imgClose: TImage;
-    lblTitle: TLabel;
-    lblSubTitle: TLabel;
-    pnlContainer: TPanel;
+    ilClose: TImageList;
+    imMain: TImage;
+    ilIcons: TImageList;
+    imClose: TImage;
+    lbTitle: TLabel;
+    lbSubTitle: TLabel;
+    pnContainer: TPanel;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure imgCloseClick(Sender: TObject);
+    procedure imCloseClick(Sender: TObject);
   private
     FFullScreen: Boolean;
     FCalledFromLoader: Boolean;
@@ -70,42 +71,42 @@ end;
 
 procedure TfrSimpleDialog.FormResize(Sender: TObject);
 begin
-  Image.Left := (pnlContainer.Width - Image.Width) div 2;
-  lblTitle.Left := (ClientWidth - lblTitle.Width) div 2;
-  lblSubTitle.Left := (ClientWidth - lblSubTitle.Width) div 2;
+  imMain.Left := (pnContainer.Width - imMain.Width) div 2;
+  lbTitle.Left := (ClientWidth - lbTitle.Width) div 2;
+  lbSubTitle.Left := (ClientWidth - lbSubTitle.Width) div 2;
 end;
 
 procedure TfrSimpleDialog.FormShow(Sender: TObject);
 begin
   inherited;
 
-  lblSubTitle.Height := SDfunctions.GetLabelHeight(lblSubTitle);
+  lbSubTitle.Height := SDfunctions.GetLabelHeight(lbSubTitle);
   frSimpleDialog.Height := Scale96ToForm(220);
-  frSimpleDialog.Height := frSimpleDialog.Height + lblSubTitle.Height;
+  frSimpleDialog.Height := frSimpleDialog.Height + lbSubTitle.Height;
 
   case typeMessage of
     TTypeMessage.tmInfo:
       begin
-        frSimpleDialog.lblTitle.Caption := 'Olá';
-        ImageList1.GetBitmap(0, Self.Image.Picture.Bitmap);
+        frSimpleDialog.lbTitle.Caption := 'Olá';
+        imMain.ImageIndex := 0;
         frSimpleDialog.Color := $00FFF1E8;
       end;
     TTypeMessage.tmWarning:
       begin
-        frSimpleDialog.lblTitle.Caption := 'Atenção';
-        ImageList1.GetBitmap(1, Self.Image.Picture.Bitmap);
+        frSimpleDialog.lbTitle.Caption := 'Atenção';
+        imMain.ImageIndex := 1;
         frSimpleDialog.Color := $00E8FFFA;
       end;
     TTypeMessage.tmError:
       begin
-        frSimpleDialog.lblTitle.Caption := 'Erro';
-        ImageList1.GetBitmap(2, Self.Image.Picture.Bitmap);
+        frSimpleDialog.lbTitle.Caption := 'Erro';
+        imMain.ImageIndex := 2;
         frSimpleDialog.Color := $00E8ECFF;
       end;
      TTypeMessage.tmQuestion:
        begin
-         frSimpleDialog.lblTitle.Caption := 'Pergunta';
-         ImageList1.GetBitmap(3, Self.Image.Picture.Bitmap);
+         frSimpleDialog.lbTitle.Caption := 'Pergunta';
+         imMain.ImageIndex := 3;
          frSimpleDialog.Color := $00FFF1E8;
        end;
   end;
@@ -114,7 +115,7 @@ begin
   CenterForm(Self, Owner, FullScreen);
 end;
 
-procedure TfrSimpleDialog.imgCloseClick(Sender: TObject);
+procedure TfrSimpleDialog.imCloseClick(Sender: TObject);
 begin
   Self.Close;
 end;

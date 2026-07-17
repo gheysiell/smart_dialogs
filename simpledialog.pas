@@ -131,7 +131,7 @@ begin
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(ParentForm);
 
-  frSimpleDialog.lblSubTitle.Caption := SubTitle;
+  frSimpleDialog.lbSubTitle.Caption := SubTitle;
   frSimpleDialog.FullScreen := FFullScreen;
   frSimpleDialog.CalledFromLoader := FCalledFromLoader;
 

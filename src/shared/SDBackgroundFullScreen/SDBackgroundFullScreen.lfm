@@ -1,4 +1,4 @@
-object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
+object frSDBackgroundFullScreen: TfrSDBackgroundFullScreen
   Left = 2032
   Height = 192
   Top = 330
@@ -6,8 +6,8 @@ object frmSDBackgroundFullScreen: TfrmSDBackgroundFullScreen
   AlphaBlend = True
   AlphaBlendValue = 128
   BorderStyle = bsNone
-  Caption = 'frmSDBackgroundFullScreen'
+  Caption = 'frSDBackgroundFullScreen'
   Color = clBlack
   FormStyle = fsStayOnTop
-  LCLVersion = '4.6.0.0'
+  LCLVersion = '4.8.0.0'
 end

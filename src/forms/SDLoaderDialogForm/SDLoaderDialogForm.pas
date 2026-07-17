@@ -14,7 +14,7 @@ type
 
   TfrLoaderDialog = class(TForm)
     Loader: TBCFluentProgressRing;
-    lblMessage: TLabel;
+    lbMessage: TLabel;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -43,18 +43,18 @@ end;
 
 procedure TfrLoaderDialog.FormShow(Sender: TObject);
 begin
-  if Trim(lblMessage.Caption) = '' then
+  if Trim(lbMessage.Caption) = '' then
   begin
     Loader.Top := Scale96ToForm(65);
     frLoaderDialog.Height := Scale96ToForm(231);
   end
   else
   begin
-    lblMessage.Height := SDfunctions.GetLabelHeight(lblMessage);
+    lbMessage.Height := SDfunctions.GetLabelHeight(lbMessage);
 
     Loader.Top := Scale96ToForm(40);
     frLoaderDialog.Height := Scale96ToForm(200);
-    frLoaderDialog.Height := frLoaderDialog.Height + lblMessage.Height;
+    frLoaderDialog.Height := frLoaderDialog.Height + lbMessage.Height;
   end;
 
   SetRoundedCorners(Self, 50);
@@ -72,7 +72,7 @@ end;
 
 procedure TfrLoaderDialog.FormResize(Sender: TObject);
 begin
-  lblMessage.Left := (ClientWidth - lblMessage.Width) div 2;
+  lbMessage.Left := (ClientWidth - lbMessage.Width) div 2;
 end;
 
 procedure TfrLoaderDialog.CloseLoader;
