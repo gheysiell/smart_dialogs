@@ -16,6 +16,8 @@ function Ternary(
 function GetParentForm(Owner: TComponent): TForm;
 function GetLabelHeight(ALabel: TLabel): Integer;
 function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
+function GetDialogPopupParent(ParentForm: TCustomForm): TCustomForm;
+procedure RestoreDialogFocus(AForm: TCustomForm);
 function GetTaskBarHeight: Integer;
 procedure GetFormCenters(
   FullScreen: Boolean;
@@ -114,6 +116,25 @@ begin
       Exit(F);
     end;
   end;
+end;
+
+function GetDialogPopupParent(ParentForm: TCustomForm): TCustomForm;
+begin
+  Result := GetTopMostModalForm(nil);
+
+  if not Assigned(Result) then
+    Result := ParentForm;
+end;
+
+procedure RestoreDialogFocus(AForm: TCustomForm);
+begin
+  if not Assigned(AForm) or not AForm.HandleAllocated then
+    Exit;
+
+  AForm.BringToFront;
+
+  if AForm.CanFocus then
+    AForm.SetFocus;
 end;
 
 function GetTaskBarHeight: Integer;

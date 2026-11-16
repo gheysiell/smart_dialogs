@@ -64,8 +64,6 @@ end;
 procedure TfrLoaderDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  TSDBackgroundManager.PopBackground;
-
   CloseAction := caFree;
   frLoaderDialog := nil;
 end;

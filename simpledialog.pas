@@ -122,8 +122,10 @@ var
   CenterTop: Integer = 0;
   CenterLeft: Integer = 0;
   ParentForm: TForm;
+  FocusForm: TCustomForm;
 begin
   ParentForm := SDfunctions.GetParentForm(Owner);
+  FocusForm := SDfunctions.GetDialogPopupParent(ParentForm);
 
   if not FCalledFromLoader then
     TSDBackgroundManager.PushBackground(ParentForm, FFullScreen);
@@ -148,10 +150,14 @@ begin
   frSimpleDialog.Left := CenterLeft;
   frSimpleDialog.Top := CenterTop;
 
-  frSimpleDialog.ShowModal;
-  
-  ParentForm.BringToFront;
-  ParentForm.SetFocus;  
+  try
+    frSimpleDialog.ShowModal;
+  finally
+    SDfunctions.RestoreDialogFocus(FocusForm);
+
+    if not FCalledFromLoader then
+      TSDBackgroundManager.PopBackground;
+  end;
 end;
 
 procedure Register;

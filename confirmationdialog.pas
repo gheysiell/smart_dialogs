@@ -128,8 +128,10 @@ var
   CenterLeft: Integer = 0;
   CenterTop: Integer = 0;
   ParentForm: TForm;
+  FocusForm: TCustomForm;
 begin
   ParentForm := SDfunctions.GetParentForm(Owner);
+  FocusForm := SDfunctions.GetDialogPopupParent(ParentForm);
 
   if not FCalledFromLoader then
     TSDBackgroundManager.PushBackground(ParentForm, FFullScreen);
@@ -154,7 +156,14 @@ begin
   frConfirmationDialog.Left := CenterLeft;
   frConfirmationDialog.Top := CenterTop;
 
-  frConfirmationDialog.ShowModal;
+  try
+    frConfirmationDialog.ShowModal;
+  finally
+    SDfunctions.RestoreDialogFocus(FocusForm);
+
+    if not FCalledFromLoader then
+      TSDBackgroundManager.PopBackground;
+  end;
 
   Result :=
     SDConfirmationDialogForm.CanceledOrConfirmed =
@@ -165,9 +174,6 @@ begin
 
   if Assigned(FOnCanceled) and (not Result) then
     FOnCanceled();
-
-  ParentForm.BringToFront;
-  ParentForm.SetFocus;    
 end;
 
 procedure Register;

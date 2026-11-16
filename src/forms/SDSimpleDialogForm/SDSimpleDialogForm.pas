@@ -55,9 +55,6 @@ end;
 procedure TfrSimpleDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  if not FCalledFromLoader then
-    TSDBackgroundManager.PopBackground;
-
   CloseAction := caFree;
   frSimpleDialog := nil;
 end;
@@ -66,7 +63,10 @@ procedure TfrSimpleDialog.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = VK_ESCAPE) or (Key = VK_RETURN) then
+  begin
+    Key := 0;
     Self.Close;
+  end;
 end;
 
 procedure TfrSimpleDialog.FormResize(Sender: TObject);

@@ -80,9 +80,6 @@ end;
 procedure TfrConfirmationDialog.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  if not FCalledFromLoader then
-    TSDBackgroundManager.PopBackground;
-
   CloseAction := caFree;
   frConfirmationDialog := nil;
 end;
@@ -91,9 +88,15 @@ procedure TfrConfirmationDialog.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
-    ConfirmAndClose
+  begin
+    Key := 0;
+    ConfirmAndClose;
+  end
   else if Key = VK_ESCAPE then
+  begin
+    Key := 0;
     CancelAndClose;
+  end;
 end;
 
 procedure TfrConfirmationDialog.FormResize(Sender: TObject);
