@@ -75,15 +75,17 @@ var
   CenterLeft: Integer=0;
   CenterTop: Integer=0;
   ParentForm: TForm;
+  FocusForm: TCustomForm;
 begin
   ParentForm := SDfunctions.GetParentForm(Owner);
+  FocusForm := SDfunctions.GetDialogPopupParent(ParentForm);
 
   TSDBackgroundManager.PushBackground(ParentForm, FFullScreen);
 
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(ParentForm);
 
-  frLoaderDialog.lblMessage.Caption := Message;
+  frLoaderDialog.lbMessage.Caption := Message;
   frLoaderDialog.Position := poDesigned;
   frLoaderDialog.FullScreen := FFullScreen;
 
@@ -101,10 +103,12 @@ begin
   if Assigned(FSlowProcess) then
     TSDMyThread.Create(FSlowProcess, @CloseLoader);
 
-  frLoaderDialog.ShowModal;
-
-  ParentForm.BringToFront;
-  ParentForm.SetFocus;
+  try
+    frLoaderDialog.ShowModal;
+  finally
+    SDfunctions.RestoreDialogFocus(FocusForm);
+    TSDBackgroundManager.PopBackground;
+  end;
 end;
 
 procedure TLoaderDialog.CloseLoader;

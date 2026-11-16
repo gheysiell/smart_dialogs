@@ -42,9 +42,8 @@ begin
       FSlowProcess();
   finally
     IsInsideLoader := False;
+    Synchronize(@DoOnFinished);
   end;
-
-  Synchronize(@DoOnFinished);
 end;
 
 procedure TSDMyThread.DoOnFinished;
