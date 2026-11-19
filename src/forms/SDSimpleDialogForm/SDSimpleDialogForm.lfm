@@ -8,7 +8,6 @@ object frSimpleDialog: TfrSimpleDialog
   ClientHeight = 250
   ClientWidth = 440
   Color = 16773608
-  FormStyle = fsStayOnTop
   KeyPreview = True
   LCLVersion = '4.8.0.0'
   OnClose = FormClose

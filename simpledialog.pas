@@ -133,6 +133,11 @@ begin
   if not Assigned(frSimpleDialog) then
     frSimpleDialog := TfrSimpleDialog.Create(ParentForm);
 
+  if FCalledFromLoader then
+    SDfunctions.SetDialogOwner(frSimpleDialog, FocusForm)
+  else
+    SDfunctions.SetDialogOwner(frSimpleDialog, TSDBackgroundManager.Current);
+
   frSimpleDialog.lbSubTitle.Caption := SubTitle;
   frSimpleDialog.FullScreen := FFullScreen;
   frSimpleDialog.CalledFromLoader := FCalledFromLoader;

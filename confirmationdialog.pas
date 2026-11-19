@@ -139,6 +139,11 @@ begin
   if not Assigned(frConfirmationDialog) then
     frConfirmationDialog := TfrConfirmationDialog.Create(ParentForm);
 
+  if FCalledFromLoader then
+    SDfunctions.SetDialogOwner(frConfirmationDialog, FocusForm)
+  else
+    SDfunctions.SetDialogOwner(frConfirmationDialog, TSDBackgroundManager.Current);
+
   frConfirmationDialog.lbSubTitle.Caption := SubTitle;
   frConfirmationDialog.FullScreen := FFullScreen;
   frConfirmationDialog.CalledFromLoader := FCalledFromLoader;
