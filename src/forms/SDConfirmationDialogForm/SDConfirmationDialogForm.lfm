@@ -8,7 +8,6 @@ object frConfirmationDialog: TfrConfirmationDialog
   ClientHeight = 330
   ClientWidth = 490
   Color = 15269882
-  FormStyle = fsStayOnTop
   LCLVersion = '4.8.0.0'
   OnClose = FormClose
   OnKeyDown = FormKeyDown

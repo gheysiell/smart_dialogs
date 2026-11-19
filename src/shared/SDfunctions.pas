@@ -18,6 +18,7 @@ function GetLabelHeight(ALabel: TLabel): Integer;
 function GetTopMostModalForm(Exclude: TCustomForm): TCustomForm;
 function GetDialogPopupParent(ParentForm: TCustomForm): TCustomForm;
 procedure RestoreDialogFocus(AForm: TCustomForm);
+procedure SetDialogOwner(Dialog: TCustomForm; OwnerForm: TCustomForm);
 function GetTaskBarHeight: Integer;
 procedure GetFormCenters(
   FullScreen: Boolean;
@@ -135,6 +136,15 @@ begin
 
   if AForm.CanFocus then
     AForm.SetFocus;
+end;
+
+procedure SetDialogOwner(Dialog: TCustomForm; OwnerForm: TCustomForm);
+begin
+  if not Assigned(Dialog) or not Assigned(OwnerForm) or (Dialog = OwnerForm) then
+    Exit;
+
+  Dialog.PopupMode := pmExplicit;
+  Dialog.PopupParent := OwnerForm;
 end;
 
 function GetTaskBarHeight: Integer;

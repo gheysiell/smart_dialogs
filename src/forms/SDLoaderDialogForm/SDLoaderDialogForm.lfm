@@ -7,7 +7,6 @@ object frLoaderDialog: TfrLoaderDialog
   Caption = 'frLoaderDialog'
   ClientHeight = 230
   ClientWidth = 230
-  FormStyle = fsStayOnTop
   Position = poWorkAreaCenter
   LCLVersion = '4.8.0.0'
   OnClose = FormClose

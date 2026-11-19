@@ -12,8 +12,6 @@ type
   { TfrSDBackgroundFullScreen }
 
   TfrSDBackgroundFullScreen = class(TForm)
-  public
-    constructor Create(AOwner: TComponent); override;
   end;
 
   { TSDBackgroundManager }
@@ -25,6 +23,7 @@ type
   public
     class procedure PushBackground(FormRef: TForm; FullScreen: Boolean);
     class procedure PopBackground;
+    class function Current: TCustomForm;
     class procedure ClearAll;
     class procedure Finalize;
   end;
@@ -51,8 +50,15 @@ var
   AMonitor: TMonitor;
   TaskBarHeight: Integer;
   NewBG: TfrSDBackgroundFullScreen;
+  OwnerForm: TCustomForm;
 begin
+  OwnerForm := Screen.ActiveForm;
+
+  if not Assigned(OwnerForm) then
+    OwnerForm := Application.MainForm;
+
   NewBG := TfrSDBackgroundFullScreen.Create(Application);
+  SDfunctions.SetDialogOwner(NewBG, OwnerForm);
 
   if Assigned(FormRef) then
     AMonitor := Screen.MonitorFromWindow(FormRef.Handle)
@@ -63,7 +69,6 @@ begin
 
   with NewBG do
   begin
-    FormStyle := fsStayOnTop;
     Left      := AMonitor.Left;
     Top       := AMonitor.Top;
     Width     := AMonitor.Width;
@@ -81,6 +86,14 @@ begin
     FBackgroundStack.Delete(FBackgroundStack.Count - 1);
 end;
 
+class function TSDBackgroundManager.Current: TCustomForm;
+begin
+  Result := nil;
+
+  if (Assigned(FBackgroundStack)) and (FBackgroundStack.Count > 0) then
+    Result := TCustomForm(FBackgroundStack.Last);
+end;
+
 class procedure TSDBackgroundManager.ClearAll;
 begin
   if Assigned(FBackgroundStack) then
@@ -91,14 +104,6 @@ class procedure TSDBackgroundManager.Finalize;
 begin
   if Assigned(FBackgroundStack) then
     FreeAndNil(FBackgroundStack);
-end;
-
-{ TfrSDBackgroundFullScreen }
-
-constructor TfrSDBackgroundFullScreen.Create(AOwner: TComponent);
-begin
-  inherited Create(AOwner);
-  Enabled := False;
 end;
 
 initialization

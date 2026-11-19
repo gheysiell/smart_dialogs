@@ -85,6 +85,8 @@ begin
   if not Assigned(frLoaderDialog) then
     frLoaderDialog := TfrLoaderDialog.Create(ParentForm);
 
+  SDfunctions.SetDialogOwner(frLoaderDialog, TSDBackgroundManager.Current);
+
   frLoaderDialog.lbMessage.Caption := Message;
   frLoaderDialog.Position := poDesigned;
   frLoaderDialog.FullScreen := FFullScreen;
